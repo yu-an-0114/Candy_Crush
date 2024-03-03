@@ -6,7 +6,7 @@
 #include "../Library/gameutil.h"
 #include "../Library/gamecore.h"
 #include "mygame.h"
-//111111
+//陳米區看一下
 using namespace game_framework;
 
 /////////////////////////////////////////////////////////////////////////////
