@@ -38,12 +38,12 @@
  *      3. Use ShowInitProgress(percent) to display loading progress.
 */
 
-
+//11111
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 	// Constants
 	/////////////////////////////////////////////////////////////////////////////
-	////
+
 	enum AUDIO_ID {				// 定義各種音效的編號
 		AUDIO_DING,				// 0
 		AUDIO_LAKE,				// 1
@@ -65,7 +65,11 @@ namespace game_framework {
 	protected:
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
-		CMovingBitmap logo;								// csie的logo
+		int phase_start=1;
+		CMovingBitmap play;								// csie的logo
+		CMovingBitmap start_loading;
+		CMovingBitmap start_ui;
+		
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -89,6 +93,9 @@ namespace game_framework {
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
+	private:
+		CMovingBitmap map;
+		CMovingBitmap map_arrow;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
