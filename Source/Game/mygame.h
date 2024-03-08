@@ -37,8 +37,7 @@
  *      2. Replace the demonstration of animation as a new bouncing ball.
  *      3. Use ShowInitProgress(percent) to display loading progress.
 */
-
-
+#include "../Game/map.h"
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 	// Constants
@@ -89,6 +88,8 @@ namespace game_framework {
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
+	private:
+		Map MAP;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -107,5 +108,4 @@ namespace game_framework {
 	private:
 		int counter;	// 倒數之計數器
 	};
-
 }
