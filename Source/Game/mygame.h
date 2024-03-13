@@ -38,6 +38,7 @@
  *      3. Use ShowInitProgress(percent) to display loading progress.
 */
 #include "../Game/map.h"
+#include "../Game/UI.h"
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 	// Constants
@@ -65,6 +66,7 @@ namespace game_framework {
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
 		CMovingBitmap logo;								// csie的logo
+		UI StartUI;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -90,6 +92,8 @@ namespace game_framework {
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
 		Map MAP;
+		//CMovingBitmap map_level;
+		//CMovingBitmap map_arrow;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
