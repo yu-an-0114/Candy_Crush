@@ -70,9 +70,15 @@ namespace game_framework {
 				}
 			}
 		}*/
-		/*
-		void Candy_Move(CPoint point) {
-			if(point.x)
+		bool isClick_CMovingBitmap(CMovingBitmap obj, CPoint point) {
+			return obj.GetLeft() < point.x && obj.GetLeft() + obj.GetWidth() > point.x && obj.GetTop() > point.y && obj.GetTop() - obj.GetHeight() < point.y;
+		}
+		/*void Candy_Move(CPoint point) {
+			for (int i = 0; i < 10; i++) {
+				for (int j = 0; j < 10; j++) {
+					if (candy[i][j].GetLeft()<)
+				}
+			}
 			
 		}*/
 	private:
