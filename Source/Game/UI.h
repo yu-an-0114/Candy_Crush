@@ -26,7 +26,6 @@ namespace game_framework {
 		bool IS_PLAY_BUTTON(CPoint point) {
 
 				return (600 > point.x && point.x > 150) && (800 > point.y && point.y > 640) && start_loading.GetFrameIndexOfBitmap() == 2;
-			
 		}
 	
 	private:

@@ -30,16 +30,15 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
+
+	MAP.Candy_Element( clickX, clickY, changeX, changeY);
+	MAP.candy_down();
 	
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	MAP.Build_map();
-	/*map_level.LoadBitmapByString({ "resources/map_level2.bmp" }, RGB(255, 255, 255));
-	map_level.SetTopLeft(0, 0);
-	map_arrow.LoadBitmapByString({ "resources/arrow.bmp" }, RGB(255, 255, 255));
-	map_arrow.SetTopLeft(0, 0);*/
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -54,19 +53,74 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 {
-	
+	mouse_candy_state = true;
+	candy_start = point;
 }
 
 void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 {
+	mouse_candy_state = false;
+
+	if (num == 1 && mouse_candy_state ==false) {
+		num = 0;
+		int change = 0;
+		for (int i = 0; i < 10; i++) {
+			if (change == 1) {
+				break;
+			}
+			for (int j = 0; j < 10; j++) {
+				if (change == 1) {
+					break;
+				}
+				if (MAP.map[i][j].isClick_CMovingBitmap(MAP.candy[i][j], point) && MAP.candy[i][j].GetFrameIndexOfBitmap()!=0 && MAP.candy[clickX][clickY].GetFrameIndexOfBitmap() != 0) {
+					if ((clickX - 1 == i && clickY == j) || (clickX + 1 == i && clickY == j) || (clickX == i && clickY - 1 == j) || (clickX == i && clickY + 1 == j)) {
+						change = 1;
+						MAP.candy_change(i, j, clickX, clickY);
+						changeX = clickX;
+						changeY = clickY;
+						clickX = i;
+						clickY = j;	
+						break;
+					}
+					else {
+						MAP.candy[clickX][clickY].SetTopLeft(MAP.map[clickX][clickY].GetLeft() + (MAP.map[clickX][clickY].GetWidth() - MAP.candy[clickX][clickY].GetWidth()) / 2, MAP.map[clickX][clickY].GetTop() + (MAP.map[clickX][clickY].GetHeight() - MAP.candy[clickX][clickY].GetHeight()) / 2);
+					}
+				}
+				else if (i == 9 && j == 9) {
+					MAP.candy[clickX][clickY].SetTopLeft(MAP.map[clickX][clickY].GetLeft() + (MAP.map[clickX][clickY].GetWidth() - MAP.candy[clickX][clickY].GetWidth()) / 2, MAP.map[clickX][clickY].GetTop() + (MAP.map[clickX][clickY].GetHeight() - MAP.candy[clickX][clickY].GetHeight()) / 2);
+				}
+			}
+		}
+		
+	}
+	
 }
 
 void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 {
+	if (mouse_candy_state == true && num == 0) {
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				if (MAP.candy[i][j].isClick_CMovingBitmap(MAP.candy[i][j], candy_start)) {
+					num = 1;
+					clickX = i;
+					clickY = j;
+					break;
+				}
+			}
+		}
+	}
+	if (mouse_candy_state == true && num==1) {
+		if (MAP.candy[clickX][clickY].isClick_CMovingBitmap(MAP.candy[clickX][clickY], candy_start)) {
+			MAP.candy[clickX][clickY].SetTopLeft(point.x - MAP.candy[clickX][clickY].GetWidth() / 2, point.y - MAP.candy[clickX][clickY].GetHeight() / 2);
+			candy_start = point;
+		}
+	}
 }
 
 void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 {
+	
 }
 
 void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -76,6 +130,5 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 void CGameStateRun::OnShow()
 {
 	MAP.Show_map();
-	//map_level.ShowBitmap();
-	//map_arrow.ShowBitmap();
+
 }
