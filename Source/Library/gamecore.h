@@ -164,8 +164,14 @@ namespace game_framework {
 
 	class CGame {
 	public:
+		
+		void OnMouseDownAndMove(UINT nFlags, CPoint point) {
+			OnLButtonDown(nFlags, point);
+			OnMouseMove(nFlags,point);
+		}
 		CGame();										// Constructor
 		~CGame();										// Destructor
+		
 		bool IsRunning();								// 讀取遊戲是否正在進行中
 		void OnDraw();									// 對應CGameView的OnDraw()
 		void OnFilePause();								// 遊戲暫停
