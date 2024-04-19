@@ -65,9 +65,15 @@ namespace game_framework {
 	protected:
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
-		CMovingBitmap logo;								// csie的logo
+		CMovingBitmap down;
 		UI StartUI;
+		UI RankChooseUI;
+
+		int phase_start = 1;
+		int phase_rank = 1;
+		int level = 0;
 	};
+
 
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class為遊戲的遊戲執行物件，主要的遊戲程式都在這裡
@@ -102,6 +108,15 @@ namespace game_framework {
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
 		Map MAP;
+		UI WinUI;
+		UI FailUI;
+		UI Setting;
+		UI UI;
+		int phase_run = 1;
+		int phase_rank = 1;
+		int level = 0;
+		
+		CMovingBitmap down;
 		//CMovingBitmap map_level;
 		//CMovingBitmap map_arrow;
 	};

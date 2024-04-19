@@ -33,12 +33,19 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 	MAP.Candy_Element( clickX, clickY, changeX, changeY);
 	MAP.candy_down();
+	MAP.SCORE();
+	MAP.STEP();
 	
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	MAP.Build_map();
+	UI.RUN();
+	UI.RUN2();
+	UI.Win();
+	UI.Board_set();
+	UI.Fail();
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -55,6 +62,16 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 {
 	mouse_candy_state = true;
 	candy_start = point;
+	if (UI.IS_HOME(point) == true) {
+		GotoGameState(GAME_STATE_INIT);
+		phase_run = 1;
+	}
+	if (UI.IS_SETTING(point) == true) {
+		phase_run += 1;
+	}
+	if (UI.IS_RETRY(point) == true) {
+		phase_run -= 1;
+	}
 }
 
 void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -80,6 +97,8 @@ void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 						changeY = clickY;
 						clickX = i;
 						clickY = j;	
+						MAP.step = MAP.step - 1;
+						
 						break;
 					}
 					else {
@@ -92,6 +111,16 @@ void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 			}
 		}
 		
+	}
+	if (UI.IS_HOME(point) == true) {
+		GotoGameState(GAME_STATE_INIT);
+		phase_run = 1;
+	}
+	if (UI.IS_SETTING(point) == true) {
+		phase_run += 1;
+	}
+	if (UI.IS_RETRY(point) == true) {
+		phase_run -= 1;
 	}
 	
 }
@@ -130,5 +159,28 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 void CGameStateRun::OnShow()
 {
 	MAP.Show_map();
+	UI.Setting_Show();
+	if (MAP.step == 0) {
+		if (MAP.score < 300) {
+			UI.Fail_ui_show();
+		}
+		else if (MAP.score < 500) {
+			UI.win_ui_show(1);
+		}
+		else if (MAP.score < 1000) {
+			UI.win_ui_show(2);
+		}
+		else {
+			UI.win_ui_show(3);
+		}
+	}
 
+	if ((phase_run == 2) && (phase_rank == 2)) {
+		UI.Setting_RUN_show();
+		//GotoGameState(GAME_STATE_INIT);
+		//phase_run = 1;
+	}
+	else {
+		UI.Setting_RUN_unshow();
+	}
 }
