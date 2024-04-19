@@ -126,7 +126,6 @@ namespace game_framework {
 			Win_Bird.SetTopLeft(0, 700);
 			Next.LoadBitmapByString({ "resources/score/next.bmp" }, RGB(255, 255, 255));
 			Next.SetTopLeft(400, 600);
-			//Retry.SetTopLeft(300, 600);
 			Board_set();
 		}
 
@@ -157,7 +156,7 @@ namespace game_framework {
 			star.SetAnimation(1000, true);
 			//star.ToggleAnimation();
 			Retry.LoadBitmapByString({ "resources/score/Retry.bmp" }, RGB(255, 255, 255));
-			Retry.SetTopLeft(250, 600);
+			Retry.SetTopLeft(150, 600);
 			Home.LoadBitmapByString({ "resources/score/home.bmp" }, RGB(255, 255, 255));
 			Home.SetTopLeft(330, 550);
 		}
@@ -182,10 +181,18 @@ namespace game_framework {
 		void Setting_Show() {
 			Setting.ShowBitmap();
 		}
+		void Setting_UnShow() {
+			Setting.UnshowBitmap();
+		}
 		void Setting_RUN_show() {
 			board.ShowBitmap();
 			Retry.ShowBitmap();
 			Home.ShowBitmap();
+		}
+		void Setting_RUN_Unshow() {
+			board.UnshowBitmap();
+			Retry.UnshowBitmap();
+			Home.UnshowBitmap();
 		}
 		void Setting_RUN_unshow() {
 			board.UnshowBitmap();

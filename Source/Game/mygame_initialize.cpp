@@ -39,8 +39,6 @@ void CGameStateInit::OnBeginState()
 	StartUI.START_UI();
 
 	RankChooseUI.Rank_choose_UI();
-
-
 }
 
 void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -93,9 +91,4 @@ void CGameStateInit::OnShow()
 	else if ((phase_start == 2) && (phase_rank == 2)) {
 		RankChooseUI.rankchoose_ui_2_show();
 	}
-
-
-
-
-
 }
