@@ -54,7 +54,11 @@ namespace game_framework {
 	// 這個class為遊戲的遊戲開頭畫面物件
 	// 每個Member function的Implementation都要弄懂
 	/////////////////////////////////////////////////////////////////////////////
-
+	class MyStruct
+	{ public:
+		static int level;
+	};
+	
 	class CGameStateInit : public CGameState {
 	public:
 		CGameStateInit(CGame *g);
@@ -62,6 +66,7 @@ namespace game_framework {
 		void OnBeginState();							// 設定每次重玩所需的變數
 		void OnKeyUp(UINT, UINT, UINT); 				// 處理鍵盤Up的動作
 		void OnLButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
+
 	protected:
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
@@ -71,7 +76,7 @@ namespace game_framework {
 
 		int phase_start = 1;
 		int phase_rank = 1;
-		int level = 0;
+		
 	};
 
 
@@ -79,9 +84,10 @@ namespace game_framework {
 	// 這個class為遊戲的遊戲執行物件，主要的遊戲程式都在這裡
 	// 每個Member function的Implementation都要弄懂
 	/////////////////////////////////////////////////////////////////////////////
-
+	//int level123;
 	class CGameStateRun : public CGameState {
 	public:
+		
 		CGameStateRun(CGame *g);
 		~CGameStateRun();
 		void OnBeginState();							// 設定每次重玩所需的變數
@@ -102,7 +108,7 @@ namespace game_framework {
 		int clickY = 0;
 		int changeX = 0;
 		int changeY = 0;
-		
+	
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
@@ -114,7 +120,7 @@ namespace game_framework {
 		UI UI;
 		int phase_run = 1;
 		int phase_rank = 1;
-		int level = 0;
+
 		
 		CMovingBitmap down;
 		//CMovingBitmap map_level;

@@ -16,7 +16,7 @@ using namespace game_framework;
 CGameStateInit::CGameStateInit(CGame *g) : CGameState(g)
 {
 }
-
+int MyStruct::level = 0;
 void CGameStateInit::OnInit()
 {
 	//
@@ -39,6 +39,9 @@ void CGameStateInit::OnBeginState()
 	StartUI.START_UI();
 
 	RankChooseUI.Rank_choose_UI();
+	if ((phase_start == 2) && (phase_rank == 2)) {
+		RankChooseUI.Rank_choose_UI_2();
+	}
 }
 
 void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -59,18 +62,18 @@ void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 			phase_rank += 1;
 		}
 
-		if (RankChooseUI.IS_RANK_BUTTON_1(point) == true) {
+		if (RankChooseUI.IS_RANK_BUTTON_1(point) == 1) {
 			GotoGameState(GAME_STATE_RUN);
 		}
 
 	}
 	else if ((phase_start == 2) && (phase_rank == 2)) {
-
+		MyStruct::level = RankChooseUI.IS_RANK_BUTTON_2(point);
 		if (RankChooseUI.IS_UP_BUTTON(point) == true) {
 			RankChooseUI.Rank_choose_UI();
 			phase_rank -= 1;
 		}
-		if (RankChooseUI.IS_RANK_BUTTON_2(point) == true) {
+		if (MyStruct::level == 21) {
 			GotoGameState(GAME_STATE_RUN);
 		}
 	}
