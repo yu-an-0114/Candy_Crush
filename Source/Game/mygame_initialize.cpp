@@ -13,6 +13,8 @@ using namespace game_framework;
 // 這個class為遊戲的遊戲開頭畫面物件
 /////////////////////////////////////////////////////////////////////////////
 
+int levelrank::value = 0;
+
 CGameStateInit::CGameStateInit(CGame *g) : CGameState(g)
 {
 }
@@ -37,7 +39,7 @@ void CGameStateInit::OnInit()
 void CGameStateInit::OnBeginState()
 {
 	StartUI.START_UI();
-
+	
 	RankChooseUI.Rank_choose_UI();
 	if ((phase_start == 2) && (phase_rank == 2)) {
 		RankChooseUI.Rank_choose_UI_2();
@@ -61,8 +63,10 @@ void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 			RankChooseUI.Rank_choose_UI_2();
 			phase_rank += 1;
 		}
+		levelrank::value = RankChooseUI.IS_RANK_BUTTON_1(point);
 
-		if (RankChooseUI.IS_RANK_BUTTON_1(point) == 1) {
+		if (levelrank::value > -1) {
+
 			GotoGameState(GAME_STATE_RUN);
 		}
 
@@ -75,7 +79,7 @@ void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 		}
 		
 	}
-	//if (level == 0) {
+
 
 }
 

@@ -45,12 +45,12 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	
 	MAP.Build_map(level);
-	UI.map_background();
+	UI.map_background(A);
 	UI.RUN2();
 	UI.Win();
 	UI.Board_set();
 	UI.Fail();
-	
+
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -82,6 +82,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	}
 	if (((phase_run == 2) && (phase_rank == 2)) || ((phase_run == 3) && (phase_rank == 3))) {
 		if (UI.IS_HOME(point) == true) {
+			levelrank::value = -1;
 			GotoGameState(GAME_STATE_INIT);
 			MAP.step = 10;
 			MAP.score = 0;
@@ -148,16 +149,7 @@ void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 		}
 		
 	}
-	if (UI.IS_HOME(point) == true) {
-		GotoGameState(GAME_STATE_INIT);
-		phase_run = 1;
-	}
-	if (UI.IS_SETTING(point) == true) {
-		phase_run += 1;
-	}
-	if (UI.IS_RETRY(point) == true) {
-		phase_run -= 1;
-	}
+	
 	
 }
 
@@ -199,13 +191,16 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 
 void CGameStateRun::OnShow()
 {
-	UI.map_show(MAP.score);
-	MAP.Show_map(level);
+	
+	UI.map_show(MAP.score, A);
+	MAP.Show_map(levelrank::value);
 	UI.Setting_Show();
 	if (MAP.step == 0) {
 		phase_run = 3;
 		phase_rank = 3;
 	}
+
+
 
 
 	if ((phase_run == 3) && (phase_rank == 3)) {
