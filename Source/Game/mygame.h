@@ -62,6 +62,7 @@ namespace game_framework {
 		void OnBeginState();							// 設定每次重玩所需的變數
 		void OnKeyUp(UINT, UINT, UINT); 				// 處理鍵盤Up的動作
 		void OnLButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
+		int level = 0;
 	protected:
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
@@ -71,7 +72,7 @@ namespace game_framework {
 
 		int phase_start = 1;
 		int phase_rank = 1;
-		int level = 0;
+		//int level = 0;
 	};
 
 
@@ -93,16 +94,15 @@ namespace game_framework {
 		void OnMouseMove(UINT nFlags, CPoint point);	// 處理滑鼠的動作 
 		void OnRButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
 		void OnRButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
-		//void OnMouseDownAndMove(UINT nFlags, CPoint point);
 		bool mouse_candy_state=false;
 		CPoint candy_start;
 		CPoint mouse_point;
-		int num= 0;
+		int num = 0;
 		int clickX = 0;
 		int clickY = 0;
 		int changeX = 0;
 		int changeY = 0;
-		
+		int level = 0;
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
@@ -114,7 +114,6 @@ namespace game_framework {
 		UI UI;
 		int phase_run = 1;
 		int phase_rank = 1;
-		int level = 0;
 		
 		CMovingBitmap down;
 		//CMovingBitmap map_level;

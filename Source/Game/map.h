@@ -19,18 +19,22 @@ using namespace std;
 namespace game_framework {
 	class Map {
 	public:
+	
+		
 		void Build_map(int level) {
+			unitMap.LoadBitmapByString({ "resources/CandyLattice.bmp" });
 			for (int i = 0; i < 10; i++) {
 				for (int j = 0; j < 10; j++) {
 					if (maplevel.mapLevel[level][i][j] == 0) {
 						continue;
 					}
 					map[i][j].LoadBitmapByString({ "resources/CandyLattice.bmp" });
-					map[i][j].SetTopLeft(10 + map[0][0].GetWidth()*j, 150 + map[0][0].GetHeight()*i);
+					map[i][j].SetTopLeft(10 + unitMap.GetWidth()*j, 150 + unitMap.GetHeight()*i);
 					candy[i][j].LoadBitmapByString({"resources/candy/white.bmp" ,"resources/candy/yellow-candy.bmp","resources/candy/blue-candy.bmp" ,"resources/candy/red-candy.bmp" ,"resources/candy/purple-candy.bmp" ,"resources/candy/green-candy.bmp" ,"resources/candy/orange-candy.bmp" ,"resources/candy/yellow-candy-row.bmp" ,"resources/candy/yellow-candy-col.bmp" ,"resources/candy/yellow-candy-pack.bmp","resources/candy/blue-candy-row.bmp" ,"resources/candy/blue-candy-col.bmp" ,"resources/candy/blue-candy-pack.bmp","resources/candy/red-candy-row.bmp" ,"resources/candy/red-candy-col.bmp","resources/candy/red-candy-pack.bmp","resources/candy/purple-candy-row.bmp" ,"resources/candy/purple-candy-col.bmp","resources/candy/purple-candy-pack.bmp","resources/candy/green-candy-row.bmp" ,"resources/candy/green-candy-col.bmp" ,"resources/candy/green-candy-pack.bmp","resources/candy/orange-candy-row.bmp" ,"resources/candy/orange-candy-col.bmp","resources/candy/orange-candy-pack.bmp" ,"resources/candy/color-ball.bmp" }, RGB(255, 255, 255));
 					int RandNum = rand() % 6 + 1;		
+					
 					candy[i][j].SetFrameIndexOfBitmap(RandNum);
-					candy[i][j].SetTopLeft(map[i][j].GetLeft() + (map[i][j].GetWidth() - candy[i][j].GetWidth()) / 2, map[i][j].GetTop() + (map[i][j].GetHeight() - candy[i][j].GetHeight()) / 2);
+					candy[i][j].SetTopLeft(map[i][j].GetLeft() + (unitMap.GetWidth() - candy[i][j].GetWidth()) / 2, map[i][j].GetTop() + (unitMap.GetHeight() - candy[i][j].GetHeight()) / 2);
 				}
 			}
 		}
@@ -42,10 +46,9 @@ namespace game_framework {
 						continue;
 					}
 					map[i][j].ShowBitmap();
-					candy[i][j].ShowBitmap();
 				}
 			}
-			/*
+			
 			for (int i = 0; i < 10; i++) {
 				for (int j = 0; j < 10; j++) {
 					if (maplevel.mapLevel[level][i][j] == 0) {
@@ -53,7 +56,7 @@ namespace game_framework {
 					}
 					candy[i][j].ShowBitmap();
 				}
-			}*/
+			}
 		}
 
 		void candy_down(int level) {
@@ -84,7 +87,7 @@ namespace game_framework {
 							else {
 								candy[k][j].SetFrameIndexOfBitmap(candy[k - candyLatticeEmpty - 1][j].GetFrameIndexOfBitmap());
 							}
-							candy[k][j].SetTopLeft(map[k][j].GetLeft() + (map[k][j].GetWidth() - candy[k][j].GetWidth()) / 2, map[k][j].GetTop() + (map[k][j].GetHeight() - candy[k][j].GetHeight()) / 2);
+							candy[k][j].SetTopLeft(map[k][j].GetLeft() + (unitMap.GetWidth() - candy[k][j].GetWidth()) / 2, map[k][j].GetTop() + (unitMap.GetHeight() - candy[k][j].GetHeight()) / 2);
 							k--;
 						}
 					}
@@ -108,13 +111,13 @@ namespace game_framework {
 				while (isCandySameColor(x,y,x1,y1)) {
 					y1++;
 				}
-				return y1 - y;
+				return y1 - y + 1;
 			}
 			else {
 				while (isCandySameColor(x, y, x1, y1)) {
 					x1++;
 				}
-				return x1 - x;	
+				return x1 - x + 1;	
 			}
 		}
 
@@ -267,34 +270,19 @@ namespace game_framework {
 				if (sum == 5) {
 					for (int z = j; z < j + 5; z++) {
 						if ((i == clickX && z == clickY ) || (z == j+2)) {
-							for (int k = i; k < i + 3; k++) {
-								if (maplevel.mapLevel[level][k][z] == 0) {
-									break;
-								}
-								if (k >= 10) {
-									break;
-								}
-								if (!isCandySameColor(k, z, i, z)) {
-									break;
-								}
-								if (k == i + 2) {
-									for (int k1 = i; k1 < i + 3; k1++) {
-										candy[k1][z].SetFrameIndexOfBitmap(0);
-									}
+							if (Candy_Connet(i, z, false) >= 3) {
+								for (int k = i; k < i + Candy_Connet(i, z, false); k++) {
+									candy_skill(k, j + 2, level);
 								}
 							}
 							candy[i][z].SetFrameIndexOfBitmap(25);
 							continue;
 						}
-						
-						candy[i][z].SetFrameIndexOfBitmap(0);
+						candy_skill(i, z, level);
 					}
 				}
 				else if (sum == 4) {
 					for (int z = j; z < j + 4; z++) {
-						if (maplevel.mapLevel[level][i][z] == 0) {
-							continue;
-						}
 						if (z == clickY) {
 							candy[i][z].SetFrameIndexOfBitmap(8 + (candy[i][z].GetFrameIndexOfBitmap() - 1) * 3);
 							continue;
@@ -565,10 +553,12 @@ namespace game_framework {
 		
 		CMovingBitmap candy[10][10];
 		CMovingBitmap map[10][10];
+		CMovingBitmap unitMap;
+		
 		int score = 0;
 		int step = 10;
 		MapLevel maplevel;
-	
+		
 	private:
 		
 		

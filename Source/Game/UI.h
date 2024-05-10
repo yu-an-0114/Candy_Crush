@@ -67,6 +67,61 @@ namespace game_framework {
 				}
 			}
 		}
+		void map_background() {
+			Game_background.LoadBitmapByString({ "resources/score/game_background.bmp" });
+			Game_background.SetTopLeft(0, -30);
+			score_board.LoadBitmapByString({ "resources/score/score_board2.bmp" }, RGB(255, 255, 255));
+			score_board.SetTopLeft(-20, 0);
+			Point();
+			score_star.LoadBitmapByString({ "resources/score/unlight_star.bmp","resources/score/light_star.bmp" }, RGB(255, 255, 255));
+			score_star.SetTopLeft(point[28].GetLeft(), point[28].GetTop() - 5);
+			score_star.SetFrameIndexOfBitmap(0);
+			score_star_2.LoadBitmapByString({ "resources/score/unlight_star.bmp","resources/score/light_star.bmp" }, RGB(255, 255, 255));
+			score_star_2.SetTopLeft(point[61].GetLeft(), point[61].GetTop() - 5);
+			score_star_2.SetFrameIndexOfBitmap(0);
+			score_star_3.LoadBitmapByString({ "resources/score/unlight_star.bmp","resources/score/light_star.bmp" }, RGB(255, 255, 255));
+			score_star_3.SetTopLeft(point[95].GetLeft(), point[95].GetTop() - 5);
+			score_star_3.SetFrameIndexOfBitmap(0);
+			Setting.LoadBitmapByString({ "resources/set.bmp" }, RGB(255, 255, 255));
+			Setting.SetTopLeft(0, 0);
+
+		}
+		void map_show(int score) {
+			Game_background.ShowBitmap();
+			score_board.ShowBitmap();
+
+			int goal = 1000;
+			int percentage = (score * 100 / goal);
+			score_star.ShowBitmap();
+			score_star_2.ShowBitmap();
+			score_star_3.ShowBitmap();
+			score_star.SetFrameIndexOfBitmap(0);
+			score_star_2.SetFrameIndexOfBitmap(0);
+			score_star_3.SetFrameIndexOfBitmap(0);
+			for (int i = 1; i < percentage; i++) {
+				if (i == 100) {
+					break;
+				}
+				score_star.ShowBitmap();
+				score_star_2.ShowBitmap();
+				score_star_3.ShowBitmap();
+				point[i].ShowBitmap();
+				if (i >= 33) {
+					score_star.SetFrameIndexOfBitmap(1);
+				}
+
+				if (i >= 66) {
+					score_star_2.SetFrameIndexOfBitmap(1);
+				}
+
+				if (i >= 99) {
+					score_star_3.SetFrameIndexOfBitmap(1);
+				}
+
+			}
+
+		}
+
 		void start_ui_show() {
 			start_loading.ShowBitmap();
 		}
@@ -77,7 +132,13 @@ namespace game_framework {
 				rank[i].ShowBitmap();
 			}
 		}
-
+		void rankchoose_ui_unshow() {
+			rank_choose_map.UnshowBitmap();
+			rank_down_button.UnshowBitmap();
+			for (int i = 0; i < 20; i++) {
+				rank[i].UnshowBitmap();
+			}
+		}
 		void rankchoose_ui_2_show() {
 			rank_choose_map.ShowBitmap();
 			rank_up_button.ShowBitmap();
@@ -85,6 +146,19 @@ namespace game_framework {
 			for (int i = 10; i < 30; i++) {
 				rank[i].ShowBitmap();
 			}
+		}
+		void Point() {
+			for (int i = 0; i < 100; i++) {
+				point[i].LoadBitmapByString({ "resources/score/blue-1.bmp" });
+			}
+			point[0].SetTopLeft(228, 20);
+			for (int i = 1; i < 100; i++) {
+				point[i].SetTopLeft(point[i - 1].GetLeft() + point[i - 1].GetWidth(), point[i - 1].GetTop());
+			}
+		}
+
+		void Point_Show(int score) {
+
 		}
 
 		bool IS_PLAY_BUTTON(CPoint point) {
@@ -104,19 +178,15 @@ namespace game_framework {
 			int height = rank_up_button.GetHeight();
 			return (x + width > point.x && point.x > x) && (y + height > point.y && point.y > y);
 		}
-		void RUN() {
-			Setting.LoadBitmapByString({ "resources/set.bmp" }, RGB(255, 255, 255));
-			Setting.SetTopLeft(715, 0);
 
-		}
-		
+
 		void RUN2() {
 			board.LoadBitmapByString({ "resources/score/board.bmp" }, RGB(255, 255, 255));
 			board.SetTopLeft(125, 150);
 			Retry.LoadBitmapByString({ "resources/score/Retry.bmp" }, RGB(255, 255, 255));
-			Retry.SetTopLeft(200, 600);
+			Retry.SetTopLeft(board.GetLeft() + 50, board.GetTop() + board.GetHeight() - 200);
 			Home.LoadBitmapByString({ "resources/score/home.bmp" }, RGB(255, 255, 255));
-			Home.SetTopLeft(330, 550);
+			Home.SetTopLeft(Retry.GetLeft() + Retry.GetWidth(), Retry.GetTop());
 
 		}
 		void Win() {
@@ -125,7 +195,7 @@ namespace game_framework {
 			Win_Bird.LoadBitmapByString({ "resources/score/win_bird.bmp" }, RGB(255, 255, 255));
 			Win_Bird.SetTopLeft(0, 700);
 			Next.LoadBitmapByString({ "resources/score/next.bmp" }, RGB(255, 255, 255));
-			Next.SetTopLeft(400, 600);
+			Next.SetTopLeft(Home.GetLeft() + Home.GetWidth(), Home.GetTop());
 			Board_set();
 		}
 
@@ -145,20 +215,20 @@ namespace game_framework {
 		}
 
 		bool IS_HOME(CPoint point) {
-			
 			return Home.isClick_CMovingBitmap(Home, point);
 		}
 		void Board_set() {
 			board.LoadBitmapByString({ "resources/score/board.bmp" }, RGB(255, 255, 255));
 			board.SetTopLeft(125, 150);
+			Close.LoadBitmapByString({ "resources/score/close.bmp" }, RGB(255, 255, 255));
+			Close.SetTopLeft(board.GetLeft() + board.GetWidth() - 110, board.GetTop() + 80);
 			star.LoadBitmapByString({ "resources/score/0star.bmp","resources/score/1star.bmp","resources/score/2stars.bmp","resources/score/3stars.bmp" }, RGB(255, 255, 255));
-			star.SetTopLeft(100, 300);
+			star.SetTopLeft(board.GetLeft(), board.GetTop() + 200);
 			star.SetAnimation(1000, true);
-			//star.ToggleAnimation();
 			Retry.LoadBitmapByString({ "resources/score/Retry.bmp" }, RGB(255, 255, 255));
-			Retry.SetTopLeft(150, 600);
+			Retry.SetTopLeft(board.GetLeft() + 40, board.GetTop() + board.GetHeight() - 200);
 			Home.LoadBitmapByString({ "resources/score/home.bmp" }, RGB(255, 255, 255));
-			Home.SetTopLeft(330, 550);
+			Home.SetTopLeft(Retry.GetLeft() + Retry.GetWidth(), Retry.GetTop());
 		}
 		void win_ui_show(int x = 0) {
 			Win_background.ShowBitmap();
@@ -186,19 +256,17 @@ namespace game_framework {
 		}
 		void Setting_RUN_show() {
 			board.ShowBitmap();
+			Close.ShowBitmap();
 			Retry.ShowBitmap();
 			Home.ShowBitmap();
 		}
 		void Setting_RUN_Unshow() {
 			board.UnshowBitmap();
+			Close.UnshowBitmap();
 			Retry.UnshowBitmap();
 			Home.UnshowBitmap();
 		}
-		void Setting_RUN_unshow() {
-			board.UnshowBitmap();
-			Retry.UnshowBitmap();
-			Home.UnshowBitmap();
-		}
+
 		void Fail_ui_show() {
 			Fail_background.ShowBitmap();
 			board.ShowBitmap();
@@ -209,14 +277,14 @@ namespace game_framework {
 			Home.ShowBitmap();
 		}
 
-		bool IS_RANK_BUTTON_1(CPoint point) {
+		int IS_RANK_BUTTON_1(CPoint point) {
 			for (int i = 0; i < 20; i++) {
 				int x = rank[i].GetLeft();
 				int width = rank[i].GetWidth();
 				int y = rank[i].GetTop();
 				int height = rank[i].GetHeight();
 				if ((x + width > point.x && point.x > x) && (y + height > point.y && point.y > y)) {
-					return TRUE;
+					return i;
 				}
 				else {
 					continue;
@@ -224,14 +292,14 @@ namespace game_framework {
 			}
 			return FALSE;
 		}
-		bool IS_RANK_BUTTON_2(CPoint point) {
+		int IS_RANK_BUTTON_2(CPoint point) {
 			for (int i = 10; i < 30; i++) {
 				int x = rank[i].GetLeft();
 				int width = rank[i].GetWidth();
 				int y = rank[i].GetTop();
 				int height = rank[i].GetHeight();
 				if ((x + width > point.x && point.x > x) && (y + height > point.y && point.y > y)) {
-					return TRUE;
+					return i;
 				}
 				else {
 					continue;
@@ -240,7 +308,11 @@ namespace game_framework {
 			return FALSE;
 		}
 		bool IS_SETTING(CPoint point) {
-			return Setting.isClick_CMovingBitmap(Setting,point);
+			return Setting.isClick_CMovingBitmap(Setting, point);
+		}
+
+		bool IS_CLOSE(CPoint point) {
+			return Close.isClick_CMovingBitmap(Close, point);
 		}
 
 	private:
@@ -250,7 +322,13 @@ namespace game_framework {
 		CMovingBitmap rank_down_button;
 		CMovingBitmap rank_up_button;
 		CMovingBitmap rank[30];
+		CMovingBitmap point[100];
 		CMovingBitmap Win_Bird;
+		CMovingBitmap Game_background;
+		CMovingBitmap score_board;
+		CMovingBitmap score_star;
+		CMovingBitmap score_star_2;
+		CMovingBitmap score_star_3;
 		CMovingBitmap Win_background;
 		CMovingBitmap Fail_background;
 		CMovingBitmap Fail_Character;
@@ -260,5 +338,6 @@ namespace game_framework {
 		CMovingBitmap Next;
 		CMovingBitmap Home;
 		CMovingBitmap Setting;
+		CMovingBitmap Close;
 	};
 }

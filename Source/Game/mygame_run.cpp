@@ -43,8 +43,9 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
+	
 	MAP.Build_map(level);
-	UI.RUN();
+	UI.map_background();
 	UI.RUN2();
 	UI.Win();
 	UI.Board_set();
@@ -68,31 +69,45 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	mouse_candy_state = true;
 	candy_start = point;
 	
-	if (UI.IS_HOME(point) == true) {
-		GotoGameState(GAME_STATE_INIT);
-		MAP.step = 10;
-		MAP.score = 0;
-		MAP.Build_map(level);
-		phase_run = 1;
-	}
 	if (UI.IS_SETTING(point) == true) {
-		UI.RUN();
-		phase_run += 1;
-		phase_rank += 1;
+		if ((phase_run == 1) && (phase_rank == 1)) {
+			//UI.RUN();
+			phase_run += 1;
+			phase_rank += 1;
+		}
+		else if ((phase_run == 2) && (phase_rank == 2)) {
+			phase_run -= 1;
+			phase_rank -= 1;
+		}
 	}
-	
-	/*
-	if (UI.IS_RETRY(point) == true) {
-		MAP.step = 10;
-		MAP.score = 0;
-		MAP.Build_map();
-		phase_run -= 1;
-	}*/
+	if (((phase_run == 2) && (phase_rank == 2)) || ((phase_run == 3) && (phase_rank == 3))) {
+		if (UI.IS_HOME(point) == true) {
+			GotoGameState(GAME_STATE_INIT);
+			MAP.step = 10;
+			MAP.score = 0;
+			MAP.Build_map(level);
+			phase_run = 1;
+			phase_rank = 1;
+		}
+
+		if (UI.IS_RETRY(point) == true) {
+			MAP.step = 10;
+			MAP.score = 0;
+			MAP.Build_map(level);
+			phase_run = 1;
+			phase_rank = 1;
+		}
+		if (UI.IS_CLOSE(point) == true) {
+			phase_run -= 1;
+			phase_rank -= 1;
+		}
+	}
 }
   
 
 void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 {
+	
 	mouse_candy_state = false;
 
 	if (num == 1 && mouse_candy_state ==false) {
@@ -184,9 +199,16 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 
 void CGameStateRun::OnShow()
 {
+	UI.map_show(MAP.score);
 	MAP.Show_map(level);
 	UI.Setting_Show();
 	if (MAP.step == 0) {
+		phase_run = 3;
+		phase_rank = 3;
+	}
+
+
+	if ((phase_run == 3) && (phase_rank == 3)) {
 		if (MAP.score < 300) {
 			UI.Fail_ui_show();
 		}
@@ -200,17 +222,17 @@ void CGameStateRun::OnShow()
 			UI.win_ui_show(3);
 		}
 	}
-	else {
-		//Setting_UnShow()0
-	}
+
 
 	if ((phase_run == 2) && (phase_rank == 2)) {
 		UI.Setting_RUN_show();
 		//GotoGameState(GAME_STATE_INIT);
 		//phase_run = 1;
 	}
+
 	else {
 		UI.Setting_RUN_Unshow();
 	}
-	
+	MAP.SCORE();
+	MAP.STEP();
 }
