@@ -65,7 +65,8 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 {
-	
+
+	canMove = true;
 	mouse_candy_state = true;
 	candy_start = point;
 	
@@ -102,6 +103,14 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 			phase_run -= 1;
 			phase_rank -= 1;
 		}
+		if (UI.IS_NEXT(point) == true) {
+			levelrank::value += 1;
+			MAP.step = 10;
+			MAP.score = 0;
+			MAP.Build_map(level);
+			phase_run = 1;
+			phase_rank = 1;
+		}
 	}
 }
   
@@ -111,7 +120,7 @@ void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 	
 	mouse_candy_state = false;
 
-	if (num == 1 && mouse_candy_state ==false) {
+	if (num == 1 && mouse_candy_state ==false  && canMove == true) {
 		num = 0;
 		int change = 0;
 		for (int i = 0; i < 10; i++) {
@@ -149,8 +158,7 @@ void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 		}
 		
 	}
-	
-	
+
 }
 
 void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -171,12 +179,20 @@ void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 			}
 		}
 	}
-	
+
+	if (MAP.maplevel.mapLevel[levelrank::value][clickX][clickY] == 1 && MAP.blocklevel.blockLevel[levelrank::value][clickX][clickY] == 1) {
+		canMove = false;
+		return;
+	}
+
 	if (mouse_candy_state == true && num==1) {
 		if (MAP.candy[clickX][clickY].isClick_CMovingBitmap(MAP.candy[clickX][clickY], candy_start)) {
 			MAP.candy[clickX][clickY].SetTopLeft(point.x - MAP.candy[clickX][clickY].GetWidth() / 2, point.y - MAP.candy[clickX][clickY].GetHeight() / 2);
 			candy_start = point;
 		}
+	}
+	else {
+		return;
 	}
 }
 
@@ -225,9 +241,7 @@ void CGameStateRun::OnShow()
 		//phase_run = 1;
 	}
 
-	else {
-		UI.Setting_RUN_Unshow();
-	}
+
 	MAP.SCORE();
 	MAP.STEP();
 }

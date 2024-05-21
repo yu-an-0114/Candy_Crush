@@ -3,6 +3,9 @@
 //#define MAP_H
 #include "../Library/gameutil.h"
 #include "../Library/gamecore.h"
+#include "blocklevel.h"
+
+#include "MapLevel.h"
 #include <list>
 #include <vector>
 #include <map>
@@ -12,8 +15,8 @@
 #include <iostream>
 #include <stdio.h>
 #include <cmath>
-#include "MapLevel.h"
-//
+
+
 using namespace std;
 
 namespace game_framework {
@@ -35,6 +38,9 @@ namespace game_framework {
 					
 					candy[i][j].SetFrameIndexOfBitmap(RandNum);
 					candy[i][j].SetTopLeft(map[i][j].GetLeft() + (unitMap.GetWidth() - candy[i][j].GetWidth()) / 2, map[i][j].GetTop() + (unitMap.GetHeight() - candy[i][j].GetHeight()) / 2);
+
+					block[i][j].LoadBitmapByString({ "resources/block/X_block.bmp" });
+					block[i][j].SetTopLeft(map[i][j].GetLeft() , map[i][j].GetTop() );
 				}
 			}
 		}
@@ -46,6 +52,7 @@ namespace game_framework {
 						continue;
 					}
 					map[i][j].ShowBitmap();
+
 				}
 			}
 			
@@ -55,7 +62,14 @@ namespace game_framework {
 						continue;
 					}
 					candy[i][j].ShowBitmap();
+
+					if (blocklevel.blockLevel[level][i][j] == 0) {
+						continue;
+					}
+
+					block[i][j].ShowBitmap();
 				}
+
 			}
 		}
 
@@ -553,12 +567,13 @@ namespace game_framework {
 		
 		CMovingBitmap candy[10][10];
 		CMovingBitmap map[10][10];
+		CMovingBitmap block[10][10];
 		CMovingBitmap unitMap;
 		
 		int score = 0;
 		int step = 10;
 		MapLevel maplevel;
-		
+		BlockLevel blocklevel;
 	private:
 		
 		
