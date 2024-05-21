@@ -14,16 +14,16 @@ namespace game_framework {
 	public:
 
 		void START_UI() {
-			start_loading.LoadBitmapByString({ "resources/Start.bmp","resources/Start_loading.bmp","resources/Start_UI.bmp" }, RGB(255, 255, 255));
+			start_loading.LoadBitmapByString({ "resources/UI/Start.bmp","resources/UI/Start_loading.bmp","resources/UI/Start_UI.bmp" }, RGB(255, 255, 255));
 			start_loading.SetTopLeft(0, 0);
 			start_loading.SetAnimation(1000, true);
 			start_loading.ToggleAnimation();
 		}
 		void Rank_choose_UI() {
 
-			rank_choose_map.LoadBitmapByString({ "resources/map_level2.bmp" });
+			rank_choose_map.LoadBitmapByString({ "resources/UI/map_level2.bmp" });
 			rank_choose_map.SetTopLeft(0, -30);
-			rank_down_button.LoadBitmapByString({ "resources/arrow.bmp" }, RGB(255, 255, 255));
+			rank_down_button.LoadBitmapByString({ "resources/UI/arrow.bmp" }, RGB(255, 255, 255));
 			rank_down_button.SetTopLeft(275, 875);
 
 			for (int i = 0; i < 30; i++) {
@@ -50,7 +50,7 @@ namespace game_framework {
 
 		void Rank_choose_UI_2() {
 			rank_choose_map.SetTopLeft(0, -600);
-			rank_up_button.LoadBitmapByString({ "resources/up.bmp" }, RGB(255, 255, 255));
+			rank_up_button.LoadBitmapByString({ "resources/UI/up.bmp" }, RGB(255, 255, 255));
 			rank_up_button.SetTopLeft(300, 0);
 			for (int i = 10; i < 30; i++) {
 				if (i < 15) {
@@ -67,30 +67,30 @@ namespace game_framework {
 				}
 			}
 		}
-		void map_background() {
+		void map_background(int *place) {
 			Game_background.LoadBitmapByString({ "resources/score/game_background.bmp" });
 			Game_background.SetTopLeft(0, -30);
 			score_board.LoadBitmapByString({ "resources/score/score_board2.bmp" }, RGB(255, 255, 255));
 			score_board.SetTopLeft(-20, 0);
 			Point();
 			score_star.LoadBitmapByString({ "resources/score/unlight_star.bmp","resources/score/light_star.bmp" }, RGB(255, 255, 255));
-			score_star.SetTopLeft(point[28].GetLeft(), point[28].GetTop() - 5);
+			score_star.SetTopLeft(point[place[0]].GetLeft(), point[28].GetTop() - 5);
 			score_star.SetFrameIndexOfBitmap(0);
 			score_star_2.LoadBitmapByString({ "resources/score/unlight_star.bmp","resources/score/light_star.bmp" }, RGB(255, 255, 255));
-			score_star_2.SetTopLeft(point[61].GetLeft(), point[61].GetTop() - 5);
+			score_star_2.SetTopLeft(point[place[1]].GetLeft(), point[61].GetTop() - 5);
 			score_star_2.SetFrameIndexOfBitmap(0);
 			score_star_3.LoadBitmapByString({ "resources/score/unlight_star.bmp","resources/score/light_star.bmp" }, RGB(255, 255, 255));
 			score_star_3.SetTopLeft(point[95].GetLeft(), point[95].GetTop() - 5);
 			score_star_3.SetFrameIndexOfBitmap(0);
-			Setting.LoadBitmapByString({ "resources/set.bmp" }, RGB(255, 255, 255));
+			Setting.LoadBitmapByString({ "resources/UI/set.bmp" }, RGB(255, 255, 255));
 			Setting.SetTopLeft(0, 0);
 
 		}
-		void map_show(int score) {
+		void map_show(int score, int *place, int goal = 1000) {
 			Game_background.ShowBitmap();
 			score_board.ShowBitmap();
 
-			int goal = 1000;
+			goal = 500;
 			int percentage = (score * 100 / goal);
 			score_star.ShowBitmap();
 			score_star_2.ShowBitmap();
@@ -99,18 +99,20 @@ namespace game_framework {
 			score_star_2.SetFrameIndexOfBitmap(0);
 			score_star_3.SetFrameIndexOfBitmap(0);
 			for (int i = 1; i < percentage; i++) {
-				if (i == 100) {
+
+				if (i == 101) {
 					break;
 				}
+
 				score_star.ShowBitmap();
 				score_star_2.ShowBitmap();
 				score_star_3.ShowBitmap();
 				point[i].ShowBitmap();
-				if (i >= 33) {
+				if (i >= place[0] + 3) {
 					score_star.SetFrameIndexOfBitmap(1);
 				}
 
-				if (i >= 66) {
+				if (i >= place[1] + 3) {
 					score_star_2.SetFrameIndexOfBitmap(1);
 				}
 
@@ -230,6 +232,7 @@ namespace game_framework {
 			Home.LoadBitmapByString({ "resources/score/home.bmp" }, RGB(255, 255, 255));
 			Home.SetTopLeft(Retry.GetLeft() + Retry.GetWidth(), Retry.GetTop());
 		}
+
 		void win_ui_show(int x = 0) {
 			Win_background.ShowBitmap();
 			board.ShowBitmap();
@@ -248,6 +251,7 @@ namespace game_framework {
 			Retry.ShowBitmap();
 			Home.ShowBitmap();
 		}
+
 		void Setting_Show() {
 			Setting.ShowBitmap();
 		}
@@ -290,7 +294,7 @@ namespace game_framework {
 					continue;
 				}
 			}
-			return FALSE;
+			return -1;
 		}
 		int IS_RANK_BUTTON_2(CPoint point) {
 			for (int i = 10; i < 30; i++) {
@@ -305,7 +309,7 @@ namespace game_framework {
 					continue;
 				}
 			}
-			return FALSE;
+			return -1;
 		}
 		bool IS_SETTING(CPoint point) {
 			return Setting.isClick_CMovingBitmap(Setting, point);

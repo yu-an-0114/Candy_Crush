@@ -43,6 +43,11 @@ namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 	// Constants
 	/////////////////////////////////////////////////////////////////////////////
+	class levelrank
+	{
+	public:
+		static int value;
+	};
 
 	enum AUDIO_ID {				// 定義各種音效的編號
 		AUDIO_DING,				// 0
@@ -63,6 +68,8 @@ namespace game_framework {
 		void OnKeyUp(UINT, UINT, UINT); 				// 處理鍵盤Up的動作
 		void OnLButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
 		int level = 0;
+		//levelrank init;
+
 	protected:
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
@@ -103,6 +110,10 @@ namespace game_framework {
 		int changeX = 0;
 		int changeY = 0;
 		int level = 0;
+		int A[2] = { 20, 60 };
+		//levelrank run;
+		//static int levelrank;
+
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
