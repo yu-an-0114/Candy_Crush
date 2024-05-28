@@ -261,6 +261,7 @@
     <ClInclude Include="Source\Game\config.h" />
     <ClInclude Include="Source\Game\MapLevel.h" />
     <ClInclude Include="Source\Game\mygame.h" />
+    <ClInclude Include="Source\Game\obstacle.h" />
     <ClInclude Include="Source\Game\UI.h" />
     <ClInclude Include="Source\Library\audio.h" />
     <ClInclude Include="Source\Library\gamecore.h" />

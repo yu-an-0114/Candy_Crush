@@ -85,8 +85,8 @@ namespace game_framework {
 		//add
 		bool isClick_CMovingBitmap(CMovingBitmap obj, CPoint point) {
 			return (obj.GetLeft() <= point.x && obj.GetLeft() + obj.GetWidth() >= point.x) && (obj.GetTop() <= point.y && obj.GetTop() + obj.GetHeight() >= point.y);
-			//return   (obj.GetLeft() <= point.x);
 		}
+		
 		
 		/* The function for loading the bitmap. */
 		void  LoadBitmap(int, COLORREF = CLR_INVALID);		// 載入圖，指定圖的編號(resource)及透明色
