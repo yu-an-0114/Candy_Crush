@@ -7,12 +7,14 @@
 #include <map>
 #include <cstdlib>
 #include <ctime>
+//#include "levelcheck.h"
 using namespace std;
 
 namespace game_framework {
 	class UI {
 	public:
-
+		//LevelCheck lebel;
+		
 		void START_UI() {
 			start_loading.LoadBitmapByString({ "resources/UI/Start.bmp","resources/UI/Start_loading.bmp","resources/UI/Start_UI.bmp" }, RGB(255, 255, 255));
 			start_loading.SetTopLeft(0, 0);
@@ -46,7 +48,54 @@ namespace game_framework {
 			}
 
 		}
+		void GoalSetting() {
+			goal1.LoadBitmapByString({ "resources/candy/white.bmp" ,"resources/candy/yellow-candy.bmp",
+				"resources/candy/blue-candy.bmp" ,"resources/candy/red-candy.bmp" ,"resources/candy/purple-candy.bmp" ,
+				"resources/candy/green-candy.bmp" ,"resources/candy/orange-candy.bmp" ,"resources/candy/yellow-candy-row.bmp" ,
+				"resources/candy/yellow-candy-col.bmp" ,"resources/candy/yellow-candy-pack.bmp","resources/candy/blue-candy-row.bmp" ,
+				"resources/candy/blue-candy-col.bmp" ,"resources/candy/blue-candy-pack.bmp","resources/candy/red-candy-row.bmp" ,
+				"resources/candy/red-candy-col.bmp","resources/candy/red-candy-pack.bmp","resources/candy/purple-candy-row.bmp" ,
+				"resources/candy/purple-candy-col.bmp","resources/candy/purple-candy-pack.bmp","resources/candy/green-candy-row.bmp" ,
+				"resources/candy/green-candy-col.bmp" ,"resources/candy/green-candy-pack.bmp","resources/candy/orange-candy-row.bmp" ,
+				"resources/candy/orange-candy-col.bmp","resources/candy/orange-candy-pack.bmp" ,"resources/candy/color-ball.bmp" }, RGB(255, 255, 255));
+			goal1.SetTopLeft(245, 75);
+			goal1.SetFrameIndexOfBitmap(helper.GetGoalIndex(0));
+			goal2.LoadBitmapByString({ "resources/candy/white.bmp" ,"resources/candy/yellow-candy.bmp",
+				"resources/candy/blue-candy.bmp" ,"resources/candy/red-candy.bmp" ,"resources/candy/purple-candy.bmp" ,
+				"resources/candy/green-candy.bmp" ,"resources/candy/orange-candy.bmp" ,"resources/candy/yellow-candy-row.bmp" ,
+				"resources/candy/yellow-candy-col.bmp" ,"resources/candy/yellow-candy-pack.bmp","resources/candy/blue-candy-row.bmp" ,
+				"resources/candy/blue-candy-col.bmp" ,"resources/candy/blue-candy-pack.bmp","resources/candy/red-candy-row.bmp" ,
+				"resources/candy/red-candy-col.bmp","resources/candy/red-candy-pack.bmp","resources/candy/purple-candy-row.bmp" ,
+				"resources/candy/purple-candy-col.bmp","resources/candy/purple-candy-pack.bmp","resources/candy/green-candy-row.bmp" ,
+				"resources/candy/green-candy-col.bmp" ,"resources/candy/green-candy-pack.bmp","resources/candy/orange-candy-row.bmp" ,
+				"resources/candy/orange-candy-col.bmp","resources/candy/orange-candy-pack.bmp" ,"resources/candy/color-ball.bmp" }, RGB(255, 255, 255));
+			goal2.SetTopLeft(goal1.GetLeft()+ goal1.GetWidth()+ 35, goal1.GetTop());
+			goal2.SetFrameIndexOfBitmap(helper.GetGoalIndex(1));
+			goal3.LoadBitmapByString({ "resources/candy/white.bmp" ,"resources/candy/yellow-candy.bmp",
+				"resources/candy/blue-candy.bmp" ,"resources/candy/red-candy.bmp" ,"resources/candy/purple-candy.bmp" ,
+				"resources/candy/green-candy.bmp" ,"resources/candy/orange-candy.bmp" ,"resources/candy/yellow-candy-row.bmp" ,
+				"resources/candy/yellow-candy-col.bmp" ,"resources/candy/yellow-candy-pack.bmp","resources/candy/blue-candy-row.bmp" ,
+				"resources/candy/blue-candy-col.bmp" ,"resources/candy/blue-candy-pack.bmp","resources/candy/red-candy-row.bmp" ,
+				"resources/candy/red-candy-col.bmp","resources/candy/red-candy-pack.bmp","resources/candy/purple-candy-row.bmp" ,
+				"resources/candy/purple-candy-col.bmp","resources/candy/purple-candy-pack.bmp","resources/candy/green-candy-row.bmp" ,
+				"resources/candy/green-candy-col.bmp" ,"resources/candy/green-candy-pack.bmp","resources/candy/orange-candy-row.bmp" ,
+				"resources/candy/orange-candy-col.bmp","resources/candy/orange-candy-pack.bmp" ,"resources/candy/color-ball.bmp" }, RGB(255, 255, 255));
+			goal3.SetTopLeft(goal2.GetLeft() + goal2.GetWidth() + 35, goal1.GetTop());
+			goal3.SetFrameIndexOfBitmap(helper.GetGoalIndex(2));
 
+			helper.SetGoal(1);
+			helper.SetGoal(2);
+			helper.SetGoal(3);
+
+
+		}
+		void GoalShow() {
+			goal1.ShowBitmap();
+			goal2.ShowBitmap();
+			goal3.ShowBitmap();
+			helper.GOAL(1, goal1.GetLeft() + goal1.GetWidth(), goal1.GetTop());
+			helper.TEST(helper.goal[0], helper.goal[1], helper.goal[2]);
+		}
 
 		void Rank_choose_UI_2() {
 			rank_choose_map.SetTopLeft(0, -600);
@@ -319,6 +368,13 @@ namespace game_framework {
 			return Close.isClick_CMovingBitmap(Close, point);
 		}
 
+		int goal1Num;
+		int goal2Num;
+		int goal3Num;
+		CMovingBitmap goal1;
+		CMovingBitmap goal2;
+		CMovingBitmap goal3;
+		LevelCheck helper;
 	private:
 		CMovingBitmap start_loading;
 		CMovingBitmap start_ui;

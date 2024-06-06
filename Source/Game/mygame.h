@@ -39,15 +39,13 @@
 */
 #include "../Game/map.h"
 #include "../Game/UI.h"
+
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 	// Constants
 	/////////////////////////////////////////////////////////////////////////////
-	class levelrank
-	{
-	public:
-		static int value;
-	};
+
+
 
 	enum AUDIO_ID {				// 定義各種音效的編號
 		AUDIO_DING,				// 0
@@ -62,6 +60,7 @@ namespace game_framework {
 
 	class CGameStateInit : public CGameState {
 	public:
+
 		CGameStateInit(CGame *g);
 		void OnInit();  								// 遊戲的初值及圖形設定
 		void OnBeginState();							// 設定每次重玩所需的變數
@@ -69,7 +68,7 @@ namespace game_framework {
 		void OnLButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
 
 		//levelrank init;
-
+		LevelCheck helper;
 	protected:
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
@@ -103,6 +102,9 @@ namespace game_framework {
 		void OnRButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
 		bool mouse_candy_state=false;
 		bool canMove = true;
+		bool showEffect = false;
+
+		CSpecialEffect time;
 		CPoint candy_start;
 		CPoint mouse_point;
 		int num = 0;
@@ -112,9 +114,8 @@ namespace game_framework {
 		int changeY = 0;
 		int level = 0;
 		int A[2] = { 20, 60 };
-		//levelrank run;
-		//static int levelrank;
 
+		LevelCheck helper;
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
@@ -122,14 +123,12 @@ namespace game_framework {
 		Map MAP;
 		UI WinUI;
 		UI FailUI;
-		UI Setting;
 		UI UI;
 		int phase_run = 1;
 		int phase_rank = 1;
 		
 		CMovingBitmap down;
-		//CMovingBitmap map_level;
-		//CMovingBitmap map_arrow;
+
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

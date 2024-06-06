@@ -10,6 +10,7 @@
 #include "mygame.h"
 
 
+
 using namespace game_framework;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -34,11 +35,13 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	MAP.Candy_Element( clickX, clickY, changeX, changeY, level);
 	MAP.candy_down(level);
 	
-	if (MAP.step == 10) {
-		MAP.score = 0;
+	if (helper.IsnewGame(LevelCheck::rank, LevelCheck::step)) {
+		LevelCheck::score = 0;
 	}
-	MAP.SCORE();
-	MAP.STEP();
+
+	helper.SCORE();
+	helper.STEP();
+	time.Delay(50);
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
@@ -50,6 +53,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	UI.Win();
 	UI.Board_set();
 	UI.Fail();
+	UI.GoalSetting();
+	//UI.GoalInit();
 
 }
 
@@ -65,7 +70,7 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 {
-
+	showEffect = false;
 	canMove = true;
 	mouse_candy_state = true;
 	candy_start = point;
@@ -83,19 +88,21 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	}
 	if (((phase_run == 2) && (phase_rank == 2)) || ((phase_run == 3) && (phase_rank == 3))) {
 		if (UI.IS_HOME(point) == true) {
-			levelrank::value = -1;
+			LevelCheck::rank = -1;
 			GotoGameState(GAME_STATE_INIT);
-			MAP.step = 10;
-			MAP.score = 0;
+			
 			MAP.Build_map(level);
+			LevelCheck::step = helper.stepInit(LevelCheck::rank);
+			LevelCheck::score = 0;
 			phase_run = 1;
 			phase_rank = 1;
 		}
 
 		if (UI.IS_RETRY(point) == true) {
-			MAP.step = 10;
-			MAP.score = 0;
+			
 			MAP.Build_map(level);
+			LevelCheck::step = helper.stepInit(LevelCheck::rank);
+			LevelCheck::score = 0;
 			phase_run = 1;
 			phase_rank = 1;
 		}
@@ -104,10 +111,13 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 			phase_rank -= 1;
 		}
 		if (UI.IS_NEXT(point) == true) {
-			levelrank::value += 1;
-			MAP.step = 10;
-			MAP.score = 0;
+			LevelCheck::rank += 1;
+			
 			MAP.Build_map(level);
+
+			LevelCheck::step = helper.stepInit(LevelCheck::rank);
+
+			LevelCheck::score = 0;
 			phase_run = 1;
 			phase_rank = 1;
 		}
@@ -117,9 +127,9 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 
 void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 {
-	
+	showEffect = true; 
 	mouse_candy_state = false;
-
+	
 	if (num == 1 && mouse_candy_state ==false  && canMove == true) {
 		num = 0;
 		int change = 0;
@@ -143,7 +153,7 @@ void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 						changeY = clickY;
 						clickX = i;
 						clickY = j;	
-						MAP.step = MAP.step - 1;
+						LevelCheck::step = helper.stepMove(LevelCheck::step);
 						
 						break;
 					}
@@ -180,11 +190,13 @@ void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 		}
 	}
 
-	if (MAP.maplevel.mapLevel[levelrank::value][clickX][clickY] == 1 && MAP.blocklevel.blockLevel[levelrank::value][clickX][clickY] == 1) {
+	if (MAP.maplevel.mapLevel[LevelCheck::rank][clickX][clickY] == 1 && MAP.blocklevel.blockLevel[LevelCheck::rank][clickX][clickY] == 1) {
 		canMove = false;
 		return;
 	}
 
+	
+	
 	if (mouse_candy_state == true && num==1) {
 		if (MAP.candy[clickX][clickY].isClick_CMovingBitmap(MAP.candy[clickX][clickY], candy_start)) {
 			MAP.candy[clickX][clickY].SetTopLeft(point.x - MAP.candy[clickX][clickY].GetWidth() / 2, point.y - MAP.candy[clickX][clickY].GetHeight() / 2);
@@ -207,33 +219,36 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 
 void CGameStateRun::OnShow()
 {
-	
-	UI.map_show(MAP.score, A);
-	MAP.Show_map(levelrank::value);
+
+	UI.map_show(LevelCheck::score, A);
+	MAP.Show_map(LevelCheck::rank);
 	UI.Setting_Show();
-	if (MAP.step == 0) {
+	UI.GoalShow();
+	if (LevelCheck::step == 0) {
 		phase_run = 3;
 		phase_rank = 3;
 	}
-
-
-
+	
 
 	if ((phase_run == 3) && (phase_rank == 3)) {
-		if (MAP.score < 300) {
+		if (LevelCheck::score < 300) {
 			UI.Fail_ui_show();
 		}
-		else if (MAP.score < 500) {
+		else if (LevelCheck::score < 500) {
 			UI.win_ui_show(1);
 		}
-		else if (MAP.score < 1000) {
+		else if (LevelCheck::score < 1000) {
 			UI.win_ui_show(2);
 		}
 		else {
 			UI.win_ui_show(3);
 		}
 	}
-
+	else {
+		if (showEffect) {
+			MAP.Show_effect(LevelCheck::rank);
+		}
+	}
 
 	if ((phase_run == 2) && (phase_rank == 2)) {
 		UI.Setting_RUN_show();
@@ -241,7 +256,7 @@ void CGameStateRun::OnShow()
 		//phase_run = 1;
 	}
 
-
-	MAP.SCORE();
-	MAP.STEP();
+	//helper.RANK();
+	helper.SCORE();
+	helper.STEP();
 }

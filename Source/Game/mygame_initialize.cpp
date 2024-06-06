@@ -5,6 +5,7 @@
 #include "../Library/audio.h"
 #include "../Library/gameutil.h"
 #include "../Library/gamecore.h"
+
 #include "mygame.h"
 
 
@@ -13,14 +14,21 @@ using namespace game_framework;
 // 這個class為遊戲的遊戲開頭畫面物件
 /////////////////////////////////////////////////////////////////////////////
 
-int levelrank::value = -1;
+int LevelCheck::rank = -1;
+int LevelCheck::step = 0;
+int LevelCheck::score = 0;
+
 
 CGameStateInit::CGameStateInit(CGame *g) : CGameState(g)
 {
+
 }
+
+
 
 void CGameStateInit::OnInit()
 {
+
 	//
 	// 當圖很多時，OnInit載入所有的圖要花很多時間。為避免玩遊戲的人
 	//     等的不耐煩，遊戲會出現「Loading ...」，顯示Loading的進度。
@@ -38,8 +46,9 @@ void CGameStateInit::OnInit()
 
 void CGameStateInit::OnBeginState()
 {
-	StartUI.START_UI();
 	
+	StartUI.START_UI();
+
 	RankChooseUI.Rank_choose_UI();
 	if ((phase_start == 2) && (phase_rank == 2)) {
 		RankChooseUI.Rank_choose_UI_2();
@@ -63,8 +72,8 @@ void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 			RankChooseUI.Rank_choose_UI_2();
 			phase_rank += 1;
 		}
-		levelrank::value = RankChooseUI.IS_RANK_BUTTON_1(point);
-
+		LevelCheck::rank = RankChooseUI.IS_RANK_BUTTON_1(point);
+		
 	}
 	else if ((phase_start == 2) && (phase_rank == 2)) {
 		
@@ -72,10 +81,11 @@ void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 			RankChooseUI.Rank_choose_UI();
 			phase_rank -= 1;
 		}
-		levelrank::value = RankChooseUI.IS_RANK_BUTTON_2(point);
+		LevelCheck::rank = RankChooseUI.IS_RANK_BUTTON_2(point);
 
 	}
-	if (levelrank::value > -1) {
+	if (helper.rank > -1) {
+		helper.step = helper.stepInit(helper.rank);
 		GotoGameState(GAME_STATE_RUN);
 	}
 
