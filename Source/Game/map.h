@@ -16,8 +16,13 @@
 #include <iostream>
 #include <stdio.h>
 #include <cmath>
+<<<<<<< HEAD
 
 
+=======
+#include "MapLevel.h"
+//
+>>>>>>> 5d04bc4d14e11385b18eee98749bbf73d2ed1a99
 using namespace std;
 
 namespace game_framework {
