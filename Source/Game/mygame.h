@@ -40,14 +40,8 @@ namespace game_framework {
 		void OnMouseMove(UINT nFlags, CPoint point);	// 處理滑鼠的動作 
 		void OnRButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
 		void OnRButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
-		bool mouse_candy_state = false;
-		CPoint candy_start;
-		CPoint mouse_point;
-		int num = 0;
-		int clickX = 0;
-		int clickY = 0;
-		int changeX = 0;
-		int changeY = 0;
+
+
 		int level = -1;
 		GameSystem game_system;
 		

@@ -254,6 +254,7 @@
     <ClInclude Include="Source\Game\Candy.h" />
     <ClInclude Include="Source\Game\CandyLattice.h" />
     <ClInclude Include="Source\Game\Cherry.h" />
+    <ClInclude Include="Source\Game\GameSystem.h" />
     <ClInclude Include="Source\Game\map.h" />
     <ClInclude Include="Source\Core\Game.h" />
     <ClInclude Include="Source\Core\gameDoc.h" />
