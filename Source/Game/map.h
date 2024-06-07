@@ -43,7 +43,6 @@ namespace game_framework {
 			}	
 		}
 		void show_map(int level) {
-			
 			for (int i = 0; i < 10; i++) {
 				for (int j = 0; j < 10; j++) {
 					if (map_level[level][i][j] == 0) {
@@ -82,8 +81,6 @@ namespace game_framework {
 					CTextDraw::Print(pDC,100+ 15*j, 15*i, to_string(map_level[level][i][j]));
 				}
 			}
-			CTextDraw::Print(pDC, 300 , 15 , to_string(level));
-			CTextDraw::Print(pDC, 500, 15, to_string(test));
 			CDDraw::ReleaseBackCDC();
 		}
 		CandyLattice unit_candy_lattice;
@@ -92,6 +89,7 @@ namespace game_framework {
 		Cherry cherry[10][10];
 		CSpecialEffect time;
 		int test = 0;
+		
 	};
 }
 

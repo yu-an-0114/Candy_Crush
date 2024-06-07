@@ -89,7 +89,7 @@ namespace game_framework {
 				rank[i].ShowBitmap();
 			}
 		}
-		
+
 
 		void point_show(int score) {
 

@@ -251,7 +251,9 @@
     <ClCompile Include="Source\Library\gameutil.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Game\cherry.h" />
+    <ClInclude Include="Source\Game\Candy.h" />
+    <ClInclude Include="Source\Game\CandyLattice.h" />
+    <ClInclude Include="Source\Game\Cherry.h" />
     <ClInclude Include="Source\Game\map.h" />
     <ClInclude Include="Source\Core\Game.h" />
     <ClInclude Include="Source\Core\gameDoc.h" />
@@ -262,7 +264,8 @@
     <ClInclude Include="Source\Game\config.h" />
     <ClInclude Include="Source\Game\MapLevel.h" />
     <ClInclude Include="Source\Game\mygame.h" />
-    <ClInclude Include="Source\Game\obstacle.h" />
+    <ClInclude Include="Source\Game\Score.h" />
+    <ClInclude Include="Source\Game\Step.h" />
     <ClInclude Include="Source\Game\UI.h" />
     <ClInclude Include="Source\Library\audio.h" />
     <ClInclude Include="Source\Library\gamecore.h" />
