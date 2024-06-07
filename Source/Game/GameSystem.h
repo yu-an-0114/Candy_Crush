@@ -550,6 +550,7 @@ namespace game_framework {
 		int clickY = 0;
 		int changeX = 0;
 		int changeY = 0;
+		bool canMove = true;
 	};
 }
 

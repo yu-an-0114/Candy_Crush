@@ -41,9 +41,9 @@ namespace game_framework {
 		void OnRButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
 		void OnRButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
 
-
 		int level = -1;
 		GameSystem game_system;
+		
 		
 	protected:
 		void OnMove();									// 移動遊戲元素
