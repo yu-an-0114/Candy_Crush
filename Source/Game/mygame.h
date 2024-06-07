@@ -44,11 +44,6 @@ namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 	// Constants
 	/////////////////////////////////////////////////////////////////////////////
-	class levelrank
-	{
-	public:
-		static int value;
-	};
 
 
 
@@ -71,15 +66,9 @@ namespace game_framework {
 		void OnBeginState();							// 設定每次重玩所需的變數
 		void OnKeyUp(UINT, UINT, UINT); 				// 處理鍵盤Up的動作
 		void OnLButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
-<<<<<<< HEAD
 
 		//levelrank init;
 		LevelCheck helper;
-=======
-		int level = 0;
-		//levelrank init;
-
->>>>>>> 5d04bc4d14e11385b18eee98749bbf73d2ed1a99
 	protected:
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
@@ -125,14 +114,8 @@ namespace game_framework {
 		int changeY = 0;
 		int level = 0;
 		int A[2] = { 20, 60 };
-<<<<<<< HEAD
 
 		LevelCheck helper;
-=======
-		//levelrank run;
-		//static int levelrank;
-
->>>>>>> 5d04bc4d14e11385b18eee98749bbf73d2ed1a99
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面

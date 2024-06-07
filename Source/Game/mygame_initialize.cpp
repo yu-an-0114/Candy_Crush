@@ -14,14 +14,10 @@ using namespace game_framework;
 // 這個class為遊戲的遊戲開頭畫面物件
 /////////////////////////////////////////////////////////////////////////////
 
-<<<<<<< HEAD
 int LevelCheck::rank = -1;
 int LevelCheck::step = 0;
 int LevelCheck::score = 0;
 
-=======
-int levelrank::value = 0;
->>>>>>> 5d04bc4d14e11385b18eee98749bbf73d2ed1a99
 
 CGameStateInit::CGameStateInit(CGame *g) : CGameState(g)
 {
@@ -52,7 +48,7 @@ void CGameStateInit::OnBeginState()
 {
 	
 	StartUI.START_UI();
-	
+
 	RankChooseUI.Rank_choose_UI();
 	if ((phase_start == 2) && (phase_rank == 2)) {
 		RankChooseUI.Rank_choose_UI_2();
@@ -76,18 +72,8 @@ void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 			RankChooseUI.Rank_choose_UI_2();
 			phase_rank += 1;
 		}
-<<<<<<< HEAD
 		LevelCheck::rank = RankChooseUI.IS_RANK_BUTTON_1(point);
 		
-=======
-		levelrank::value = RankChooseUI.IS_RANK_BUTTON_1(point);
-
-		if (levelrank::value > -1) {
-
-			GotoGameState(GAME_STATE_RUN);
-		}
-
->>>>>>> 5d04bc4d14e11385b18eee98749bbf73d2ed1a99
 	}
 	else if ((phase_start == 2) && (phase_rank == 2)) {
 		
@@ -102,10 +88,6 @@ void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 		helper.step = helper.stepInit(helper.rank);
 		GotoGameState(GAME_STATE_RUN);
 	}
-<<<<<<< HEAD
-=======
-
->>>>>>> 5d04bc4d14e11385b18eee98749bbf73d2ed1a99
 
 }
 

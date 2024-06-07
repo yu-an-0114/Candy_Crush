@@ -48,7 +48,7 @@ namespace game_framework {
 			}
 
 		}
-		void GoalSetting() {
+		void GoalSetting(int level) {
 			goal1.LoadBitmapByString({ "resources/candy/white.bmp" ,"resources/candy/yellow-candy.bmp",
 				"resources/candy/blue-candy.bmp" ,"resources/candy/red-candy.bmp" ,"resources/candy/purple-candy.bmp" ,
 				"resources/candy/green-candy.bmp" ,"resources/candy/orange-candy.bmp" ,"resources/candy/yellow-candy-row.bmp" ,
@@ -59,7 +59,7 @@ namespace game_framework {
 				"resources/candy/green-candy-col.bmp" ,"resources/candy/green-candy-pack.bmp","resources/candy/orange-candy-row.bmp" ,
 				"resources/candy/orange-candy-col.bmp","resources/candy/orange-candy-pack.bmp" ,"resources/candy/color-ball.bmp" }, RGB(255, 255, 255));
 			goal1.SetTopLeft(245, 75);
-			goal1.SetFrameIndexOfBitmap(helper.GetGoalIndex(0));
+
 			goal2.LoadBitmapByString({ "resources/candy/white.bmp" ,"resources/candy/yellow-candy.bmp",
 				"resources/candy/blue-candy.bmp" ,"resources/candy/red-candy.bmp" ,"resources/candy/purple-candy.bmp" ,
 				"resources/candy/green-candy.bmp" ,"resources/candy/orange-candy.bmp" ,"resources/candy/yellow-candy-row.bmp" ,
@@ -70,7 +70,7 @@ namespace game_framework {
 				"resources/candy/green-candy-col.bmp" ,"resources/candy/green-candy-pack.bmp","resources/candy/orange-candy-row.bmp" ,
 				"resources/candy/orange-candy-col.bmp","resources/candy/orange-candy-pack.bmp" ,"resources/candy/color-ball.bmp" }, RGB(255, 255, 255));
 			goal2.SetTopLeft(goal1.GetLeft()+ goal1.GetWidth()+ 35, goal1.GetTop());
-			goal2.SetFrameIndexOfBitmap(helper.GetGoalIndex(1));
+			
 			goal3.LoadBitmapByString({ "resources/candy/white.bmp" ,"resources/candy/yellow-candy.bmp",
 				"resources/candy/blue-candy.bmp" ,"resources/candy/red-candy.bmp" ,"resources/candy/purple-candy.bmp" ,
 				"resources/candy/green-candy.bmp" ,"resources/candy/orange-candy.bmp" ,"resources/candy/yellow-candy-row.bmp" ,
@@ -81,7 +81,7 @@ namespace game_framework {
 				"resources/candy/green-candy-col.bmp" ,"resources/candy/green-candy-pack.bmp","resources/candy/orange-candy-row.bmp" ,
 				"resources/candy/orange-candy-col.bmp","resources/candy/orange-candy-pack.bmp" ,"resources/candy/color-ball.bmp" }, RGB(255, 255, 255));
 			goal3.SetTopLeft(goal2.GetLeft() + goal2.GetWidth() + 35, goal1.GetTop());
-			goal3.SetFrameIndexOfBitmap(helper.GetGoalIndex(2));
+			
 
 			helper.SetGoal(1);
 			helper.SetGoal(2);
@@ -89,12 +89,17 @@ namespace game_framework {
 
 
 		}
-		void GoalShow() {
+		void GoalShow(int level) {
+			goal1.SetFrameIndexOfBitmap(helper.rankgoal[level][0]);
 			goal1.ShowBitmap();
+
+			goal2.SetFrameIndexOfBitmap(helper.rankgoal[level][1]);
 			goal2.ShowBitmap();
+			goal3.SetFrameIndexOfBitmap(helper.rankgoal[level][2]);
 			goal3.ShowBitmap();
-			helper.GOAL(1, goal1.GetLeft() + goal1.GetWidth(), goal1.GetTop());
-			helper.TEST(helper.goal[0], helper.goal[1], helper.goal[2]);
+			//helper.GOAL(1, goal1.GetLeft() + goal1.GetWidth(), goal1.GetTop());
+			helper.RANK(level);
+			helper.TEST(helper.rankgoal[level][0], helper.rankgoal[level][1], helper.rankgoal[level][2]);
 		}
 
 		void Rank_choose_UI_2() {

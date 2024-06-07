@@ -37,6 +37,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	
 	if (helper.IsnewGame(LevelCheck::rank, LevelCheck::step)) {
 		LevelCheck::score = 0;
+		helper.SetGoal();
 	}
 
 	helper.SCORE();
@@ -53,11 +54,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	UI.Win();
 	UI.Board_set();
 	UI.Fail();
-<<<<<<< HEAD
-	UI.GoalSetting();
+	UI.GoalSetting(LevelCheck::rank);
 	//UI.GoalInit();
-=======
->>>>>>> 5d04bc4d14e11385b18eee98749bbf73d2ed1a99
 
 }
 
@@ -91,11 +89,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	}
 	if (((phase_run == 2) && (phase_rank == 2)) || ((phase_run == 3) && (phase_rank == 3))) {
 		if (UI.IS_HOME(point) == true) {
-<<<<<<< HEAD
 			LevelCheck::rank = -1;
-=======
-			levelrank::value = -1;
->>>>>>> 5d04bc4d14e11385b18eee98749bbf73d2ed1a99
 			GotoGameState(GAME_STATE_INIT);
 			
 			MAP.Build_map(level);
@@ -119,7 +113,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 		}
 		if (UI.IS_NEXT(point) == true) {
 			LevelCheck::rank += 1;
-			
+			helper.SetGoal();
 			MAP.Build_map(level);
 
 			LevelCheck::step = helper.stepInit(LevelCheck::rank);
@@ -173,14 +167,9 @@ void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 				}
 			}
 		}
-		
+		helper.SetGoal(0, 1);
 	}
-<<<<<<< HEAD
 
-=======
-	
-	
->>>>>>> 5d04bc4d14e11385b18eee98749bbf73d2ed1a99
 }
 
 void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -231,24 +220,16 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 
 void CGameStateRun::OnShow()
 {
-<<<<<<< HEAD
 
 	UI.map_show(LevelCheck::score, A);
 	MAP.Show_map(LevelCheck::rank);
-=======
-	
-	UI.map_show(MAP.score, A);
-	MAP.Show_map(levelrank::value);
->>>>>>> 5d04bc4d14e11385b18eee98749bbf73d2ed1a99
 	UI.Setting_Show();
-	UI.GoalShow();
+	UI.GoalShow(LevelCheck::rank);
 	if (LevelCheck::step == 0) {
 		phase_run = 3;
 		phase_rank = 3;
 	}
 	
-
-
 
 	if ((phase_run == 3) && (phase_rank == 3)) {
 		if (LevelCheck::score < 300) {
@@ -279,4 +260,7 @@ void CGameStateRun::OnShow()
 	//helper.RANK();
 	helper.SCORE();
 	helper.STEP();
+	helper.GOAL(0, 305, 65);
+	helper.GOAL(1, 405, 65);
+	helper.GOAL(2, 505, 65);
 }

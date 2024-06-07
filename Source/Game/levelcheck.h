@@ -23,14 +23,18 @@ namespace game_framework {
 							 10, 10, 10, 10, 10,
 							 10, 10, 10, 10, 10,
 							 10, 10, 10, 10, 10, };
-		int rankgoal[20][3] = { {1,2,3}, {2,3,4}, {3,4,5}, {0,0,0}, {0,0,0},
-								{0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0},
-								{0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0},
-								{0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, };
-		int goalnumber[20][3] = {{10,10,10}, {10,10,10}, {5,5,5}, {4,4,4}, {5,0,0},
-								 {6,0,0}, {7,0,0}, {8,0,0}, {9,9,0}, {9,9,9},
+		int rankgoal[20][3] = { {1,2,3}, {2,3,4}, {3,4,5}, {4,5,6}, {5,6,7},
+								{6,7,8}, {7,8,9}, {8,9,10}, {6,7,8}, {10,10,10},
+								{11,12,13}, {14,15,16}, {17,10,9}, {8,9,10}, {15,16,17},
+								{16,17,18}, {17,18,19}, {10,20,21}, {22,23,24}, {23,24,25}, };
+		int goalnumber[20][3] = {{10,10,10}, {10,10,10}, {5,5,5}, {4,4,4}, {5,5,5},
+								 {6,6,6}, {7,7,7}, {8,8,8}, {9,9,9}, {9,9,9},
 								 {10,10,10}, {11,11,11}, {12,12,12}, {13,13,13}, {14,14,14},
 								 {15,15,15}, {16,16,16}, {17,17,17}, {18,18,18}, {19,19,19} };
+		LevelCheck() {
+
+		}
+		
 		int stepInit(int level) {
 			return rankstep[level];
 		}
@@ -44,12 +48,12 @@ namespace game_framework {
 		}
 
 		void SetGoal(int index,int value) {
-			goal[index] = value;
+			goal[index] -= value;
 		}
 
 		void SetGoal() {
 			for (int i = 0; i < 3; i++) {
-				goal[i] = goalnumber[rank][0];
+				goal[i] = goalnumber[rank][i];
 			}
 		}
 		
@@ -61,24 +65,26 @@ namespace game_framework {
 		bool IsnewGame(int level, int step) {
 			return step == rankstep[level];
 		}
+
 		void SCORE() {
 			CDC *pDC = CDDraw::GetBackCDC();
 			CTextDraw::ChangeFontLog(pDC, 20, "微軟正黑體", RGB(255, 255, 255));
-			CTextDraw::Print(pDC, 20, 20, "Score:" + to_string(score));
+			CTextDraw::Print(pDC, 20, 60, "Score:" + to_string(score));
 			CDDraw::ReleaseBackCDC();
 		}
 
 		void STEP() {
 			CDC *pDC = CDDraw::GetBackCDC();
 			CTextDraw::ChangeFontLog(pDC, 20, "微軟正黑體", RGB(255, 255, 255));
-			CTextDraw::Print(pDC, 200, 20, "Step:" + to_string(step));
+			CTextDraw::Print(pDC, 20, 90, "Step:" + to_string(step));
 			CDDraw::ReleaseBackCDC();
 		}
 		void GOAL(int index,int X,int Y) {
 
 			CDC *pDC = CDDraw::GetBackCDC();
 			CTextDraw::ChangeFontLog(pDC, 20, "微軟正黑體", RGB(255, 255, 255));
-			CTextDraw::Print(pDC, X + 5, Y + 20, to_string(goal[0]));
+			CTextDraw::Print(pDC, X + 7, Y + 30, to_string(goal[index]));
+			//CTextDraw::Print(pDC, X + 5, Y + 40, to_string(20));
 			CDDraw::ReleaseBackCDC();
 		}
 

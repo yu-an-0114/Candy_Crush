@@ -16,13 +16,8 @@
 #include <iostream>
 #include <stdio.h>
 #include <cmath>
-<<<<<<< HEAD
 
 
-=======
-#include "MapLevel.h"
-//
->>>>>>> 5d04bc4d14e11385b18eee98749bbf73d2ed1a99
 using namespace std;
 
 namespace game_framework {
@@ -50,9 +45,9 @@ namespace game_framework {
 						obstacle[i][j].SetFrameIndexOfBitmap(0);
 						bomb[i][j].LoadBitmapByString({ "resources/candy/white.bmp","resources/bomb/yellow-bomb.bmp","resources/bomb/blue-bomb.bmp" ,"resources/bomb/red-bomb.bmp" ,"resources/bomb/purple-bomb.bmp" ,"resources/bomb/green-bomb.bmp" ,"resources/bomb/orange-bomb.bmp" }, RGB(255, 255, 255));
 						bomb[i][j].SetTopLeft(map[i][j].GetLeft() + (unitMap.GetWidth() - bomb[i][j].GetWidth()) / 2, map[i][j].GetTop() + (unitMap.GetHeight() - bomb[i][j].GetHeight()) / 2);
-						effect[i][j].LoadBitmapByString({ "resources/special_effect/effect1.bmp" ,"resources/special_effect/effect2.bmp" ,"resources/special_effect/effect3.bmp" ,"resources/special_effect/effect4.bmp" ,"resources/special_effect/effect5.bmp" }, RGB(255, 255, 255));
+						effect[i][j].LoadBitmapByString({ "resources/special_effect/effect1.bmp" ,"resources/special_effect/effect2.bmp" ,"resources/special_effect/effect3.bmp" ,"resources/special_effect/effect4.bmp" ,"resources/special_effect/effect5.bmp","resources/special_effect/effect_base.bmp" }, RGB(255, 255, 255));
 						effect[i][j].SetTopLeft(map[i][j].GetLeft(), map[i][j].GetTop());
-						effect[i][j].SetAnimation(1000, false);
+						effect[i][j].SetAnimation(1000, true);
 						if (maplevel.mapLevel[level][i][j] == 1) {
 							int RandNum = rand() % 6 + 1;
 							candy[i][j].SetFrameIndexOfBitmap(RandNum);
@@ -116,15 +111,16 @@ namespace game_framework {
 						if (effectlevel.effect[i][j] == 1) {
 
 							effect[i][j].ShowBitmap();
-							effect[i][j].ToggleAnimation();
+							//effect[i][j].ToggleAnimation();
 							time.Delay(10);
 
 						}
 						else if (effectlevel.effect[i][j] == 2) {
-								effect[i][j].SetFrameIndexOfBitmap(4);
+								effect[i][j].SetFrameIndexOfBitmap(5);
+								//effect[i][j].SetFrameIndexOfBitmap(3);
 								effect[i][j].ShowBitmap();
-								//effect[i][j].ToggleAnimation();
-								time.Delay(10);
+								effect[i][j].ToggleAnimation();
+								time.Delay(5);
 							
 						}
 						effectlevel.Unshine(i, j);
