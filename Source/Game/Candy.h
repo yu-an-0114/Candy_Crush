@@ -9,11 +9,11 @@
 #include <iostream>
 #include <stdio.h>
 #include <cmath>
-//
+
 using namespace std;
 namespace game_framework {
-	class Obstacle {
+	class Candy : public CMovingBitmap {
 	public:
-		CMovingBitmap obstacle[10][10];
-	}
+
+	};
 }
