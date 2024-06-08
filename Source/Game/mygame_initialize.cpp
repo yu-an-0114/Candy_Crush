@@ -9,14 +9,15 @@
 
 using namespace game_framework;
 int levelrank::value = -1;
-
+int Step::step = 0;
+int Score::score = 0;
 CGameStateInit::CGameStateInit(CGame *g) : CGameState(g)
 {
 	
 }
 void CGameStateInit::OnInit()
 {
-	game_system.Ui.start_UI_init();
+
 }
 
 void CGameStateInit::OnBeginState()
@@ -68,7 +69,7 @@ void CGameStateInit::OnShow()
 	if (phase_start == 1) {
 		game_system.Ui.start_loading.ShowBitmap();
 	}
-	if ((phase_start == 2) && (phase_rank == 1)) {
+	else if ((phase_start == 2) && (phase_rank == 1)) {
 		game_system.Ui.rankchoose_UI_show();
 	}
 	else if ((phase_start == 2) && (phase_rank == 2)) {

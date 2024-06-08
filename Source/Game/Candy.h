@@ -15,5 +15,7 @@ namespace game_framework {
 	class Candy : public CMovingBitmap {
 	public:
 
+	private:
+		
 	};
 }

@@ -21,6 +21,7 @@ using namespace std;
 namespace game_framework {
 	class Map {
 	public:
+
 		void build_map(int level) {	
 			unit_candy_lattice.LoadBitmapByString({ "resources/CandyLattice.bmp" });
 			for (int i = 0; i < 10; i++) {
@@ -68,6 +69,7 @@ namespace game_framework {
 				}
 			}
 		}
+
 		template <typename T>
 		void set_candy_lattice_center(int x, int y, T& object) {
 			object[x][y].SetTopLeft(candy_lattice[x][y].GetLeft() + (unit_candy_lattice.GetWidth() - object[x][y].GetWidth()) / 2, candy_lattice[x][y].GetTop() + (unit_candy_lattice.GetHeight() - object[x][y].GetHeight()) / 2);
@@ -82,6 +84,7 @@ namespace game_framework {
 				}
 			}
 			CDDraw::ReleaseBackCDC();
+			
 		}
 		CandyLattice unit_candy_lattice;
 		CandyLattice candy_lattice[10][10];
@@ -89,7 +92,6 @@ namespace game_framework {
 		Cherry cherry[10][10];
 		CSpecialEffect time;
 		int test = 0;
-		
 	};
 }
 

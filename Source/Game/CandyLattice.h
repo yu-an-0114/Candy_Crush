@@ -14,6 +14,6 @@ using namespace std;
 namespace game_framework {
 	class CandyLattice : public CMovingBitmap {
 	public:
-
+		
 	};
 }

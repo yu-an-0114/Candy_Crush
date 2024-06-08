@@ -14,6 +14,7 @@ using namespace std;
 namespace game_framework {
 	class Score {
 	public:
+		static int score;
 		void score_strip() {
 			for (int i = 0; i < 100; i++) {
 				score_point[i].LoadBitmapByString({ "resources/score/blue-1.bmp" });
@@ -68,6 +69,12 @@ namespace game_framework {
 			score_star_3.LoadBitmapByString({ "resources/score/unlight_star.bmp","resources/score/light_star.bmp" }, RGB(255, 255, 255));
 			score_star_3.SetTopLeft(score_point[95].GetLeft(), score_point[95].GetTop() - 5);
 			score_star_3.SetFrameIndexOfBitmap(0);
+		}
+		void scoreShow() {
+			CDC *pDC = CDDraw::GetBackCDC();
+			CTextDraw::ChangeFontLog(pDC, 20, "·L³n¥¿¶ÂÅé", RGB(255, 255, 255));
+			CTextDraw::Print(pDC, 20, 60, "Score:" + to_string(score));
+			CDDraw::ReleaseBackCDC();
 		}
 	private:
 		CMovingBitmap score_board;
