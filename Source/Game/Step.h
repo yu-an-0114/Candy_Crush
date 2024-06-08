@@ -12,7 +12,7 @@
 
 using namespace std;
 namespace game_framework {
-	class Step  {
+	class Step {
 	public:
 		static int step;
 		Step() {
@@ -26,7 +26,7 @@ namespace game_framework {
 		int stepInit(int level) {
 			return rankstep[level];
 		}
-		
+
 		int stepMove(int step) {
 			return step - 1;
 		}

@@ -74,7 +74,7 @@ namespace game_framework {
 				rank[i].ShowBitmap();
 			}
 		}
-		
+
 		void rankchoose_UI_2_show() {
 			rank_choose_map.ShowBitmap();
 			rank_up_button.ShowBitmap();
@@ -123,7 +123,7 @@ namespace game_framework {
 			fail_character.LoadBitmapByString({ "resources/score/lose_Character.bmp" }, RGB(255, 255, 255));
 			fail_character.SetTopLeft(0, 700);
 		}
-		
+
 		void board_set() {
 			board.LoadBitmapByString({ "resources/score/board.bmp" }, RGB(255, 255, 255));
 			board.SetTopLeft(125, 150);
@@ -169,7 +169,7 @@ namespace game_framework {
 			retry.ShowBitmap();
 			home.ShowBitmap();
 		}
-		
+
 
 		void Fail_ui_show() {
 			fail_background.ShowBitmap();
@@ -206,7 +206,7 @@ namespace game_framework {
 		bool is_play_button(CPoint point) {
 			return (600 > point.x && point.x > 150) && (800 > point.y && point.y > 640) && start_loading.GetFrameIndexOfBitmap() == 2;
 		}
-		
+
 		bool IS_NEXT(CPoint point) {
 			return next.isClick_CMovingBitmap(next, point);
 		}
