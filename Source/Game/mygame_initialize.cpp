@@ -5,53 +5,27 @@
 #include "../Library/audio.h"
 #include "../Library/gameutil.h"
 #include "../Library/gamecore.h"
-
 #include "mygame.h"
 
-
 using namespace game_framework;
-/////////////////////////////////////////////////////////////////////////////
-// 這個class為遊戲的遊戲開頭畫面物件
-/////////////////////////////////////////////////////////////////////////////
-
-int LevelCheck::rank = -1;
-int LevelCheck::step = 0;
-int LevelCheck::score = 0;
-
+int levelrank::value = -1;
 
 CGameStateInit::CGameStateInit(CGame *g) : CGameState(g)
 {
-
+	
 }
-
-
-
 void CGameStateInit::OnInit()
 {
-
-	//
-	// 當圖很多時，OnInit載入所有的圖要花很多時間。為避免玩遊戲的人
-	//     等的不耐煩，遊戲會出現「Loading ...」，顯示Loading的進度。
-	//
-	//ShowInitProgress(0, "Start Initialize...");	// 一開始的loading進度為0%
-	//
-	//開始載入資料
-	//
-	//Sleep(1000);				// 放慢，以便看清楚進度，實際遊戲請刪除此Sleep
-	//
-	// 此OnInit動作會接到CGameStaterRun::OnInit()，所以進度還沒到100%
-	//
-
+	game_system.Ui.start_UI_init();
 }
 
 void CGameStateInit::OnBeginState()
 {
-	
-	StartUI.START_UI();
-
-	RankChooseUI.Rank_choose_UI();
+	level = levelrank::value;
+	game_system.Ui.start_UI_init();
+	game_system.Ui.rank_choose_UI();
 	if ((phase_start == 2) && (phase_rank == 2)) {
-		RankChooseUI.Rank_choose_UI_2();
+		game_system.Ui.rank_choose_UI_2();
 	}
 }
 
@@ -63,45 +37,41 @@ void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	if (phase_start == 1) {
-		if (StartUI.IS_PLAY_BUTTON(point) == true) {
+		if (game_system.Ui.is_play_button(point)) {
 			phase_start += 1;
 		}
 	}
-	else if ((phase_start == 2) && (phase_rank == 1)) {
-		if (RankChooseUI.IS_DOWN_BUTTON(point) == true) {
-			RankChooseUI.Rank_choose_UI_2();
-			phase_rank += 1;
+	else if (phase_start == 2) {
+		if (phase_rank == 1) {
+			if (game_system.Ui.rank_down_button.isClick_CMovingBitmap(game_system.Ui.rank_down_button, point)) {
+				game_system.Ui.rank_choose_UI_2();
+				phase_rank += 1;
+			}
+			level = game_system.Ui.is_rank_button_1(point);
 		}
-		LevelCheck::rank = RankChooseUI.IS_RANK_BUTTON_1(point);
-		
-	}
-	else if ((phase_start == 2) && (phase_rank == 2)) {
-		
-		if (RankChooseUI.IS_UP_BUTTON(point) == true) {
-			RankChooseUI.Rank_choose_UI();
-			phase_rank -= 1;
+		else if (phase_rank == 2) {
+			if (game_system.Ui.rank_up_button.isClick_CMovingBitmap(game_system.Ui.rank_up_button, point)) {
+				game_system.Ui.rank_choose_UI();
+				phase_rank -= 1;
+			}
+			level = game_system.Ui.is_rank_button_2(point);
 		}
-		LevelCheck::rank = RankChooseUI.IS_RANK_BUTTON_2(point);
-
 	}
-	if (helper.rank > -1) {
-		helper.step = helper.stepInit(helper.rank);
+	if (level > -1) {
+		levelrank::value = level; 
 		GotoGameState(GAME_STATE_RUN);
 	}
-
 }
 
 void CGameStateInit::OnShow()
 {
-
 	if (phase_start == 1) {
-		StartUI.start_ui_show();
-
+		game_system.Ui.start_loading.ShowBitmap();
 	}
 	if ((phase_start == 2) && (phase_rank == 1)) {
-		RankChooseUI.rankchoose_ui_show();
+		game_system.Ui.rankchoose_UI_show();
 	}
 	else if ((phase_start == 2) && (phase_rank == 2)) {
-		RankChooseUI.rankchoose_ui_2_show();
+		game_system.Ui.rankchoose_UI_2_show();
 	}
 }
