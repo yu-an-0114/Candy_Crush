@@ -58,10 +58,6 @@ namespace game_framework {
 			return false;
 		}*/
 		
-
-		
-
-
 		void object_down(int level) {
 			for (int j = 0; j < 10; j++) {
 				for (int i = 9; i >= 0; i--) {
@@ -184,6 +180,7 @@ namespace game_framework {
 			if (map_level[level][x][y] == 0 || map.candy[x][y].is_candy_empty(level, x, y, map.candy)) {
 				return 0;
 			}
+			
 			int sum = 0;
 			if (checkRow) {
 				while (1) {
@@ -191,6 +188,7 @@ namespace game_framework {
 						break;
 					}
 					if (!object_have_color(x,y,level) || !object_have_color(x1, y1, level) || !is_object_same_color(x, y, x1, y1, level)) {
+						
 						break;
 					}
 					sum++;
@@ -221,7 +219,7 @@ namespace game_framework {
 			}
 		}
 
-		void object_need_element(int clickX, int clickY, int changeX, int changeY, int level) {
+		void object_check_element(int clickX, int clickY, int changeX, int changeY, int level) {
 			if ((map_level[level][clickX][clickY] == 1 || map_level[level][clickX][clickY] == 12 || map_level[level][clickX][clickY] == 13) && (map_level[level][changeX][changeY] == 1 || map_level[level][changeX][changeY] == 12 || map_level[level][changeX][changeY] == 13)) {
 				candy_special_and_special(clickX, clickY, changeX, changeY, level);
 			}
@@ -230,7 +228,9 @@ namespace game_framework {
 					if (map_level[level][i][j] == 0 || map_level[level][i][j] == 3 || (5 <= map_level[level][i][j] && map_level[level][i][j] <= 11) || map.candy[i][j].is_candy_empty(level, i, j, map.candy)) {
 						continue;
 					}
+					
 					int sum_row = color_connet(i, j, true, level);
+					
 					candy_need_upgrade(clickX, clickY, changeX, changeY, i, j, sum_row, true, level);
 					int sum_col = color_connet(i, j, false, level);
 					candy_need_upgrade(clickX, clickY, changeX, changeY, i, j, sum_col, false, level);
@@ -238,7 +238,8 @@ namespace game_framework {
 			}
 		}
 		bool object_have_color(int x, int y, int level) {
-			if ((map_level[level][x][y] == 1 || map_level[level][x][y] == 2 || map_level[level][x][y] == 4 || map_level[level][x][y] == 12 || map_level[level][x][y] == 13) && (map.candy[x][y].GetFrameIndexOfBitmap() != 0 && map.candy[x][y].GetFrameIndexOfBitmap() != 25)) {
+			if ((map_level[level][x][y] == 1 || map_level[level][x][y] == 2 || map_level[level][x][y] == 4 || map_level[level][x][y] == 12 || map_level[level][x][y] == 13) && (map_level[level][x][y]==1 && map.candy[x][y].GetFrameIndexOfBitmap() != 0 && map.candy[x][y].GetFrameIndexOfBitmap() != 25)) {
+				
 				return true;
 			}
 			else {
@@ -250,13 +251,11 @@ namespace game_framework {
 			CTextDraw::ChangeFontLog(pDC, 10, "·L³n¥¿¶ÂÅé", RGB(255, 255, 255));
 			for (int i = 0; i < 10; i++) {
 				for (int j = 0; j < 10; j++) {
-					CTextDraw::Print(pDC, 100 + 15 * j, 15 * i, to_string(map.candy[i][j].GetFrameIndexOfBitmap()));
+					CTextDraw::Print(pDC, 100 + 15 * j, 15 * i, to_string(map_level[level][i][j]));
+					CTextDraw::Print(pDC, 270 + 15 * j, 15 * i, to_string(map.candy[i][j].GetFrameIndexOfBitmap()));
 				}
-			}
-			CTextDraw::Print(pDC, 300, 15, to_string(clickX));
-			CTextDraw::Print(pDC, 310, 15, to_string(clickY));
-			CTextDraw::Print(pDC, 350, 15, to_string(changeX));
-			CTextDraw::Print(pDC, 360, 15, to_string(changeY));
+			}	
+			CTextDraw::Print(pDC, 450 , 15 , to_string(test));
 			CDDraw::ReleaseBackCDC();
 		}
 		void candy_num_text(int level) {
@@ -273,9 +272,10 @@ namespace game_framework {
 			if (!object_have_color(i, j, level) || !object_have_color(x, y, level)) {
 				return false;
 			}
+			
 			int color_num = 0;
 			int color_num2 = 0;
-			if (map.candy[i][j].GetFrameIndexOfBitmap() == 25 || map.candy[x][y].GetFrameIndexOfBitmap() == 25 || map.candy[i][j].GetFrameIndexOfBitmap() == 0 || map.candy[x][y].GetFrameIndexOfBitmap() == 0 || map.bomb[i][j].GetFrameIndexOfBitmap() == 0 || map.bomb[x][y].GetFrameIndexOfBitmap() == 0) {
+			if (map.candy[i][j].GetFrameIndexOfBitmap() == 25 || map.candy[x][y].GetFrameIndexOfBitmap() == 25 || map.candy[i][j].GetFrameIndexOfBitmap() == 0 || map.candy[x][y].GetFrameIndexOfBitmap() == 0 || (map_level[level][i][j]==4 && map.bomb[i][j].GetFrameIndexOfBitmap() == 0) || (map_level[level][i][j] == 4 && map.bomb[x][y].GetFrameIndexOfBitmap() == 0)) {
 				return false;
 			}
 			
@@ -411,6 +411,7 @@ namespace game_framework {
 		
 		void candy_need_upgrade(int clickX, int clickY, int changeX, int changeY, int i, int j, int sum, bool isRow, int level) {
 			if (isRow) {
+				
 				if (sum == 5) {
 					for (int k = j; k < j + sum; k++) {
 						if (k == j + 2) {
@@ -448,6 +449,7 @@ namespace game_framework {
 					}
 				}
 				else if (sum == 3) {
+					
 					for (int k = j; k < j + sum; k++) {
 						if (color_connet(i, k, false, level) >= 3) {
 							map.candy[i][k].SetFrameIndexOfBitmap(9 + (map.candy[i][k].GetFrameIndexOfBitmap() - 1) * 3);
@@ -458,6 +460,7 @@ namespace game_framework {
 							}
 						}
 						else {
+							
 							object_element(i, k, level);
 							obstacel_destory(i, k, level);
 						}
@@ -522,6 +525,7 @@ namespace game_framework {
 				return;
 			}
 			else if (map_level[level][x][y]==1) {
+				
 				if (map.candy[x][y].GetFrameIndexOfBitmap() < 7) {
 					map.candy[x][y].SetFrameIndexOfBitmap(0);
 				}
@@ -788,6 +792,7 @@ namespace game_framework {
 				map.candy[changeX][changeY].SetFrameIndexOfBitmap(0);
 			}
 		}
+
 		Map map;
 		UI Ui;
 		bool mouse_candy_state = false;
@@ -800,6 +805,7 @@ namespace game_framework {
 		bool canMove = true;
 		bool step_has_chocolate_destory = false;
 		CSpecialEffect time;
+		int test = 0;
 	};
 }
 

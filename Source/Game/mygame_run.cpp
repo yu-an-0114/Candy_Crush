@@ -31,8 +31,8 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 {
 	game_system.map_level_text(level);
 	//game_system.candy_num_text(level);
-	//game_system.Candy_Element(game_system.clickX, game_system.clickY, game_system.changeX, game_system.changeY, level);
-	//game_system.object_down(level);
+	game_system.object_check_element(game_system.clickX, game_system.clickY, game_system.changeX, game_system.changeY, level);
+	game_system.object_down(level);
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
@@ -148,6 +148,7 @@ void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 
 void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 {
+
 }
 
 void CGameStateRun::OnShow()
