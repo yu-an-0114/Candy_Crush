@@ -134,16 +134,16 @@ namespace game_framework {
 							bomb[i][j].UnshowBitmap();
 						}
 						if (map_level[level][i][j] == 5) {
-							chocolate[i][j].ShowBitmap();
-						}
-						else {
-							chocolate[i][j].UnshowBitmap();
-						}
-						if (map_level[level][i][j] == 6) {
 							chocolate_machine[i][j].ShowBitmap();
 						}
 						else {
 							chocolate_machine[i][j].UnshowBitmap();
+						}
+						if (map_level[level][i][j] == 6) {
+							chocolate[i][j].ShowBitmap();
+						}
+						else {
+							chocolate[i][j].UnshowBitmap();
 						}
 						if (7 <= map_level[level][i][j] && map_level[level][i][j] <= 11) {
 							sugar[i][j].ShowBitmap();
