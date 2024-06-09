@@ -10,11 +10,16 @@
 #include <stdio.h>
 #include <cmath>
 
+
 using namespace std;
 namespace game_framework {
-	class CandyLattice : public CMovingBitmap {
+	class X_block : public CMovingBitmap {
 	public:
+		void x_block_element(int x, int y, int level) {
+			map_level[level][x][y] = 1;
+		}
 		
-		
+	private:
+
 	};
 }

@@ -251,10 +251,15 @@
     <ClCompile Include="Source\Library\gameutil.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Game\Bomb.h" />
     <ClInclude Include="Source\Game\Candy.h" />
     <ClInclude Include="Source\Game\CandyLattice.h" />
     <ClInclude Include="Source\Game\Cherry.h" />
+    <ClInclude Include="Source\Game\Chocolate.h" />
+    <ClInclude Include="Source\Game\ChocolatMachine.h" />
+    <ClInclude Include="Source\Game\Container.h" />
     <ClInclude Include="Source\Game\GameSystem.h" />
+    <ClInclude Include="Source\Game\Glass.h" />
     <ClInclude Include="Source\Game\map.h" />
     <ClInclude Include="Source\Core\Game.h" />
     <ClInclude Include="Source\Core\gameDoc.h" />
@@ -267,7 +272,9 @@
     <ClInclude Include="Source\Game\mygame.h" />
     <ClInclude Include="Source\Game\Score.h" />
     <ClInclude Include="Source\Game\Step.h" />
+    <ClInclude Include="Source\Game\Sugar.h" />
     <ClInclude Include="Source\Game\UI.h" />
+    <ClInclude Include="Source\Game\X_block.h" />
     <ClInclude Include="Source\Library\audio.h" />
     <ClInclude Include="Source\Library\gamecore.h" />
     <ClInclude Include="Source\Library\gameutil.h" />

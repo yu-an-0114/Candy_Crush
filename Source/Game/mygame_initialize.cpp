@@ -12,7 +12,7 @@ int levelrank::value = -1;
 
 CGameStateInit::CGameStateInit(CGame *g) : CGameState(g)
 {
-	
+
 }
 void CGameStateInit::OnInit()
 {
@@ -58,7 +58,7 @@ void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 		}
 	}
 	if (level > -1) {
-		levelrank::value = level; 
+		levelrank::value = level;
 		GotoGameState(GAME_STATE_RUN);
 	}
 }

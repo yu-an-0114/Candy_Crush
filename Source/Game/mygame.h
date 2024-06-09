@@ -40,11 +40,19 @@ namespace game_framework {
 		void OnMouseMove(UINT nFlags, CPoint point);	// 處理滑鼠的動作 
 		void OnRButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
 		void OnRButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
+		template <typename T>
+		void object_move_with_mouse(T& click_object,CPoint point) {
+			click_object[game_system.clickX][game_system.clickY].SetTopLeft(point.x - click_object[game_system.clickX][game_system.clickY].GetWidth() / 2, point.y - click_object[game_system.clickX][game_system.clickY].GetHeight() / 2);
+		}
+		template <typename T>
+		bool oblect_click_mouse(T& click_object) {
+			return click_object[game_system.clickX][game_system.clickY].isClick_CMovingBitmap(click_object[game_system.clickX][game_system.clickY], game_system.candy_start);
+		}
 
 		int level = -1;
 		GameSystem game_system;
-		
-		
+
+
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面

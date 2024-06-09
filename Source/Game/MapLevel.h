@@ -17,7 +17,7 @@ namespace game_framework {
 		static int map_level[30][10][10];
 	};
 	*/
-	
+
 	static int map_level[30][10][10] = {
 		//1
 		   {{1,1,1,1,1,1,1,1,1,1},

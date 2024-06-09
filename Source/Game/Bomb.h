@@ -10,11 +10,18 @@
 #include <stdio.h>
 #include <cmath>
 
+
 using namespace std;
 namespace game_framework {
-	class CandyLattice : public CMovingBitmap {
+	class Bomb : public CMovingBitmap {
 	public:
-		
-		
+		void set_bomb_random(int x, int y, int level, Bomb bomb[10][10]) {
+			int RandNum = rand() % 6 + 1;
+			bomb[x][y].SetFrameIndexOfBitmap(RandNum);
+			map_level[level][x][y] = 4;
+		}
+
+	private:
+
 	};
 }

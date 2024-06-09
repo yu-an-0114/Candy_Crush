@@ -10,11 +10,13 @@
 #include <stdio.h>
 #include <cmath>
 
+
 using namespace std;
 namespace game_framework {
-	class CandyLattice : public CMovingBitmap {
+	class Sugar : public CMovingBitmap {
 	public:
-		
-		
+
+	private:
+
 	};
 }
