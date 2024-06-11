@@ -18,18 +18,23 @@ namespace game_framework {
 		Step() {
 
 		}
+		bool  use_step = false;
 
-		int rankstep[20] = { 20, 20, 20, 20, 10,
-							 10, 10, 10, 10, 10,
-							 10, 10, 10, 10, 10,
-							 10, 10, 10, 10, 10, };
+		void step_update() {
+			use_step = true;
+			step--;
+		}
+		int rankstep[30] = { 20, 20, 20, 20, 30,
+							 20, 20, 20, 20, 30,
+							 20, 20, 20, 20, 30,
+							 20, 20, 20, 20, 30,
+							 20, 20, 20, 20, 30,
+							 40, 40, 40, 40, 40};
 		int stepInit(int level) {
 			return rankstep[level];
 		}
 
-		int stepMove(int step) {
-			return step - 1;
-		}
+
 		bool IsNewGame(int level, int stepNow) {
 			return stepNow == rankstep[level];
 		}

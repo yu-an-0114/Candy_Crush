@@ -98,8 +98,10 @@ namespace game_framework {
 		}
 		void condition_show(int phase) {
 			setting_show();
+			
 			if (phase == 0) {
 				Setting_RUN_show();
+				debug_mode_button.ShowBitmap();
 			}
 			else if (phase == 1) {
 				Fail_ui_show();
@@ -127,6 +129,8 @@ namespace game_framework {
 		void board_set() {
 			board.LoadBitmapByString({ "resources/score/board.bmp" }, RGB(255, 255, 255));
 			board.SetTopLeft(125, 150);
+			debug_mode_button.LoadBitmapByString({ "resources/DebugModeButton.bmp" }, RGB(255, 255, 255));
+			debug_mode_button.SetTopLeft(210, 350);
 			close.LoadBitmapByString({ "resources/score/close.bmp" }, RGB(255, 255, 255));
 			close.SetTopLeft(board.GetLeft() + board.GetWidth() - 110, board.GetTop() + 80);
 			star.LoadBitmapByString({ "resources/score/0star.bmp","resources/score/1star.bmp","resources/score/2stars.bmp","resources/score/3stars.bmp" }, RGB(255, 255, 255));
@@ -206,7 +210,9 @@ namespace game_framework {
 		bool is_play_button(CPoint point) {
 			return (600 > point.x && point.x > 150) && (800 > point.y && point.y > 640) && start_loading.GetFrameIndexOfBitmap() == 2;
 		}
-
+		bool IS_DEBUG_MODE(CPoint point) {
+			return debug_mode_button.isClick_CMovingBitmap(debug_mode_button, point);
+		}
 		bool IS_NEXT(CPoint point) {
 			return next.isClick_CMovingBitmap(next, point);
 		}
@@ -236,6 +242,7 @@ namespace game_framework {
 		CMovingBitmap home;
 		CMovingBitmap setting;
 		CMovingBitmap close;
+		CMovingBitmap debug_mode_button;
 		Step step;
 		Score score;
 	};

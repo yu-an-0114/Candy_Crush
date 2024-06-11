@@ -25,9 +25,6 @@ namespace game_framework {
 		GameSystem game_system;
 		int phase_start = 1;
 		int phase_rank = 1;
-		Score score_system;
-		Step step_helper;
-		Goal goal_helper;
 	};
 
 	class CGameStateRun : public CGameState {
@@ -43,7 +40,15 @@ namespace game_framework {
 		void OnMouseMove(UINT nFlags, CPoint point);	// 處理滑鼠的動作 
 		void OnRButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
 		void OnRButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
-
+		template <typename T>
+		void object_move_with_mouse(T& click_object,CPoint point) {
+			click_object[game_system.clickX][game_system.clickY].SetTopLeft(point.x - click_object[game_system.clickX][game_system.clickY].GetWidth() / 2, point.y - click_object[game_system.clickX][game_system.clickY].GetHeight() / 2);
+		}
+		template <typename T>
+		bool oblect_click_mouse(T& click_object) {
+			return click_object[game_system.clickX][game_system.clickY].isClick_CMovingBitmap(click_object[game_system.clickX][game_system.clickY], game_system.candy_start);
+		}
+		bool showEffect = false;
 		int level = -1;
 		GameSystem game_system;
 		Score score_system;
@@ -51,6 +56,7 @@ namespace game_framework {
 		Goal goal_helper;
 		int scoreStar_place[2] = { 20, 60 };
 		int phase = -1;
+		int starNum = 0;
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面

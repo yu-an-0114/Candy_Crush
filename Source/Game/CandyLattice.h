@@ -15,5 +15,6 @@ namespace game_framework {
 	class CandyLattice : public CMovingBitmap {
 	public:
 		
+		
 	};
 }
