@@ -14,6 +14,8 @@ using namespace std;
 namespace game_framework {
 	class Cherry : public CMovingBitmap {
 	public:
-
+		void cherry_element(int x, int y, int level) {
+			map_level[level][x][y] = 1;
+		}
 	};
 }

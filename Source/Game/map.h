@@ -71,7 +71,7 @@ namespace game_framework {
 							sugar[i][j].SetFrameIndexOfBitmap(1);
 						}
 						else if (map_level[level][i][j] == 9) {
-							sugar[i][j].SetFrameIndexOfBitmap(1);
+							sugar[i][j].SetFrameIndexOfBitmap(2);
 						}
 						else if (map_level[level][i][j] == 10) {
 							sugar[i][j].SetFrameIndexOfBitmap(3);
@@ -196,6 +196,7 @@ namespace game_framework {
 			}
 			else if (12 <= map_level[level][x][y] && map_level[level][x][y] <= 13) {
 				glass[x][y].SetTopLeft(candy_lattice[x][y].GetLeft() + (unit_candy_lattice.GetWidth() - glass[x][y].GetWidth()) / 2, candy_lattice[x][y].GetTop() + (unit_candy_lattice.GetHeight() - glass[x][y].GetHeight()) / 2);
+				candy[x][y].SetTopLeft(candy_lattice[x][y].GetLeft() + (unit_candy_lattice.GetWidth() - candy[x][y].GetWidth()) / 2, candy_lattice[x][y].GetTop() + (unit_candy_lattice.GetHeight() - candy[x][y].GetHeight()) / 2);
 			}
 		}
 

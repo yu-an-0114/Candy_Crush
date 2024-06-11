@@ -75,6 +75,7 @@ void CGameStateRun::OnMove()							// ²¾°Ê¹CÀ¸¤¸¯À
 				}
 				game_system.object_check_element(game_system.clickX, game_system.clickY, game_system.changeX, game_system.changeY, level);
 				game_system.object_down(level);
+				game_system.check_cherry_element(level);
 				for (int i = 0; i < 10; i++) {
 					for (int j = 0; j < 10; j++) {
 						if (old_map_level[i][j] != game_system.map.candy[i][j].GetFrameIndexOfBitmap()) {
