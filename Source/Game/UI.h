@@ -7,9 +7,7 @@
 #include <map>
 #include <cstdlib>
 #include <ctime>
-#include "Score.h"
-#include "Step.h"
-#include "Goal.h"
+
 using namespace std;
 
 namespace game_framework {
@@ -243,7 +241,7 @@ namespace game_framework {
 		CMovingBitmap setting;
 		CMovingBitmap close;
 		CMovingBitmap debug_mode_button;
-		Step step;
-		Score score;
+		//Step step;
+		//Score score;
 	};
 }

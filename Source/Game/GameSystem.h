@@ -14,9 +14,14 @@
 #include <typeinfo>
 #include "Map.h"
 #include "UI.h"
+#include "effect.h"
+#include "Score.h"
+#include "Step.h"
+#include "Goal.h"
 using namespace std;
 
 namespace game_framework {
+	//extern Effect effectlevel;
 	class GameSystem {
 	public:
 		int get_map_level(int level,int x,int y) {
@@ -672,6 +677,7 @@ namespace game_framework {
 			if (map_level[level][x][y] == 0 || map_level[level][x][y] == 3 || map_level[level][x][y] == 5 || visited[x][y] == 1) {
 				return;
 			}
+
 			visited[x][y] = 1;
 			if (map_level[level][x][y] == 1) {
 				int frameIndex = map.candy[x][y].GetFrameIndexOfBitmap();
@@ -1064,11 +1070,14 @@ namespace game_framework {
 					if (map_level[level][i][j] == 3 && i== map_bottom(i, j, level)) {
 						map.cherry[i][j].cherry_element(i, j, level);
 						object_down(level);
+						
 					}
 				}
 			}
 		}
-
+		Step step_helper;
+		Goal goal_helper;
+		Score score_helper;
 		Map map;
 		UI Ui;
 		bool mouse_candy_state = false;

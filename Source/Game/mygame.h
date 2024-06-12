@@ -51,12 +51,13 @@ namespace game_framework {
 		bool showEffect = false;
 		int level = -1;
 		GameSystem game_system;
-		Score score_system;
-		Step step_helper;
-		Goal goal_helper;
+		//Score score_system;
+		//Step step_helper;
+		//Goal goal_helper;
 		int scoreStar_place[2] = { 20, 60 };
 		int phase = -1;
 		int starNum = 0;
+		CSpecialEffect time1;
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面

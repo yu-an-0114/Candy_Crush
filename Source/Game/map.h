@@ -22,7 +22,8 @@
 #include "Glass.h"
 #include "Sugar.h"
 #include "X_block.h"
-#include "effect.h"
+
+
 using namespace std;
 
 namespace game_framework {
@@ -55,9 +56,7 @@ namespace game_framework {
 						sugar[i][j].SetTopLeft(candy_lattice[i][j].GetLeft() + (unit_candy_lattice.GetWidth() - sugar[i][j].GetWidth()) / 2, candy_lattice[i][j].GetTop() + (unit_candy_lattice.GetHeight() - sugar[i][j].GetHeight()) / 2);
 						x_block[i][j].LoadBitmapByString({"resources/block/X_block.bmp" }, RGB(255, 255, 255));
 						x_block[i][j].SetTopLeft(candy_lattice[i][j].GetLeft() + (unit_candy_lattice.GetWidth() - x_block[i][j].GetWidth()) / 2, candy_lattice[i][j].GetTop() + (unit_candy_lattice.GetHeight() - x_block[i][j].GetHeight()) / 2);
-						effect[i][j].LoadBitmapByString({ "resources/special_effect/effect1.bmp" ,"resources/special_effect/effect2.bmp" ,"resources/special_effect/effect3.bmp" ,"resources/special_effect/effect4.bmp" ,"resources/special_effect/effect5.bmp","resources/special_effect/effect_base.bmp" }, RGB(255, 255, 255));
-						effect[i][j].SetTopLeft(candy_lattice[i][j].GetLeft() + (unit_candy_lattice.GetWidth() - chocolate_machine[i][j].GetWidth()) / 2, candy_lattice[i][j].GetTop() + (unit_candy_lattice.GetHeight() - chocolate_machine[i][j].GetHeight()) / 2);
-						effect[i][j].SetAnimation(1000, true);
+
 						if (map_level[level][i][j] == 1) {
 							candy[i][j].set_candy_random(i, j, level, candy);
 						}
@@ -202,33 +201,8 @@ namespace game_framework {
 				candy[x][y].SetTopLeft(candy_lattice[x][y].GetLeft() + (unit_candy_lattice.GetWidth() - candy[x][y].GetWidth()) / 2, candy_lattice[x][y].GetTop() + (unit_candy_lattice.GetHeight() - candy[x][y].GetHeight()) / 2);
 			}
 		}
-		void Show_effect(int level) {
-			for (int i = 0; i < 10; i++) {
-				for (int j = 0; j < 10; j++) {
-					if (map_level[level][i][j] == 1) {
+		
 
-						if (effectlevel.effect[i][j] == 1) {
-
-							effect[i][j].ShowBitmap();
-							//effect[i][j].ToggleAnimation();
-							time.Delay(5);
-
-						}
-						else if (effectlevel.effect[i][j] == 2) {
-							effect[i][j].SetFrameIndexOfBitmap(5);
-							//effect[i][j].SetFrameIndexOfBitmap(3);
-							effect[i][j].ShowBitmap();
-							effect[i][j].ToggleAnimation();
-							time.Delay(5);
-
-						}
-
-					}
-
-
-				}
-			}
-		}
 		Bomb bomb[10][10];
 		Chocolate chocolate[10][10];
 		ChocolateMachine chocolate_machine[10][10];
@@ -240,8 +214,9 @@ namespace game_framework {
 		Sugar sugar[10][10];
 		X_block x_block[10][10];		
 		CMovingBitmap effect[10][10];
-		Effect effectlevel;
+		//Effect effectlevel;
 		CSpecialEffect time;
+
 		int test = 0;
 	};
 }
