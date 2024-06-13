@@ -15,6 +15,9 @@ using namespace std;
 namespace game_framework {
 	class ChocolateMachine : public CMovingBitmap {
 	public:
+		bool is_chocolate_machine(int x, int y, int level) {
+			return map_level[level][x][y] == 5;
+		}
 
 	private:
 

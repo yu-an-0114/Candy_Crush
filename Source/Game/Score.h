@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <cmath>
 
+
 using namespace std;
 namespace game_framework {
 	class Score {
@@ -61,7 +62,9 @@ namespace game_framework {
 			}
 			return index;
 		}
+		
 		void score_background_init(int *place) {
+
 			score_board.LoadBitmapByString({ "resources/score/score_board2.bmp" }, RGB(255, 255, 255));
 			score_board.SetTopLeft(-20, 0);
 			score_strip();

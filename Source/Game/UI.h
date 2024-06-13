@@ -13,6 +13,7 @@ using namespace std;
 namespace game_framework {
 	class UI {
 	public:
+		
 		void start_UI_init() {
 			start_loading.LoadBitmapByString({ "resources/UI/Start.bmp","resources/UI/Start_loading.bmp","resources/UI/Start_UI.bmp" }, RGB(255, 255, 255));
 			start_loading.SetTopLeft(0, 0);
@@ -94,9 +95,9 @@ namespace game_framework {
 		void background_show() {
 			game_background.ShowBitmap();
 		}
-		void condition_show(int phase) {
+		void condition_show(int phase,int star) {
 			setting_show();
-			
+
 			if (phase == 0) {
 				Setting_RUN_show();
 				debug_mode_button.ShowBitmap();
@@ -105,7 +106,7 @@ namespace game_framework {
 				Fail_ui_show();
 			}
 			else if (phase == 2) {
-				win_UI_show(1);
+				win_UI_show(star);
 			}
 		}
 

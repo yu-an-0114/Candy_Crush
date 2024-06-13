@@ -15,7 +15,9 @@ using namespace std;
 namespace game_framework {
 	class Glass : public CMovingBitmap {
 	public:
-
+		bool is_glass(int x, int y, int level) {
+			return 12 <= map_level[level][x][y] && map_level[level][x][y] <= 13;
+		}
 	private:
 
 	};

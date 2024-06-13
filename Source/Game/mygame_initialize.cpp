@@ -9,7 +9,7 @@
 
 using namespace game_framework;
 int levelrank::value = -1;
-int Step::step = 0;
+
 int Score::score = 0;
 CGameStateInit::CGameStateInit(CGame *g) : CGameState(g)
 {

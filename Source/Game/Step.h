@@ -29,7 +29,7 @@ namespace game_framework {
 							 20, 20, 20, 20, 30,
 							 20, 20, 20, 20, 30,
 							 20, 20, 20, 20, 30,
-							 40, 40, 40, 40, 40};
+							 40, 40, 40, 40, 40 };
 		int stepInit(int level) {
 			return rankstep[level];
 		}
@@ -44,5 +44,6 @@ namespace game_framework {
 			CTextDraw::Print(pDC, 20, 90, "Step:" + to_string(step));
 			CDDraw::ReleaseBackCDC();
 		}
+		
 	};
 }

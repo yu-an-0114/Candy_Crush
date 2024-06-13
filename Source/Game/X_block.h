@@ -18,7 +18,10 @@ namespace game_framework {
 		void x_block_element(int x, int y, int level) {
 			map_level[level][x][y] = 1;
 		}
-		
+		bool is_x_block(int x, int y, int level) {
+			return map_level[level][x][y] == 2;
+		}
+
 	private:
 
 	};
