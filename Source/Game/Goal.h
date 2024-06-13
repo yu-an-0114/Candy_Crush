@@ -26,17 +26,17 @@ namespace game_framework {
 		CMovingBitmap check[3];
 		int rankgoal[30][3] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0},
 								{6,7,8}, {7,8,9}, {8,9,10}, {6,7,8}, {10,10,10},
-								{11,12,13}, {14,15,16}, {17,10,9}, {8,9,10}, {15,16,17},
-								{16,17,18}, {17,18,19}, {10,20,21}, {22,23,24}, {23,24,25},
-								{16,17,18}, {17,18,19}, {10,20,21}, {22,23,24}, {23,24,25},
-								{16,17,18}, {17,18,19}, {10,20,21}, {22,23,24}, {23,24,25} };
+								{11,12,13}, {14,11,16}, {17,10,9}, {8,9,10}, {15,16,17},
+								{10,11,26}, {12,13,26}, {10,20,21}, {22,25,26}, {23,25,26},
+								{16,17,26}, {17,18,26}, {10,20,27}, {22,27,29}, {23,24,27},
+								{16,17,30}, {26,27,29}, {26,29,30}, {2,3,28}, {26,27,28} };
 
 		int goalnumber[30][3] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0},
-								 {6,1,1}, {1,2,3}, {4,5,6}, {9,9,9}, {9,9,9},
-								 {1,1,1}, {11,11,11}, {12,12,12}, {13,13,13}, {14,14,14},
-								 {15,15,15}, {16,16,16}, {17,17,17}, {18,18,18}, {19,19,19},
-								 {20,20,20}, {21,21,21}, {22,22,22}, {23,23,23}, {24,24,24},
-								 {25,25,25}, {26,26,26}, {27,27,27}, {28,28,28}, {29,29,29} };
+								 {6,1,1}, {1,2,2}, {2,2,2}, {2,2,2}, {2,2,2},
+								 {2,2,2}, {2,2,2}, {2,2,2}, {2,2,2}, {2,2,2},
+								 {1,2,1}, {2,2,3}, {2,2,2}, {3,3,2}, {2,2,19},
+								 {2,2,4}, {2,2,2}, {2,2,64}, {2,16,8}, {24,24,8},
+								 {2,2,20}, {1,22,8}, {3,3,3}, {10,10,30}, {2,40,20} };
 		void GoalSetting(int level) {
 			for (int i = 0; i < 3; i++) {
 				if (rankgoal[level][i] == 0) {
@@ -51,7 +51,7 @@ namespace game_framework {
 					"resources/candy/purple-candy-col.bmp","resources/candy/purple-candy-pack.bmp","resources/candy/green-candy-row.bmp" ,
 					"resources/candy/green-candy-col.bmp" ,"resources/candy/green-candy-pack.bmp","resources/candy/orange-candy-row.bmp" ,
 					"resources/candy/orange-candy-col.bmp","resources/candy/orange-candy-pack.bmp" ,"resources/candy/color-ball.bmp",
-					"resources/cherry.bmp","resources/block/glass.bmp","resources/block/sugar.bmp","resources/block/X_block.bmp" }, RGB(255, 255, 255));//30炸彈    31巧克力
+					"resources/cherry.bmp","resources/block/glass.bmp","resources/block/sugar.bmp","resources/block/X_block.bmp","resources/bomb/bomb.bmp" }, RGB(255, 255, 255));//30炸彈    31巧克力
 				check[i].LoadBitmapByString({"resources/check.bmp" }, RGB(255, 255, 255));
 				goalicon[i].SetTopLeft(225 + goalicon[i].GetWidth()*i + i * 40, 75);
 
@@ -60,11 +60,23 @@ namespace game_framework {
 			goalInit(level);
 
 		}
+		bool Pass(int goalCheck=3){
+			int check = 0;
+			for (int i = 0; i < 3; i++) {
+				if (goal[i] <= 0) {
+					check += 1;
+					continue;
+				}
+			}
+			if (check == goalCheck) {
+				return true;
+			}
+			return false;
+		}
 
 
-
-		int GetGoalIndex(int rank, int place) {
-			return rankgoal[rank][place];
+		int GetGoalIndex(int level, int place) {
+			return rankgoal[level][place];
 		}
 
 		void SetGoal(int index) {
@@ -75,9 +87,9 @@ namespace game_framework {
 			}
 		}
 
-		void goalInit(int rank) {
+		void goalInit(int level) {
 			for (int i = 0; i < 3; i++) {
-				goal[i] = goalnumber[rank][i];
+				goal[i] = goalnumber[level][i];
 			}
 		}
 
@@ -97,7 +109,7 @@ namespace game_framework {
 				else {
 					CDC *pDC = CDDraw::GetBackCDC();
 					CTextDraw::ChangeFontLog(pDC, 20, "微軟正黑體", RGB(255, 255, 255));
-					CTextDraw::Print(pDC, 295 + i * 105, 90, to_string(goal[i]));
+					CTextDraw::Print(pDC, 295 + i * 110, 90, to_string(goal[i]));
 					//CTextDraw::Print(pDC, X + 5, Y + 40, to_string(20));
 					CDDraw::ReleaseBackCDC();
 				}

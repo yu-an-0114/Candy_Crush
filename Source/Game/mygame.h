@@ -54,7 +54,8 @@ namespace game_framework {
 		int scoreStar_place[2] = { 20, 60 };
 		int phase = -1;
 		int starNum = 0;
-		CSpecialEffect time1;
+		bool pass = false;
+		CSpecialEffect time;
 
 	protected:
 		void OnMove();									// ²¾°Ê¹CÀ¸¤¸¯À

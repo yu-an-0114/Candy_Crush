@@ -25,10 +25,10 @@ namespace game_framework {
 				score_point[i].SetTopLeft(score_point[i - 1].GetLeft() + score_point[i - 1].GetWidth(), score_point[i - 1].GetTop());
 			}
 		}
-		int score_board_show(int score, int *place, int goal = 1000) {
+		int score_board_show(int score, int *place, int goal = 10000) {
 			score_board.ShowBitmap();
 			int index = 0;
-			goal = 100;
+			//goal = 10000;
 			int percentage = (score * 100 / goal);
 			score_star.ShowBitmap();
 			score_star_2.ShowBitmap();

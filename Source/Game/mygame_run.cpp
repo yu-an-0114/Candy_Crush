@@ -289,14 +289,30 @@ void CGameStateRun::OnShow()
 		game_system.Goal.goalShow(level);
 	}
 
+	if (game_system.Goal.Pass()) {
+		pass = true;
+	}
+	else {
+		pass = false;
+	}
+
+	if (pass) {
+		game_system.canMove = true;
+		Step::step -= 1;
+		Score::score += 1000;
+		time.Delay(100);
+	}
+
 	if (phase == 3) {
 		//debug mode
 		phase = 2;
 	}
+
 	
 
 	game_system.map.bomb[0][0].bomb_step_text(level, game_system.map.bomb);
-	if (Step::step <= 0) {
+	if ((Step::step <= 0) && (pass)){
+		game_system.canMove = false;
 		if (starNum > 0) {
 			phase = 2;
 		}
@@ -305,13 +321,18 @@ void CGameStateRun::OnShow()
 		}
 
 	}
+	else if((Step::step <= 0) && (!pass)) {
+		phase = 1;
+	}
 	game_system.Ui.condition_show(phase,starNum);
 	if (showEffect) {
 		//game_system.Goal.TEST(showEffect);
 		//game_system.map.Show_effect();
-		game_system.Effect.Show_effect();
+		game_system.effectlevel.Show_effect();
 		//game_system.effectlevel.TEST2(0,0,game_system.effectlevel.effect[0][0]);
 		//game_system.effectlevel.TEST2(0, 0, 1);
 	}
+
+	
 	
 }
