@@ -20,6 +20,7 @@ namespace game_framework {
 		}
 
 		~Effect() {
+
 		}
 
 		void effectLoad() {
@@ -40,11 +41,15 @@ namespace game_framework {
 		}
 
 		void shine(int X, int Y, int i = 1) {
-			effect[X][Y] = i; // 修改 vector 中的值
+			if (X < 10 && Y < 10) {
+				effect[X][Y] = i; // 
+			}
 		}
 
 		void Unshine(int X, int Y) {
-			effect[X][Y] = 0; // 修改 vector 中的值
+			if (X < 10 && Y < 10) {
+				effect[X][Y] = 0; // 
+			}
 		}
 
 		void TEST3(int A) {
@@ -64,10 +69,7 @@ namespace game_framework {
 		void Show_effect() {
 			for (int i = 0; i < 10; i++) {
 				for (int j = 0; j < 10; j++) {
-					TEST2(i, j, effect[i][j]);
-					TEST3(effect[i][j]);
 					if (effect[i][j] == 1) {
-						TEST2(i, j, effect[i][j]);
 						effectlevel[i][j].ShowBitmap();
 					}
 					else if (effect[i][j] == 2) {

@@ -21,9 +21,11 @@ namespace game_framework {
 			bomb[x][y].SetFrameIndexOfBitmap(RandNum);
 			map_level[level][x][y] = 4;
 		}
-		void set_bomb_step(int x, int y, int level, Bomb bomb[10][10], int step_num) {
-			int RandNum = rand() % 6 + 1;
+		void set_bomb_step(int x, int y, Bomb bomb[10][10], int step_num) {
 			bomb_step[x][y] = step_num;
+		}
+		int get_bomb_step(int x, int y, Bomb bomb[10][10]) {
+			return bomb_step[x][y];
 		}
 		void bomb_step_text(int level, Bomb bomb[10][10]) {
 			CDC *pDC = CDDraw::GetBackCDC();
@@ -42,7 +44,6 @@ namespace game_framework {
 				for (int j = 0; j < 10; j++) {
 					if (map_level[level][i][j] == 4) {
 						bomb_step[i][j]--;
-						return;
 					}
 				}
 			}
@@ -50,7 +51,7 @@ namespace game_framework {
 		bool is_bomb(int x, int y, int level) {
 			return map_level[level][x][y] == 4;
 		}
-	private:
+
 		int bomb_step[10][10] = {
 			{20,20,20,20,20,20,20,20,20,20},
 			{20,20,20,20,20,20,20,20,20,20},
