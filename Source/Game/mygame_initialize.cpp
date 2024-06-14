@@ -60,6 +60,7 @@ void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 	}
 	if (level > -1) {
 		levelrank::value = level;
+
 		GotoGameState(GAME_STATE_RUN);
 	}
 }

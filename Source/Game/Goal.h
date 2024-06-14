@@ -25,14 +25,14 @@ namespace game_framework {
 		CMovingBitmap goalicon[3];
 		CMovingBitmap check[3];
 		int rankgoal[30][3] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0},
-								{6,7,17}, {7,8,9}, {8,9,10}, {6,7,8}, {10,10,10},
-								{11,12,21}, {11,14,16}, {9,10,17}, {8,9,10}, {15,16,17},
-								{10,11,26}, {12,13,26}, {10,20,21}, {22,25,26}, {23,25,26},
+								{6,7,17}, {7,11,13}, {8,12,16}, {6,7,18}, {3,4,5},
+								{11,12,21}, {11,14,16}, {9,10,17}, {8,9,10}, {15,16,20},
+								{10,11,26}, {14,18,26}, {10,20,21}, {22,25,26}, {23,25,26},
 								{16,17,26}, {17,18,26}, {10,20,27}, {22,27,29}, {23,24,27},
 								{16,17,30}, {26,27,29}, {26,29,30}, {2,3,28}, {26,27,28} };
 
 		int goalnumber[30][3] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0},
-								 {6,1,1}, {1,2,2}, {2,2,2}, {15,2,2}, {2,2,2},
+								 {6,1,1}, {1,2,2}, {2,2,2}, {15,2,2}, {20,20,20},
 								 {2,2,2}, {2,2,2}, {2,2,2}, {2,2,2}, {2,2,2},
 								 {1, 2 ,1}, {2,2,3}, {2,2,2}, {3,3,2}, {2,2,19},
 								 {2,2,4}, {2,2,2}, {2,2,64}, {2,16,8}, {2,2,8},
@@ -53,9 +53,9 @@ namespace game_framework {
 					"resources/candy/orange-candy-col.bmp","resources/candy/orange-candy-pack.bmp" ,"resources/candy/color-ball.bmp",
 					"resources/cherry.bmp","resources/block/glass.bmp","resources/block/sugar.bmp","resources/block/X_block.bmp","resources/bomb/bomb.bmp" }, RGB(255, 255, 255));//30炸彈    31巧克力
 				check[i].LoadBitmapByString({"resources/check.bmp" }, RGB(255, 255, 255));
-				goalicon[i].SetTopLeft(225 + goalicon[i].GetWidth()*i + i * 40, 75);
+				goalicon[i].SetTopLeft(225 + 105*i , 75);
 
-				check[i].SetTopLeft(275 + i*105 , 75 + 10);
+				check[i].SetTopLeft(280 + i*105 , 75 + 10);
 			}
 			goalInit(level);
 
@@ -109,7 +109,7 @@ namespace game_framework {
 				else {
 					CDC *pDC = CDDraw::GetBackCDC();
 					CTextDraw::ChangeFontLog(pDC, 20, "微軟正黑體", RGB(255, 255, 255));
-					CTextDraw::Print(pDC, 295 + i * 110, 90, to_string(goal[i]));
+					CTextDraw::Print(pDC, 295 + i * 108, 90, to_string(goal[i]));
 					//CTextDraw::Print(pDC, X + 5, Y + 40, to_string(20));
 					CDDraw::ReleaseBackCDC();
 				}

@@ -210,7 +210,15 @@ namespace game_framework {
 			return (600 > point.x && point.x > 150) && (800 > point.y && point.y > 640) && start_loading.GetFrameIndexOfBitmap() == 2;
 		}
 		bool IS_DEBUG_MODE(CPoint point) {
-			return debug_mode_button.isClick_CMovingBitmap(debug_mode_button, point);
+			if (debug_mode_button.isClick_CMovingBitmap(debug_mode_button, point)) {
+				if (debug_mode) {
+					debug_mode = false;
+				}
+				else {
+					debug_mode = true;
+				}
+			}
+			return debug_mode;
 		}
 		bool IS_NEXT(CPoint point) {
 			return next.isClick_CMovingBitmap(next, point);
@@ -222,6 +230,13 @@ namespace game_framework {
 
 		bool IS_HOME(CPoint point) {
 			return home.isClick_CMovingBitmap(home, point);
+		}
+		void DEBUG_SHOW() {
+			CDC *pDC = CDDraw::GetBackCDC();
+			CTextDraw::ChangeFontLog(pDC, 20, "·L³n¥¿¶ÂÅé", RGB(255, 255, 255));
+			//CTextDraw::Print(pDC, 500, 900, "Rank:" + to_string(rank));
+			CTextDraw::Print(pDC, 400, 910, "DEBUG MODE:ON" );
+			CDDraw::ReleaseBackCDC();
 		}
 		CMovingBitmap start_loading;
 		CMovingBitmap start_UI;
@@ -242,6 +257,7 @@ namespace game_framework {
 		CMovingBitmap setting;
 		CMovingBitmap close;
 		CMovingBitmap debug_mode_button;
+		bool debug_mode = false;
 		//Step step;
 		//Score score;
 	};

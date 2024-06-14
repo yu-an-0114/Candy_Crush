@@ -55,8 +55,9 @@ namespace game_framework {
 		int phase = -1;
 		int starNum = 0;
 		bool pass = false;
+		//bool loading = true;
 		CSpecialEffect time;
-
+		
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面

@@ -362,6 +362,7 @@ namespace game_framework {
 					CTextDraw::Print(pDC, 270 + 20 * j, 15 * i, to_string(map.Bomb.bomb_step[i][j]));
 				}
 			}	
+			
 			CTextDraw::Print(pDC, 480 , 15 , to_string(test));
 			CDDraw::ReleaseBackCDC();
 		}
@@ -442,7 +443,7 @@ namespace game_framework {
 				effectlevel.shine(i, j);
 				map_level[level][i][j] = 4;
 				map_level[level][x][y] = 1;
-				test = map.Bomb.get_bomb_step(x, y, map.bomb);
+			
 				int tem = map.Bomb.get_bomb_step(i, j, map.bomb);
 				map.Bomb.set_bomb_step(i, j, map.bomb, map.Bomb.get_bomb_step(x, y, map.bomb));
 				map.Bomb.set_bomb_step(x, y, map.bomb, tem);
@@ -678,7 +679,48 @@ namespace game_framework {
 			}
 		}
 		
+		void game_init(int level) {
+			map.build_map(level);
+			
+			Step::step = Step.stepInit(level);
 
+			for (int i = 0; i < 10; i++) {
+				for (int j = 0; j < 10; j++) {
+					pre_map_level[i][j] = get_object_type(i, j, level);
+				}
+			}
+			int init_map_level[10][10];
+			for (int i = 0; i < 10; i++) {
+				for (int j = 0; j < 10; j++) {
+					init_map_level[i][j] = get_object_type(i, j, level);
+				}
+			}
+			map.build_map(level);
+			//for (int t = 0; t < 10; t++) {
+				//object_check_element(clickX, clickY, changeX, changeY, level);
+				for (int i = 0; i < 10; i++) {
+					for (int j = 0; j < 10; j++) {
+						while(color_connet(i, j, true, level, true) >= 3 || color_connet(i, j, false, level, true) >= 3 || color_connet(i, j, true, level, false) >= 3 || color_connet(i, j, false, level, false) >= 3) {
+							if (get_object_type(i, j, level) == 1) {
+								map.candy[i][j].set_candy_random(i, j, map.candy);
+							}
+							else if (get_object_type(i, j, level) == 2) {
+								map.candy[i][j].set_candy_random(i, j, map.candy);
+							}
+							else if (get_object_type(i, j, level) == 4) {
+								map.Bomb.set_bomb_random(i, j, level,map.bomb);
+							}
+							
+							else if (map.Glass.is_glass(i,j,level)) {
+								map.candy[i][j].set_candy_random(i, j, map.candy);
+							}
+						}	
+					}
+				}
+			//}
+			Goal.GoalSetting(level);
+			Score::score = 0;
+		}
 
 		void object_element(int x, int y, int level,int t) {
 			if (t == 0) {
@@ -710,6 +752,7 @@ namespace game_framework {
 			if (map_level[level][x][y] == 12) {
 				Goal.SetGoal(27);
 			}
+			Score::score += 100;
 			t++;
 			if (map_level[level][x][y] == 0 || map_level[level][x][y] == 3 || map_level[level][x][y] == 5 || visited[x][y] == 1) {
 				return;
@@ -890,7 +933,6 @@ namespace game_framework {
 		}
 		void obstacel_destory(int x,int y,int level) {
 			if (0 <= x - 1 && x - 1 < 10) {
-				
 				if (6<=map_level[level][x - 1][y] && map_level[level][x - 1][y]<=7) {
 					if (map_level[level][x - 1][y] == 6) {
 						step_has_chocolate_destory = true;
@@ -901,6 +943,8 @@ namespace game_framework {
 				}
 				else if (8 <= map_level[level][x - 1][y] && map_level[level][x - 1][y] <= 11) {
 					map_level[level][x - 1][y]--;
+					int sugar_index = map.sugar[x - 1][y].GetFrameIndexOfBitmap();
+					map.sugar[x - 1][y].SetFrameIndexOfBitmap(sugar_index - 1);
 				}
 			}
 			if (0 <= y + 1 && y + 1 < 10) {
@@ -915,9 +959,12 @@ namespace game_framework {
 				}
 				else if (8 <= map_level[level][x][y + 1] && map_level[level][x][y + 1] <= 11) {
 					map_level[level][x][y + 1] --;
+					int sugar_index = map.sugar[x][y + 1].GetFrameIndexOfBitmap();
+					map.sugar[x][y + 1].SetFrameIndexOfBitmap(sugar_index - 1);
 				}
 			}
 			if (0 <= x + 1 && x + 1 < 10) {
+				
 				if (6 <= map_level[level][x + 1][y] && map_level[level][x + 1][y] <= 7) {
 					if (map_level[level][x + 1][y] == 6) {
 						step_has_chocolate_destory = true;
@@ -928,7 +975,10 @@ namespace game_framework {
 					effectlevel.shine(x+1, y);
 				}
 				else if (8 <= map_level[level][x + 1][y] && map_level[level][x + 1][y] <= 11) {
+					
 					map_level[level][x + 1][y]--;
+					int sugar_index = map.sugar[x + 1][y].GetFrameIndexOfBitmap();
+					map.sugar[x + 1][y].SetFrameIndexOfBitmap(sugar_index - 1);
 				}
 			}
 			if (0 <= y - 1 && y - 1 < 10) {
@@ -943,6 +993,8 @@ namespace game_framework {
 				}
 				else if (8 <= map_level[level][x][y - 1] && map_level[level][x][y - 1] <= 11) {
 					map_level[level][x][y - 1] --;
+					int sugar_index = map.sugar[x][y - 1].GetFrameIndexOfBitmap();
+					map.sugar[x][y - 1].SetFrameIndexOfBitmap(sugar_index - 1);
 				}
 			}
 		}
@@ -1049,6 +1101,7 @@ namespace game_framework {
 				{0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0} };
+		int pre_map_level[10][10];
 	};
 }
 

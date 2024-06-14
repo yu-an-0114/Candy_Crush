@@ -25,12 +25,18 @@ CGameStateRun::~CGameStateRun()
 
 void CGameStateRun::OnBeginState()
 {
-	level = levelrank::value;//很重要
-	game_system.map.build_map(level);
 	
+	level = levelrank::value;//很重要
+	game_system.game_init(level);
+	/*game_system.map.build_map(level);
+	Score::score = 0;
 	game_system.Goal.GoalSetting(levelrank::value);
 	Step::step = game_system.Step.stepInit(levelrank::value);
-	level = levelrank::value;
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 10; j++) {
+			game_system.pre_map_level[i][j] = game_system.get_object_type(i, j, level);
+		}
+	}
 	int init_map_level[10][10];
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
@@ -62,7 +68,7 @@ void CGameStateRun::OnBeginState()
 				}
 			}
 		}
-	}
+	}*/
 }
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
@@ -98,8 +104,11 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 				break;
 			}
 		}
-		
-		game_system.map.Bomb.bomb_step_update(level, game_system.map.bomb);
+		if (!game_system.Ui.debug_mode) {
+			game_system.map.Bomb.bomb_step_update(level, game_system.map.bomb);
+		}
+
+
 		if (!game_system.step_has_chocolate_destory) {
 			game_system.chocolate_generate(level);
 		}
@@ -133,7 +142,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	game_system.canMove = true;
 	game_system.mouse_candy_state = true;
 	game_system.candy_start = point;
-	Score::score = Score::score + 10;
+	//Score::score = Score::score + 10;
 	showEffect = false;
 	if (phase == -1) {
 		if (game_system.Ui.IS_SETTING(point)) {
@@ -141,7 +150,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 		}
 	}
 	else if (phase >= 0) {
-		if (phase == 0) {
+		if ((phase == 0) | (phase == 3)) {
 			if (game_system.Ui.IS_SETTING(point)) {
 				phase = -1;
 			}
@@ -153,29 +162,41 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 			if (game_system.Ui.IS_NEXT(point)) {
 				phase = -1;
 				level += 1;
-				levelrank::value += 1;
-				game_system.Goal.goalInit(levelrank::value);
-				Step::step = game_system.Step.stepInit(levelrank::value);
-				game_system.map.build_map(levelrank::value);
+
+				game_system.Goal.goalInit(level);
+				Step::step = game_system.Step.stepInit(level);
+				game_system.map.build_map(level);
 				Score::score = 0;
 			}
 		}
 		if (game_system.Ui.IS_RETRY(point)) {
 			phase = -1;
-			game_system.map.build_map(levelrank::value);
+			//game_system.map.build_map(levelrank::value);
+			for (int i = 0; i < 10; i++) {
+				for (int j = 0; j < 10; j++) {
+					map_level[level][i][j]=game_system.pre_map_level[i][j];
+				}
+			}
 			game_system.Goal.goalInit(levelrank::value);
 			Step::step = game_system.Step.stepInit(levelrank::value);
-			Score::score = 0;
+
+			game_system.game_init(level);
+			
 		}
 		if (game_system.Ui.IS_HOME(point)) {
+			for (int i = 0; i < 10; i++) {
+				for (int j = 0; j < 10; j++) {
+					map_level[level][i][j] = game_system.pre_map_level[i][j];
+				}
+			}
 			phase = -1;
 			GotoGameState(GAME_STATE_INIT);
 			Score::score = 0;
 			Step::step = game_system.Step.stepInit(level);
-			//levelrank::value = -1;
+			levelrank::value = -1;
 		}
 		if (game_system.Ui.IS_DEBUG_MODE(point)) {
-			phase = 3;
+
 		}
 	}
 }
@@ -199,10 +220,13 @@ void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 					continue;
 				}
 				if (game_system.map.candy_lattice[i][j].isClick_CMovingBitmap(game_system.map.candy_lattice[i][j], point)) {
-					if ((game_system.clickX - 1 == i && game_system.clickY == j) || (game_system.clickX + 1 == i && game_system.clickY == j) || (game_system.clickX == i && game_system.clickY - 1 == j) || (game_system.clickX == i && game_system.clickY + 1 == j)) {
+					if ((game_system.clickX - 1 == i && game_system.clickY == j) || (game_system.clickX + 1 == i && game_system.clickY == j) || (game_system.clickX == i && game_system.clickY - 1 == j) || (game_system.clickX == i && game_system.clickY + 1 == j) || game_system.Ui.debug_mode) {
 						change = 1;
 						game_system.Step.step_update();
-						
+						if (game_system.Ui.debug_mode) {
+							Step::step += 1;
+						}
+
 						game_system.object_change(game_system.clickX, game_system.clickY, i, j, level);	
 						game_system.changeX = game_system.clickX;
 						game_system.changeY = game_system.clickY;
@@ -283,9 +307,14 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 void CGameStateRun::OnShow()
 {
 	//Sleep(100);
+	if (game_system.Ui.debug_mode) {
+		game_system.Ui.DEBUG_SHOW();
+	}
+	else {
+		game_system.Ui.background_show();
+		starNum = game_system.Score.score_board_show(Score::score, scoreStar_place);
+	}
 
-	game_system.Ui.background_show();
-	starNum = game_system.Score.score_board_show(Score::score, scoreStar_place);
 	game_system.map.show_map(level);
 	//game_system.map.bomb[0][0].bomb_step_text(level, game_system.map.bomb);
 	if ((phase == -1) | (phase == 0)) {
@@ -296,6 +325,15 @@ void CGameStateRun::OnShow()
 
 	if (game_system.Goal.Pass()) {
 		pass = true;
+		if (level < 5) {
+			if (starNum == 3) {
+				pass = true;
+			}
+			else {
+				pass = false;
+			}
+
+		}
 	}
 	else {
 		pass = false;
@@ -307,12 +345,12 @@ void CGameStateRun::OnShow()
 		Score::score += 1000;
 		time.Delay(100);
 	}
-
+	/*
 	if (phase == 3) {
 		//debug mode
 		
 		phase = 2;
-	}
+	}*/
 
 	
 

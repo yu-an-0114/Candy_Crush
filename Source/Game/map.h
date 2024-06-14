@@ -225,7 +225,7 @@ namespace game_framework {
 		int map_bottom(int row, int col, int level) {
 			for (int i = row; i < 10; i++) {
 				if (none_map(i, col, level)) {
-					return i + 1;
+					return i - 1;
 				}
 			}
 			return 9;

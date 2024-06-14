@@ -24,11 +24,11 @@ namespace game_framework {
 			use_step = true;
 			step--;
 		}
-		int rankstep[30] = { 20, 20, 20, 20, 30,
-							 20, 20, 20, 20, 30,
-							 20, 20, 20, 20, 30,
-							 20, 20, 20, 20, 30,
-							 20, 20, 20, 20, 30,
+		int rankstep[30] = { 30, 30, 30, 30, 30,
+							 30, 30, 30, 40, 30,
+							 30, 30, 30, 30, 30,
+							 30, 30, 30, 30, 30,
+							 30, 30, 30, 30, 30,
 							 40, 40, 40, 40, 40 };
 		int stepInit(int level) {
 			return rankstep[level];
