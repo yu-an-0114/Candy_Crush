@@ -108,7 +108,7 @@ namespace game_framework {
 				}
 				else {
 					CDC *pDC = CDDraw::GetBackCDC();
-					CTextDraw::ChangeFontLog(pDC, 20, "微軟正黑體", RGB(255, 255, 255));
+					CTextDraw::ChangeFontLog(pDC, 20, "Futura", RGB(255, 255, 255));
 					CTextDraw::Print(pDC, 295 + i * 108, 90, to_string(goal[i]));
 					//CTextDraw::Print(pDC, X + 5, Y + 40, to_string(20));
 					CDDraw::ReleaseBackCDC();
@@ -119,14 +119,14 @@ namespace game_framework {
 
 		void RANK(int A) {
 			CDC *pDC = CDDraw::GetBackCDC();
-			CTextDraw::ChangeFontLog(pDC, 20, "微軟正黑體", RGB(255, 255, 255));
+			CTextDraw::ChangeFontLog(pDC, 20, "Futura", RGB(255, 255, 255));
 			//CTextDraw::Print(pDC, 500, 900, "Rank:" + to_string(rank));
 			CTextDraw::Print(pDC, 400, 900, "Rank:" + to_string(A));
 			CDDraw::ReleaseBackCDC();
 		}
 		void TEST(int A) {
 			CDC *pDC = CDDraw::GetBackCDC();
-			CTextDraw::ChangeFontLog(pDC, 20, "微軟正黑體", RGB(255, 255, 255));
+			CTextDraw::ChangeFontLog(pDC, 20, "Futura", RGB(255, 255, 255));
 			CTextDraw::Print(pDC, 100, 900, "Test:" + to_string(A));
 			CDDraw::ReleaseBackCDC();
 		}

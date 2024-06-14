@@ -54,14 +54,14 @@ namespace game_framework {
 
 		void TEST3(int A) {
 			CDC *pDC = CDDraw::GetBackCDC();
-			CTextDraw::ChangeFontLog(pDC, 20, "微軟正黑體", RGB(255, 255, 255));
+			CTextDraw::ChangeFontLog(pDC, 20, "Futura", RGB(255, 255, 255));
 			CTextDraw::Print(pDC, 150, 900 + 10, "TEST3:" + to_string(A));
 			CDDraw::ReleaseBackCDC();
 		}
 
 		void TEST2(int A, int B, int C) {
 			CDC *pDC = CDDraw::GetBackCDC();
-			CTextDraw::ChangeFontLog(pDC, 20, "微軟正黑體", RGB(255, 255, 255));
+			CTextDraw::ChangeFontLog(pDC, 20, "Futura", RGB(255, 255, 255));
 			CTextDraw::Print(pDC, 100 + int(A) * 5, 1000 + 10 * int(B), "TEST2:");
 			CDDraw::ReleaseBackCDC();
 		}

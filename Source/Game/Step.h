@@ -40,7 +40,7 @@ namespace game_framework {
 		}
 		void stepShow() {
 			CDC *pDC = CDDraw::GetBackCDC();
-			CTextDraw::ChangeFontLog(pDC, 20, "·L³n¥¿¶ÂÅé", RGB(255, 255, 255));
+			CTextDraw::ChangeFontLog(pDC, 20, "Futura", RGB(255, 255, 255));
 			CTextDraw::Print(pDC, 20, 90, "Step:" + to_string(step));
 			CDDraw::ReleaseBackCDC();
 		}

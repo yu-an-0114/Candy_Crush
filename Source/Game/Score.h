@@ -80,7 +80,7 @@ namespace game_framework {
 		}
 		void scoreShow() {
 			CDC *pDC = CDDraw::GetBackCDC();
-			CTextDraw::ChangeFontLog(pDC, 20, "·L³n¥¿¶ÂÅé", RGB(255, 255, 255));
+			CTextDraw::ChangeFontLog(pDC, 20, "Futura", RGB(255, 255, 255));
 			CTextDraw::Print(pDC, 20, 60, "Score:" + to_string(score));
 			CDDraw::ReleaseBackCDC();
 		}

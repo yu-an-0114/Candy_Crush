@@ -233,7 +233,7 @@ namespace game_framework {
 		}
 		void DEBUG_SHOW() {
 			CDC *pDC = CDDraw::GetBackCDC();
-			CTextDraw::ChangeFontLog(pDC, 20, "·L³n¥¿¶ÂÅé", RGB(255, 255, 255));
+			CTextDraw::ChangeFontLog(pDC, 20, "Futura", RGB(255, 255, 255));
 			//CTextDraw::Print(pDC, 500, 900, "Rank:" + to_string(rank));
 			CTextDraw::Print(pDC, 400, 910, "DEBUG MODE:ON" );
 			CDDraw::ReleaseBackCDC();

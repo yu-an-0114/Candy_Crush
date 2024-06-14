@@ -397,7 +397,7 @@ namespace game_framework {
 		}
 		void map_level_text(int level) {
 			CDC *pDC = CDDraw::GetBackCDC();
-			CTextDraw::ChangeFontLog(pDC, 10, "微軟正黑體", RGB(255, 255, 255));
+			CTextDraw::ChangeFontLog(pDC, 10, "Futura", RGB(255, 255, 255));
 			for (int i = 0; i < 10; i++) {
 				for (int j = 0; j < 10; j++) {
 					CTextDraw::Print(pDC, 100 + 15 * j, 15 * i, to_string(map_level[level][i][j]));
