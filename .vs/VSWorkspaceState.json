@@ -3,8 +3,9 @@
     "",
     "\\Candy_Crush-yuan",
     "\\Candy_Crush-yuan\\Source",
-    "\\Candy_Crush-yuan\\Source\\Game"
+    "\\Candy_Crush-yuan\\Source\\Game",
+    "\\Candy_Crush-yuan\\Source\\Library"
   ],
-  "SelectedNode": "\\Candy_Crush-yuan\\game.sln",
+  "SelectedNode": "\\Candy_Crush-yuan\\Source\\Library\\gameutil.cpp",
   "PreviewInSolutionExplorer": false
 }
