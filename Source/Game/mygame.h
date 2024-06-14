@@ -55,7 +55,7 @@ namespace game_framework {
 		int phase = -1;
 		int starNum = 0;
 		bool pass = false;
-		//bool loading = true;
+		bool loading = false;
 		CSpecialEffect time;
 		
 	protected:

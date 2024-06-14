@@ -122,54 +122,35 @@ namespace game_framework {
 						if (Candy.is_candy(i, j, level, candy)) {
 							candy[i][j].ShowBitmap();
 						}
-						else {
-							candy[i][j].UnshowBitmap();
-						}
-						if (X_Block.is_x_block(i, j, level)) {
+
+						else if (X_Block.is_x_block(i, j, level)) {
 							candy[i][j].ShowBitmap();
 							x_block[i][j].ShowBitmap();
 						}
-						else {
-							candy[i][j].UnshowBitmap();
-							x_block[i][j].UnshowBitmap();
-						}
-						if (Cherry.is_cherry(i, j, level)) {
+
+						else if (Cherry.is_cherry(i, j, level)) {
 							cherry[i][j].ShowBitmap();
 						}
-						else {
-							cherry[i][j].UnshowBitmap();
-						}
-						if (Bomb.is_bomb(i, j, level)) {
+
+						else if (Bomb.is_bomb(i, j, level)) {
 							bomb[i][j].ShowBitmap();
 						}
-						else {
-							bomb[i][j].UnshowBitmap();
-						}
-						if (Chocolate_Machine.is_chocolate_machine(i, j, level)) {
+
+						else if (Chocolate_Machine.is_chocolate_machine(i, j, level)) {
 							chocolate_machine[i][j].ShowBitmap();
 						}
-						else {
-							chocolate_machine[i][j].UnshowBitmap();
-						}
-						if (Chocolate.is_chocolate(i, j, level)) {
+
+						else if (Chocolate.is_chocolate(i, j, level)) {
 							chocolate[i][j].ShowBitmap();
 						}
-						else {
-							chocolate[i][j].UnshowBitmap();
-						}
-						if (Sugar.is_sugar(i, j, level)) {
+
+						else if (Sugar.is_sugar(i, j, level)) {
 							sugar[i][j].ShowBitmap();
 						}
-						else {
-							sugar[i][j].UnshowBitmap();
-						}
-						if (Glass.is_glass(i, j, level)) {
+
+						else if (Glass.is_glass(i, j, level)) {
 							glass[i][j].ShowBitmap();
 							candy[i][j].ShowBitmap();
-						}
-						else {
-							glass[i][j].UnshowBitmap();
-							candy[i][j].UnshowBitmap();
 						}
 					}
 				}

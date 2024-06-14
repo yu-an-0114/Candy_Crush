@@ -25,9 +25,10 @@ CGameStateRun::~CGameStateRun()
 
 void CGameStateRun::OnBeginState()
 {
-	
+
 	level = levelrank::value;//很重要
 	game_system.game_init(level);
+
 	/*game_system.map.build_map(level);
 	Score::score = 0;
 	game_system.Goal.GoalSetting(levelrank::value);
@@ -76,8 +77,6 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	//game_system.map_level_text(level);
 	
 	game_system.map_level_text(level);
-
-	//game_system.map.Bomb.bomb_step_text(level, game_system.map.bomb);
 	if (game_system.Step.use_step) {
 		
 		int old_map_level[10][10] ;
@@ -100,7 +99,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 				}
 			}
 			if (out) {
-				game_system.Step.use_step = false;
+				//game_system.Step.use_step = false;
 				break;
 			}
 		}
@@ -114,13 +113,22 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		}
 		game_system.Step.use_step = false;
 		game_system.step_has_chocolate_destory = false;
+		
+	}
+	if (game_system.nothing_move(level)) {
+		/*for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				if (map_level[level][i][j] == 1 && game_system.map.candy[i][j].GetFrameIndexOfBitmap()<=6) {
+					game_system.map.Candy.set_candy_random(i, j, game_system.map.candy);
+				}
+			}
+		}*/
 	}
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	//game_system.Ui.background();
-	
 	game_system.Ui.background();
 	game_system.Score.score_strip();
 	game_system.Score.score_background_init(scoreStar_place);
@@ -150,7 +158,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 		}
 	}
 	else if (phase >= 0) {
-		if ((phase == 0) | (phase == 3)) {
+		if ((phase == 0) || (phase == 3)) {
 			if (game_system.Ui.IS_SETTING(point)) {
 				phase = -1;
 			}
@@ -220,28 +228,30 @@ void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 					continue;
 				}
 				if (game_system.map.candy_lattice[i][j].isClick_CMovingBitmap(game_system.map.candy_lattice[i][j], point)) {
-					if ((game_system.clickX - 1 == i && game_system.clickY == j) || (game_system.clickX + 1 == i && game_system.clickY == j) || (game_system.clickX == i && game_system.clickY - 1 == j) || (game_system.clickX == i && game_system.clickY + 1 == j) || game_system.Ui.debug_mode) {
+					
+					if ((( (game_system.clickX - 1 == i && game_system.clickY == j) || (game_system.clickX + 1 == i && game_system.clickY == j) || (game_system.clickX == i && game_system.clickY - 1 == j ) || (game_system.clickX == i && game_system.clickY + 1 == j ) )&& (game_system.can_change(i, j, game_system.clickX, game_system.clickY, level) || game_system.can_change(game_system.clickX, game_system.clickY,i,j, level)) || game_system.Ui.debug_mode)) {
 						change = 1;
-						game_system.Step.step_update();
-						if (game_system.Ui.debug_mode) {
-							Step::step += 1;
-						}
-
-						game_system.object_change(game_system.clickX, game_system.clickY, i, j, level);	
+						game_system.object_change(game_system.clickX, game_system.clickY, i, j, level);
+						
+						game_system.Step.use_step = true;
 						game_system.changeX = game_system.clickX;
 						game_system.changeY = game_system.clickY;
 						game_system.clickX = i;
 						game_system.clickY = j;
 						game_system.map.set_candy_lattice_center(game_system.clickX, game_system.clickY, level);
 						game_system.map.set_candy_lattice_center(game_system.changeX, game_system.changeY, level);
-						game_system.color_ball(level);
+						if (!game_system.Ui.debug_mode) {
+							game_system.Step.step_update();
+							game_system.color_ball(level);
+						}
+						
 						break;
 					}
 					else {
 						game_system.map.set_candy_lattice_center(game_system.clickX, game_system.clickY, level);
 					}
 				}
-				else if (i == 9 && j == 9) {
+				else{
 					game_system.map.set_candy_lattice_center(game_system.clickX, game_system.clickY, level);
 				}
 			}
@@ -316,8 +326,7 @@ void CGameStateRun::OnShow()
 	}
 
 	game_system.map.show_map(level);
-	//game_system.map.bomb[0][0].bomb_step_text(level, game_system.map.bomb);
-	if ((phase == -1) | (phase == 0)) {
+	if ((phase == -1) || (phase == 0)) {
 		game_system.Score.scoreShow();
 		game_system.Step.stepShow();
 		game_system.Goal.goalShow(level);
@@ -345,16 +354,14 @@ void CGameStateRun::OnShow()
 		Score::score += 1000;
 		time.Delay(100);
 	}
-	/*
-	if (phase == 3) {
-		//debug mode
-		
-		phase = 2;
-	}*/
+
 
 	
 
 	game_system.map.Bomb.bomb_step_text(level, game_system.map.bomb);
+	if (game_system.map.Bomb.IsBombZero(level, game_system.map.bomb)) {
+		phase = 1;
+	}
 	if ((Step::step <= 0) && (pass)){
 		game_system.canMove = false;
 		if (starNum > 0) {
@@ -370,11 +377,8 @@ void CGameStateRun::OnShow()
 	}
 	game_system.Ui.condition_show(phase,starNum);
 	if (showEffect) {
-		//game_system.Goal.TEST(showEffect);
-		//game_system.map.Show_effect();
 		game_system.effectlevel.Show_effect();
-		//game_system.effectlevel.TEST2(0,0,game_system.effectlevel.effect[0][0]);
-		//game_system.effectlevel.TEST2(0, 0, 1);
+
 	}
 
 	

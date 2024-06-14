@@ -1,4 +1,4 @@
-#include "../Library/gameutil.h"
+ï»¿#include "../Library/gameutil.h"
 #include "../Library/gamecore.h"
 #include <list>
 #include <vector>
@@ -29,7 +29,7 @@ namespace game_framework {
 								{11,12,21}, {11,14,16}, {9,10,17}, {8,9,10}, {15,16,20},
 								{10,11,26}, {14,18,26}, {10,20,21}, {22,25,26}, {23,25,26},
 								{16,17,26}, {17,18,26}, {10,20,27}, {22,27,29}, {23,24,27},
-								{16,17,30}, {26,27,29}, {26,29,30}, {2,3,28}, {26,27,28} };
+								{16,19,30}, {26,27,29}, {26,29,30}, {2,3,28}, {26,27,28} };
 
 		int goalnumber[30][3] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0},
 								 {6,1,1}, {1,2,2}, {2,2,2}, {15,2,2}, {20,20,20},
@@ -51,7 +51,7 @@ namespace game_framework {
 					"resources/candy/purple-candy-col.bmp","resources/candy/purple-candy-pack.bmp","resources/candy/green-candy-row.bmp" ,
 					"resources/candy/green-candy-col.bmp" ,"resources/candy/green-candy-pack.bmp","resources/candy/orange-candy-row.bmp" ,
 					"resources/candy/orange-candy-col.bmp","resources/candy/orange-candy-pack.bmp" ,"resources/candy/color-ball.bmp",
-					"resources/cherry.bmp","resources/block/glass.bmp","resources/block/sugar.bmp","resources/block/X_block.bmp","resources/bomb/bomb.bmp" }, RGB(255, 255, 255));//30¬µ¼u    31¥©§J¤O
+					"resources/cherry.bmp","resources/block/glass.bmp","resources/block/sugar.bmp","resources/block/X_block.bmp","resources/bomb/bomb.bmp" }, RGB(255, 255, 255));//30ç‚¸å½ˆ    31å·§å…‹åŠ›
 				check[i].LoadBitmapByString({"resources/check.bmp" }, RGB(255, 255, 255));
 				goalicon[i].SetTopLeft(225 + 105*i , 75);
 
@@ -108,7 +108,7 @@ namespace game_framework {
 				}
 				else {
 					CDC *pDC = CDDraw::GetBackCDC();
-					CTextDraw::ChangeFontLog(pDC, 20, "·L³n¥¿¶ÂÅé", RGB(255, 255, 255));
+					CTextDraw::ChangeFontLog(pDC, 20, "å¾®è»Ÿæ­£é»‘é«”", RGB(255, 255, 255));
 					CTextDraw::Print(pDC, 295 + i * 108, 90, to_string(goal[i]));
 					//CTextDraw::Print(pDC, X + 5, Y + 40, to_string(20));
 					CDDraw::ReleaseBackCDC();
@@ -119,14 +119,14 @@ namespace game_framework {
 
 		void RANK(int A) {
 			CDC *pDC = CDDraw::GetBackCDC();
-			CTextDraw::ChangeFontLog(pDC, 20, "·L³n¥¿¶ÂÅé", RGB(255, 255, 255));
+			CTextDraw::ChangeFontLog(pDC, 20, "å¾®è»Ÿæ­£é»‘é«”", RGB(255, 255, 255));
 			//CTextDraw::Print(pDC, 500, 900, "Rank:" + to_string(rank));
 			CTextDraw::Print(pDC, 400, 900, "Rank:" + to_string(A));
 			CDDraw::ReleaseBackCDC();
 		}
 		void TEST(int A) {
 			CDC *pDC = CDDraw::GetBackCDC();
-			CTextDraw::ChangeFontLog(pDC, 20, "·L³n¥¿¶ÂÅé", RGB(255, 255, 255));
+			CTextDraw::ChangeFontLog(pDC, 20, "å¾®è»Ÿæ­£é»‘é«”", RGB(255, 255, 255));
 			CTextDraw::Print(pDC, 100, 900, "Test:" + to_string(A));
 			CDDraw::ReleaseBackCDC();
 		}

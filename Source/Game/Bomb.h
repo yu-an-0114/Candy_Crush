@@ -24,6 +24,15 @@ namespace game_framework {
 		void set_bomb_step(int x, int y, Bomb bomb[10][10], int step_num) {
 			bomb_step[x][y] = step_num;
 		}
+		void bomb_init(int level, Bomb bomb[10][10]) {
+			for (int i = 0; i < 10; i++) {
+				for (int j = 0; j < 10; j++) {
+					if (map_level[level][i][j] == 4) {
+						set_bomb_step(i,j,bomb,20);
+					}
+				}
+			}
+		}
 		int get_bomb_step(int x, int y, Bomb bomb[10][10]) {
 			return bomb_step[x][y];
 		}
@@ -45,13 +54,27 @@ namespace game_framework {
 					if (map_level[level][i][j] == 4) {
 						bomb_step[i][j]--;
 					}
+					else {
+						bomb_step[i][j] = 0;
+					}
 				}
 			}
 		}
 		bool is_bomb(int x, int y, int level) {
 			return map_level[level][x][y] == 4;
 		}
-
+		bool IsBombZero(int level, Bomb bomb[10][10]) {
+			for (int i = 0; i < 10; i++) {
+				for (int j = 0; j < 10; j++) {
+					if (map_level[level][i][j] == 4) {
+						if (bomb_step[i][j] < 1) {
+							return true;
+						}
+					}
+				}
+			}
+			return false;
+		}
 		int bomb_step[10][10] = {
 			{20,20,20,20,20,20,20,20,20,20},
 			{20,20,20,20,20,20,20,20,20,20},
