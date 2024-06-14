@@ -43,7 +43,6 @@ namespace game_framework {
 			CTextDraw::ChangeFontLog(pDC, 20, "Futura", RGB(255, 255, 255));
 			CTextDraw::Print(pDC, 20, 90, "Step:" + to_string(step));
 			CDDraw::ReleaseBackCDC();
-		}
-		
+		}		
 	};
 }

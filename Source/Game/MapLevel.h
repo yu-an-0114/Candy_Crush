@@ -11,12 +11,6 @@
 #include <cmath>
 using namespace std;
 namespace game_framework {
-	/*
-	class MapLevel {
-	public:
-		static int map_level[30][10][10];
-	};
-	*/
 
 	static int map_level[30][10][10] = {
 		//1

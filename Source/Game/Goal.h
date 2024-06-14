@@ -94,9 +94,6 @@ namespace game_framework {
 		}
 
 		void goalShow(int level) {
-			//if (goal[0] == -1) {
-			//	return;
-			//}
 			for (int i = 0; i < 3; i++) {
 				if (rankgoal[level][i] == 0) {
 					continue;
@@ -110,7 +107,6 @@ namespace game_framework {
 					CDC *pDC = CDDraw::GetBackCDC();
 					CTextDraw::ChangeFontLog(pDC, 20, "Futura", RGB(255, 255, 255));
 					CTextDraw::Print(pDC, 295 + i * 108, 90, to_string(goal[i]));
-					//CTextDraw::Print(pDC, X + 5, Y + 40, to_string(20));
 					CDDraw::ReleaseBackCDC();
 				}
 
@@ -120,7 +116,6 @@ namespace game_framework {
 		void RANK(int A) {
 			CDC *pDC = CDDraw::GetBackCDC();
 			CTextDraw::ChangeFontLog(pDC, 20, "Futura", RGB(255, 255, 255));
-			//CTextDraw::Print(pDC, 500, 900, "Rank:" + to_string(rank));
 			CTextDraw::Print(pDC, 400, 900, "Rank:" + to_string(A));
 			CDDraw::ReleaseBackCDC();
 		}
@@ -130,7 +125,5 @@ namespace game_framework {
 			CTextDraw::Print(pDC, 100, 900, "Test:" + to_string(A));
 			CDDraw::ReleaseBackCDC();
 		}
-
-
 	};
 }

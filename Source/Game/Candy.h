@@ -15,6 +15,7 @@ namespace game_framework {
 	class Candy : public CMovingBitmap {
 	public:
 
+
 		bool is_candy(int x, int y, int level, Candy candy[10][10]) {
 			if (map_level[level][x][y] == 1 && candy[x][y].GetFrameIndexOfBitmap() != 0) {
 				return true;
@@ -42,11 +43,14 @@ namespace game_framework {
 		bool is_color_ball(int x, int y, Candy candy[10][10]) {
 			return candy[x][y].GetFrameIndexOfBitmap() == 25;
 		}
+		bool is_special_candy(int x, int y, Candy candy[10][10]) {
+			return candy[x][y].GetFrameIndexOfBitmap() >25;
+		}
 		void set_candy_random(int x, int y, Candy candy[10][10]) {
 			int RandNum = rand() % 6 + 1;
 			candy[x][y].SetFrameIndexOfBitmap(RandNum);
 		}
-		void candy_upgrade(int x, int y,int type,Candy candy[10][10]) {
+		void candy_upgrade(int x, int y, int type, Candy candy[10][10]) {
 			candy[x][y].SetFrameIndexOfBitmap(type);
 		}
 	private:

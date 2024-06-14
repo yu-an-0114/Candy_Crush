@@ -9,8 +9,6 @@
 #include <iostream>
 #include <stdio.h>
 #include <cmath>
-
-
 using namespace std;
 namespace game_framework {
 	class Score {
@@ -28,7 +26,6 @@ namespace game_framework {
 		int score_board_show(int score, int *place, int goal = 10000) {
 			score_board.ShowBitmap();
 			int index = 0;
-			//goal = 10000;
 			int percentage = (score * 100 / goal);
 			score_star.ShowBitmap();
 			score_star_2.ShowBitmap();
@@ -90,6 +87,6 @@ namespace game_framework {
 		CMovingBitmap score_star_2;
 		CMovingBitmap score_star_3;
 		CMovingBitmap score_point[100];
-		//CTextDraw score_text;
+
 	};
 }

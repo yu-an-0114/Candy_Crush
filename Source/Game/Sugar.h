@@ -16,6 +16,16 @@ namespace game_framework {
 		bool is_sugar(int x, int y, int level) {
 			return 7 <= map_level[level][x][y] && map_level[level][x][y] <= 11;
 		}
+		void sugar_element(int x, int y, int level) {
+			if (7 <= map_level[level][x][y] && map_level[level][x][y]) {
+				if (7 == map_level[level][x][y]) {
+					map_level[level][x][y] = 1;
+				}
+				else{
+					map_level[level][x][y] --;
+				}
+			}
+		}
 
 	private:
 

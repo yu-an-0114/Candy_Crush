@@ -25,57 +25,12 @@ CGameStateRun::~CGameStateRun()
 
 void CGameStateRun::OnBeginState()
 {
-
-	level = levelrank::value;//很重要
+	level = levelrank::value;
 	game_system.game_init(level);
-
-	/*game_system.map.build_map(level);
-	Score::score = 0;
-	game_system.Goal.GoalSetting(levelrank::value);
-	Step::step = game_system.Step.stepInit(levelrank::value);
-	for (int i = 0; i < 10; i++) {
-		for (int j = 0; j < 10; j++) {
-			game_system.pre_map_level[i][j] = game_system.get_object_type(i, j, level);
-		}
-	}
-	int init_map_level[10][10];
-	for (int i = 0; i < 10; i++) {
-		for (int j = 0; j < 10; j++) {
-			init_map_level[i][j] = game_system.get_object_type(i, j, level);
-		}
-	}
-	game_system.map.build_map(level);
-	for (int t = 0; t < 10; t++) {
-		game_system.object_check_element(game_system.clickX, game_system.clickY, game_system.changeX, game_system.changeY, level);
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
-				if (init_map_level[i][j] == 1 && (game_system.map.candy[i][j].GetFrameIndexOfBitmap() == 0) || game_system.map.candy[i][j].GetFrameIndexOfBitmap() > 6) {
-					game_system.map.candy[i][j].set_candy_random(i, j, game_system.map.candy);
-				}
-				else if (init_map_level[i][j] == 2 && game_system.get_object_type(i, j, level) != 2) {
-					game_system.set_object_type(i, j, level, 2);
-
-				}
-				else if (init_map_level[i][j] == 4 && game_system.map.candy[i][j].GetFrameIndexOfBitmap() == 0) {
-					game_system.map.candy[i][j].set_candy_random(i, j, game_system.map.candy);
-					game_system.set_object_type(i, j, level, 4);
-				}
-				else if ((6 <= init_map_level[i][j] && init_map_level[i][j] <= 11) && init_map_level[i][j] != game_system.get_object_type(i, j, level)) {
-					game_system.set_object_type(i, j, level, init_map_level[i][j]);
-				}
-				else if ((12 <= init_map_level[i][j] && init_map_level[i][j] <= 13) && init_map_level[i][j] != game_system.get_object_type(i, j, level)) {
-					game_system.set_object_type(i, j, level, init_map_level[i][j]);
-					game_system.map.candy[i][j].set_candy_random(i, j, game_system.map.candy);
-				}
-			}
-		}
-	}*/
 }
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
-	//game_system.map_level_text(level);
-	
 	game_system.map_level_text(level);
 	if (game_system.Step.use_step) {
 		
@@ -99,7 +54,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 				}
 			}
 			if (out) {
-				//game_system.Step.use_step = false;
+
 				break;
 			}
 		}
@@ -115,20 +70,10 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		game_system.step_has_chocolate_destory = false;
 		
 	}
-	if (game_system.nothing_move(level)) {
-		/*for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
-				if (map_level[level][i][j] == 1 && game_system.map.candy[i][j].GetFrameIndexOfBitmap()<=6) {
-					game_system.map.Candy.set_candy_random(i, j, game_system.map.candy);
-				}
-			}
-		}*/
-	}
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
-	//game_system.Ui.background();
 	game_system.Ui.background();
 	game_system.Score.score_strip();
 	game_system.Score.score_background_init(scoreStar_place);
@@ -150,7 +95,6 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 	game_system.canMove = true;
 	game_system.mouse_candy_state = true;
 	game_system.candy_start = point;
-	//Score::score = Score::score + 10;
 	showEffect = false;
 	if (phase == -1) {
 		if (game_system.Ui.IS_SETTING(point)) {
@@ -179,7 +123,6 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 		}
 		if (game_system.Ui.IS_RETRY(point)) {
 			phase = -1;
-			//game_system.map.build_map(levelrank::value);
 			for (int i = 0; i < 10; i++) {
 				for (int j = 0; j < 10; j++) {
 					map_level[level][i][j]=game_system.pre_map_level[i][j];
@@ -227,12 +170,10 @@ void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 				if (map_level[level][i][j] == 0) {
 					continue;
 				}
-				if (game_system.map.candy_lattice[i][j].isClick_CMovingBitmap(game_system.map.candy_lattice[i][j], point)) {
-					
+				if (game_system.map.candy_lattice[i][j].isClick_CMovingBitmap(game_system.map.candy_lattice[i][j], point)) {				
 					if ((( (game_system.clickX - 1 == i && game_system.clickY == j) || (game_system.clickX + 1 == i && game_system.clickY == j) || (game_system.clickX == i && game_system.clickY - 1 == j ) || (game_system.clickX == i && game_system.clickY + 1 == j ) )&& (game_system.can_change(i, j, game_system.clickX, game_system.clickY, level) || game_system.can_change(game_system.clickX, game_system.clickY,i,j, level)) || game_system.Ui.debug_mode)) {
 						change = 1;
 						game_system.object_change(game_system.clickX, game_system.clickY, i, j, level);
-						
 						game_system.Step.use_step = true;
 						game_system.changeX = game_system.clickX;
 						game_system.changeY = game_system.clickY;
@@ -261,7 +202,6 @@ void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 
 void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 {
-
 	if (game_system.mouse_candy_state == true && game_system.num == 0) {
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
@@ -278,8 +218,7 @@ void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 		}
 	}
 
-	if (game_system.mouse_candy_state == true && game_system.num == 1) {
-		
+	if (game_system.mouse_candy_state == true && game_system.num == 1) {		
 		if (map_level[level][game_system.clickX][game_system.clickY] == 1 || map_level[level][game_system.clickX][game_system.clickY] == 12 || map_level[level][game_system.clickX][game_system.clickY] == 13) {
 			if (oblect_click_mouse(game_system.map.candy)) {
 				object_move_with_mouse(game_system.map.candy,point);
@@ -316,7 +255,6 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 
 void CGameStateRun::OnShow()
 {
-	//Sleep(100);
 	if (game_system.Ui.debug_mode) {
 		game_system.Ui.DEBUG_SHOW();
 	}
@@ -341,7 +279,6 @@ void CGameStateRun::OnShow()
 			else {
 				pass = false;
 			}
-
 		}
 	}
 	else {
@@ -354,9 +291,6 @@ void CGameStateRun::OnShow()
 		Score::score += 1000;
 		time.Delay(100);
 	}
-
-
-	
 
 	game_system.map.Bomb.bomb_step_text(level, game_system.map.bomb);
 	if (game_system.map.Bomb.IsBombZero(level, game_system.map.bomb)) {
@@ -379,8 +313,5 @@ void CGameStateRun::OnShow()
 	if (showEffect) {
 		game_system.effectlevel.Show_effect();
 
-	}
-
-	
-	
+	}	
 }

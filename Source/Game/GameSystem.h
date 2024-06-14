@@ -103,97 +103,7 @@ namespace game_framework {
 			}
 			return -1;
 		}
-		/*
-		void object_down(int level) {
-			for (int j = 0; j < 10; j++) {
-				for (int i = 9; i >= 0; i--) {
-					if (is_can_down(i, j, level)) {
-						int k = i;
-						int RandNum = rand() % 6 + 1;
-						map.random_candy[j].SetTopLeft(map.candy_lattice[map.map_top(i,j,level)][j].GetLeft() + (map.Candy_Lattice.GetWidth() - map.candy[i][j].GetWidth()) / 2, map.candy_lattice[map.map_top(i, j, level)][j].GetTop() - (map.Candy_Lattice.GetHeight() - map.candy[i][j].GetHeight()) / 2);
-						map.random_candy[j].SetFrameIndexOfBitmap(RandNum);
-						while (1) {
-							if (can_down_row(k, j, level) == -1) {
-								k--;
-								continue;
-							}
-							if (map.Candy.is_candy(k, j, level, map.candy)) {
-								map.candy[k][j].SetTopLeft(map.candy[k][j].GetLeft(), map.candy[k][j].GetHeight() + 1);
-							}
-							else if (map.Cherry.is_cherry(k, j, level)) {
-								map.cherry[k][j].SetTopLeft(map.cherry[k][j].GetLeft(), map.cherry[k][j].GetHeight() + 1);
-							}
-							else if (map.Bomb.is_bomb(k, j, level)) {
-								map.bomb[k][j].SetTopLeft(map.bomb[k][j].GetLeft(), map.bomb[k][j].GetHeight() + 1);
-							}
-							else if (map.Glass.is_glass(k, j, level)) {
-								map.candy[k][j].SetTopLeft(map.candy[k][j].GetLeft(), map.candy[k][j].GetHeight() + 1);
-							}
-							if (k == map.map_top(k, j, level)) {
-								map.random_candy[j].SetTopLeft(map.random_candy[j].GetLeft(), map.random_candy[j].GetHeight() + 1);
-							}
-							time.Delay(1);
-							k--;
-							if (k < map.map_top(i, j, level)) {
-								k = i;
-								if (map.Candy.is_candy(k, j, level, map.candy)) {
-									if (map.candy[k][j].GetTop() == (map.candy_lattice[can_down_row(k, j, level)][j].GetTop() + (map.Candy_Lattice.GetHeight() - map.candy[can_down_row(k, j, level)][j].GetHeight()) / 2)) {
-										break;
-									}
-								}
-								else if (map.Cherry.is_cherry(k, j, level)) {
-									if (map.cherry[k][j].GetTop() == (map.candy_lattice[can_down_row(k, j, level)][j].GetTop() + (map.Candy_Lattice.GetHeight() - map.cherry[can_down_row(k, j, level)][j].GetHeight()) / 2)) {
-										break;
-									}
-								}
-								else if (map.Bomb.is_bomb(k, j, level)) {
-									if (map.bomb[k][j].GetTop() == (map.candy_lattice[can_down_row(k, j, level)][j].GetTop() + (map.Candy_Lattice.GetHeight() - map.bomb[can_down_row(k, j, level)][j].GetHeight()) / 2)) {
-										break;
-									}
-								}
-								else if (map.Glass.is_glass(k, j, level)) {
-									if (map.candy[k][j].GetTop() == (map.candy_lattice[can_down_row(k, j, level)][j].GetTop() + (map.Candy_Lattice.GetHeight() - map.candy[can_down_row(k, j, level)][j].GetHeight()) / 2)) {
-										break;
-									}
-								}
-							}
-						}
-						for (int k1 = i; k1 >= map.map_top(i, j, level); k1--) {
-							if (k1 == map.map_top(i, j, level)) {
-								map.candy[k1][j].SetFrameIndexOfBitmap(map.random_candy[j].GetFrameIndexOfBitmap());
-								continue;
-							}
-							if (search_up_can_down_row(k1, j, level) == -1) {
-								continue;
-							}
-							if (map.Candy.is_candy(search_up_can_down_row(k1, j, level), j, level, map.candy)) {
-								map.candy[k1][j].SetFrameIndexOfBitmap(map.candy[search_up_can_down_row(k1, j, level)][j].GetFrameIndexOfBitmap());
-								set_object_type(k1, j, level, 1);
-								set_object_type(search_up_can_down_row(k1, j, level), j, level, 1);
-								map.candy[search_up_can_down_row(k1, j, level)][j].SetFrameIndexOfBitmap(0);
-							}
-							else if (map.Cherry.is_cherry(search_up_can_down_row(k1, j, level), j, level)) {
-								set_object_type(k1, j, level, 3);
-								set_object_type(search_up_can_down_row(k1, j, level), j, level, 1);
-								map.candy[search_up_can_down_row(k1, j, level)][j].SetFrameIndexOfBitmap(0);
-							}
-							else if (map.Bomb.is_bomb(search_up_can_down_row(k1, j, level), j, level)) {
-								map.bomb[k1][j].SetFrameIndexOfBitmap(map.bomb[search_up_can_down_row(k1, j, level)][j].GetFrameIndexOfBitmap());
-								set_object_type(k1, j, level, 4);
-								set_object_type(search_up_can_down_row(k1, j, level), j, level, 1);
-								map.candy[search_up_can_down_row(k1, j, level)][j].SetFrameIndexOfBitmap(0);
-							}
-							else if (map.Glass.is_glass(search_up_can_down_row(k1, j, level), j, level)) {
-								map.candy[k1][j].SetFrameIndexOfBitmap(map.candy[search_up_can_down_row(k1, j, level)][j].GetFrameIndexOfBitmap());
-								map.candy[search_up_can_down_row(k1, j, level)][j].SetFrameIndexOfBitmap(0);
-							}
-						}
-					}
-				}
-			}
-		}*/
-
-
+		
 		void candy_special_and_special(int clickX, int clickY, int changeX, int changeY, int level) {
 			if (Ui.debug_mode) {
 				return;
@@ -256,36 +166,7 @@ namespace game_framework {
 				}
 			}
 		}
-		bool nothing_move(int level) {
-			for (int i = 0; i < 10; i++) {
-				for (int j = 0; j < 10; j++) {
-					if (i + 1 < 10 && object_have_color(i + 1, j, level)) {
-						
-						//if (can_change(i, j, i + 1, j, level)) {
-							//return false;
-						//}
-					}
-					if (i - 1 >= 0 && object_have_color(i - 1, j, level)) {
-						/*if (can_change(i, j, i - 1, j, level)) {
-							return false;
-						}*/
-
-					}
-					if (j + 1 < 10 && object_have_color(i, j + 1, level)) {
-						/*if (can_change(i, j, i, j + 1, level)) {
-							return false;
-						}*/
-
-					}
-					if (j - 1 < 10 && object_have_color(i, j - 1, level)) {
-						/*if (can_change(i, j, i, j - 1, level)) {
-							return false;
-						}*/
-					}
-				}
-			}
-			return false;
-		}
+		
 		int color_connet(int x, int y, bool checkRow, int level, bool check_positive) {
 			int x1 = x;
 			int y1 = y;
@@ -401,15 +282,11 @@ namespace game_framework {
 			for (int i = 0; i < 10; i++) {
 				for (int j = 0; j < 10; j++) {
 					CTextDraw::Print(pDC, 100 + 15 * j, 15 * i, to_string(map_level[level][i][j]));
-					CTextDraw::Print(pDC, 270 + 20 * j, 15 * i, to_string(map.candy[i][j].GetFrameIndexOfBitmap()));
-					//CTextDraw::Print(pDC, 270 + 20 * j, 15 * i, to_string(map.Bomb.bomb_step[i][j]));
+					CTextDraw::Print(pDC, 520 + 20 * j, 15 * i, to_string(map.candy[i][j].GetFrameIndexOfBitmap()));
+		
 				}
 			}	
-			
-			CTextDraw::Print(pDC, 480 , 15 , to_string(test));
-			CTextDraw::Print(pDC, 500, 15, to_string(test1));
-			CTextDraw::Print(pDC, 520, 15, to_string(test2));
-			CTextDraw::Print(pDC, 540, 15, to_string(test3));
+
 			CDDraw::ReleaseBackCDC();
 		}
 
@@ -553,30 +430,7 @@ namespace game_framework {
 			return color_num;
 		}
 		void candy_need_upgrade(int clickX, int clickY, int changeX, int changeY, int i, int j, int sum, bool isRow, int level) {
-			int candy_need_element_list[10][10] = {
-			{0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0}
-			};
-			int candy_need_upgrage_list[10][10] = {
-			{0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0}
-			};
+			
 			
 			int color = get_candy_color(i, j,level);
 			
@@ -588,17 +442,14 @@ namespace game_framework {
 							if (color_connet(i, k, false, level,true) >= 3) {
 								int tem = color_connet(i, k, false, level, true);
 								for (int k1 = i + 1; k1 < i + tem; k1++) {
-									//candy_need_element_list[k1][k] = 1;
 									object_element(k1, k, level,0);
 									obstacel_destory(k1, k, level);
 								}
 							}
 							map.candy[i][k].SetFrameIndexOfBitmap(25);
 							obstacel_destory(i, k, level);
-							//candy_need_upgrage_list[i][k] = 25;
 						}
 						else {
-							//candy_need_element_list[i][k] = 1;
 							object_element(i, k, level,0);
 							obstacel_destory(i, k, level);
 						}
@@ -615,7 +466,6 @@ namespace game_framework {
 								object_element(k1, k, level,0);
 								obstacel_destory(k1, k, level);
 							}
-							//candy_need_upgrage_list[i][k] = 9 + (map.candy[i][k].GetFrameIndexOfBitmap() - 1) * 3;
 							map.candy[i][k].SetFrameIndexOfBitmap(9 + (color - 1) * 3);
 							obstacel_destory(i, k, level);
 							continue;
@@ -629,7 +479,6 @@ namespace game_framework {
 					}
 				}
 				else if (sum == 3) {
-					
 					for (int k = j; k < j + sum; k++) {
 						if (color_connet(i, k, false, level,true) >= 3) {
 							int tem = color_connet(i, k, false, level, true);
@@ -706,7 +555,6 @@ namespace game_framework {
 					for (int k = i; k < i + sum; k++) {
 						if (color_connet(k, j, true, level, true) + color_connet(k, j, true, level, false) - 1 >= 3) {
 							int tem = color_connet(k, j, true, level, true);
-							
 							for (int k1 = j - color_connet(k, j, true, level, false) + 1; k1 < j +tem; k1++) {
 								if (k1 == j) {
 									continue;
@@ -727,7 +575,6 @@ namespace game_framework {
 		
 		void game_init(int level) {
 			map.build_map(level);
-			
 			Step::step = Step.stepInit(level);
 
 			for (int i = 0; i < 10; i++) {
@@ -742,8 +589,7 @@ namespace game_framework {
 				}
 			}
 			map.build_map(level);
-			//for (int t = 0; t < 10; t++) {
-				//object_check_element(clickX, clickY, changeX, changeY, level);
+			for (int t = 0; t < 3; t++) {
 				for (int i = 0; i < 10; i++) {
 					for (int j = 0; j < 10; j++) {
 						while(color_connet(i, j, true, level, true) >= 3 || color_connet(i, j, false, level, true) >= 3 || color_connet(i, j, true, level, false) >= 3 || color_connet(i, j, false, level, false) >= 3) {
@@ -763,7 +609,7 @@ namespace game_framework {
 						}	
 					}
 				}
-			//}
+			}
 			map.Bomb.bomb_init(level, map.bomb);
 			Goal.GoalSetting(level);
 			Score::score = 0;
@@ -789,10 +635,8 @@ namespace game_framework {
 			
 			if (map_level[level][x][y] == 4) {
 				Goal.SetGoal(30);
-			}/*
-			if (map_level[level][x][y] == 6) {
-				Goal.SetGoal(31);
-			}*/
+			}
+			
 			if (map_level[level][x][y] == 7) {
 				Goal.SetGoal(28);
 			}
@@ -834,7 +678,7 @@ namespace game_framework {
 					for (int i = 0; i < 2; i++) {
 						if (x - 1 >= 0 && y - 1 >= 0 ) {
 							object_element(x - 1, y - 1, level, t);
-							//糖果包
+						
 						}
 						if (x - 1 >= 0) {
 							object_element(x - 1, y , level, t);
