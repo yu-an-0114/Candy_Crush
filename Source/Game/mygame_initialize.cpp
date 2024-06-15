@@ -7,37 +7,27 @@
 #include "../Library/gamecore.h"
 #include "mygame.h"
 
-
 using namespace game_framework;
-/////////////////////////////////////////////////////////////////////////////
-// 這個class為遊戲的遊戲開頭畫面物件
-/////////////////////////////////////////////////////////////////////////////
-
+int levelrank::value = -1;
+int Step::step = 0;
+int Score::score = 0;
 CGameStateInit::CGameStateInit(CGame *g) : CGameState(g)
 {
-}
 
+}
 void CGameStateInit::OnInit()
 {
-	//
-	// 當圖很多時，OnInit載入所有的圖要花很多時間。為避免玩遊戲的人
-	//     等的不耐煩，遊戲會出現「Loading ...」，顯示Loading的進度。
-	//
-	//ShowInitProgress(0, "Start Initialize...");	// 一開始的loading進度為0%
-	//
-	//開始載入資料
-	//
-	//Sleep(1000);				// 放慢，以便看清楚進度，實際遊戲請刪除此Sleep
-	//
-	// 此OnInit動作會接到CGameStaterRun::OnInit()，所以進度還沒到100%
-	//
-	
+
 }
 
 void CGameStateInit::OnBeginState()
 {
-	StartUI.START_UI();
-
+	level = levelrank::value;
+	game_system.Ui.start_UI_init();
+	game_system.Ui.rank_choose_UI();
+	if ((phase_start == 2) && (phase_rank == 2)) {
+		game_system.Ui.rank_choose_UI_2();
+	}
 }
 
 void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -47,12 +37,42 @@ void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	if (StartUI.IS_PLAY_BUTTON(point)==true) {
+	if (phase_start == 1) {
+		if (game_system.Ui.is_play_button(point)) {
+			phase_start += 1;
+		}
+	}
+	else if (phase_start == 2) {
+		if (phase_rank == 1) {
+			if (game_system.Ui.rank_down_button.isClick_CMovingBitmap(game_system.Ui.rank_down_button, point)) {
+				game_system.Ui.rank_choose_UI_2();
+				phase_rank += 1;
+			}
+			level = game_system.Ui.is_rank_button_1(point);
+		}
+		else if (phase_rank == 2) {
+			if (game_system.Ui.rank_up_button.isClick_CMovingBitmap(game_system.Ui.rank_up_button, point)) {
+				game_system.Ui.rank_choose_UI();
+				phase_rank -= 1;
+			}
+			level = game_system.Ui.is_rank_button_2(point);
+		}
+	}
+	if (level > -1) {
+		levelrank::value = level;
 		GotoGameState(GAME_STATE_RUN);
 	}
 }
 
 void CGameStateInit::OnShow()
 {
-	StartUI.start_ui_show();
+	if (phase_start == 1) {
+		game_system.Ui.start_loading.ShowBitmap();
+	}
+	if ((phase_start == 2) && (phase_rank == 1)) {
+		game_system.Ui.rankchoose_UI_show();
+	}
+	else if ((phase_start == 2) && (phase_rank == 2)) {
+		game_system.Ui.rankchoose_UI_2_show();
+	}
 }

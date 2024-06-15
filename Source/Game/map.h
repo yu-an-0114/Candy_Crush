@@ -1,6 +1,4 @@
 
-//#ifdef MAP_H
-//#define MAP_H
 #include "../Library/gameutil.h"
 #include "../Library/gamecore.h"
 #include <list>
@@ -11,295 +9,215 @@
 #include <string>
 #include <iostream>
 #include <stdio.h>
+#include <cmath>
+#include <typeinfo>
+
+#include "MapLevel.h"
+#include "Cherry.h"
+#include "Candy.h"
+#include "CandyLattice.h"
+#include "Bomb.h"
+#include "Chocolate.h"
+#include "ChocolatMachine.h"
+#include "Glass.h"
+#include "Sugar.h"
+#include "X_block.h"
+
+
 using namespace std;
 
 namespace game_framework {
 	class Map {
 	public:
-		void Build_map() {
+		void build_map(int level) {	
+			unit_candy_lattice.LoadBitmapByString({ "resources/CandyLattice.bmp" });
 			for (int i = 0; i < 10; i++) {
 				for (int j = 0; j < 10; j++) {
-					map[i][j].LoadBitmapByString({ "resources/CandyLattice.bmp" });
-					map[i][j].SetTopLeft(10 + map[0][0].GetWidth()*j, 150 + map[0][0].GetHeight()*i);
-					candy[i][j].LoadBitmapByString({"resources/candy/white.bmp" ,"resources/candy/yellow-candy.bmp","resources/candy/blue-candy.bmp" ,"resources/candy/red-candy.bmp" ,"resources/candy/purple-candy.bmp" ,"resources/candy/green-candy.bmp" ,"resources/candy/orange-candy.bmp" ,"resources/candy/yellow-candy-row.bmp" ,"resources/candy/yellow-candy-col.bmp" ,"resources/candy/yellow-candy-pack.bmp","resources/candy/blue-candy-row.bmp" ,"resources/candy/blue-candy-col.bmp" ,"resources/candy/blue-candy-pack.bmp","resources/candy/red-candy-row.bmp" ,"resources/candy/red-candy-col.bmp","resources/candy/red-candy-pack.bmp","resources/candy/purple-candy-row.bmp" ,"resources/candy/purple-candy-col.bmp","resources/candy/purple-candy-pack.bmp","resources/candy/green-candy-row.bmp" ,"resources/candy/green-candy-col.bmp" ,"resources/candy/green-candy-pack.bmp","resources/candy/orange-candy-row.bmp" ,"resources/candy/orange-candy-col.bmp","resources/candy/orange-candy-pack.bmp" ,"resources/candy/color-ball.bmp" }, RGB(255, 255, 255));
-					int RandNum = rand() % 6 + 1;		
-					candy[i][j].SetFrameIndexOfBitmap(RandNum);
-					candy[i][j].SetTopLeft(map[i][j].GetLeft() + (map[i][j].GetWidth() - candy[i][j].GetWidth()) / 2, map[i][j].GetTop() + (map[i][j].GetHeight() - candy[i][j].GetHeight()) / 2);
-				}
-			}
-		}
-
-		void Show_map() {
-			for (int i = 0; i < 10; i++) {
-				for (int j = 0; j < 10; j++) {
-					map[i][j].ShowBitmap();
-				}
-			}
-			for (int i = 0; i < 10; i++) {
-				for (int j = 0; j < 10; j++) {
-					candy[i][j].ShowBitmap();
-				}
-			}
-		}
-		
-		void candy_down() {
-			for (int i = 0; i < 10; i++) {
-				for (int j = 0; j < 10; j++) {
-					int k = i;
-					if (candy[i][j].GetFrameIndexOfBitmap() == 0) {
-						k = i;
-						while (1) {
-							if (k == 0) {			
-								int RandNum = rand() % 6 + 1;				
-								candy[k][j].SetFrameIndexOfBitmap(RandNum);
-							}
-							else {
-								candy[k][j].SetFrameIndexOfBitmap(candy[k-1][j].GetFrameIndexOfBitmap());
-							}
-							candy[k][j].SetTopLeft(map[k][j].GetLeft() + (map[k][j].GetWidth() - candy[k][j].GetWidth()) / 2, map[k][j].GetTop() + (map[k][j].GetHeight() - candy[k][j].GetHeight()) / 2);
-							k--;
-							if (k < 0) {
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
-
-
-		void Candy_Element(int clickX,int clickY,int changeX,int changeY) {
-			int i = 0;
-			while (1) {
-				int j = 0;
-				while (1) {
-					if (candy[i][j].GetFrameIndexOfBitmap() == 0) {
-						j++;
+					if (map_level[level][i][j] == 0) {
 						continue;
 					}
-					int k_row = j;
-					int sum_row = 0;
-					while (1) {
-						if (candy[i][j].GetFrameIndexOfBitmap() == candy[i][k_row].GetFrameIndexOfBitmap()) {
-							sum_row++;
+					else {
+						candy_lattice[i][j].LoadBitmapByString({ "resources/CandyLattice.bmp" });
+						candy_lattice[i][j].SetTopLeft(10 + unit_candy_lattice.GetWidth()*j, 150 + unit_candy_lattice.GetHeight()*i);
+						bomb[i][j].LoadBitmapByString({ "resources/candy/white.bmp","resources/bomb/yellow-bomb.bmp","resources/bomb/blue-bomb.bmp" ,"resources/bomb/red-bomb.bmp" ,"resources/bomb/purple-bomb.bmp" ,"resources/bomb/green-bomb.bmp" ,"resources/bomb/orange-bomb.bmp" }, RGB(255, 255, 255));
+						bomb[i][j].SetTopLeft(candy_lattice[i][j].GetLeft() + (unit_candy_lattice.GetWidth() - bomb[i][j].GetWidth()) / 2, candy_lattice[i][j].GetTop() + (unit_candy_lattice.GetHeight() - bomb[i][j].GetHeight()) / 2);
+						candy[i][j].LoadBitmapByString({ "resources/candy/white.bmp" ,"resources/candy/yellow-candy.bmp","resources/candy/blue-candy.bmp" ,"resources/candy/red-candy.bmp" ,"resources/candy/purple-candy.bmp" ,"resources/candy/green-candy.bmp" ,"resources/candy/orange-candy.bmp" ,"resources/candy/yellow-candy-row.bmp" ,"resources/candy/yellow-candy-col.bmp" ,"resources/candy/yellow-candy-pack.bmp","resources/candy/blue-candy-row.bmp" ,"resources/candy/blue-candy-col.bmp" ,"resources/candy/blue-candy-pack.bmp","resources/candy/red-candy-row.bmp" ,"resources/candy/red-candy-col.bmp","resources/candy/red-candy-pack.bmp","resources/candy/purple-candy-row.bmp" ,"resources/candy/purple-candy-col.bmp","resources/candy/purple-candy-pack.bmp","resources/candy/green-candy-row.bmp" ,"resources/candy/green-candy-col.bmp" ,"resources/candy/green-candy-pack.bmp","resources/candy/orange-candy-row.bmp" ,"resources/candy/orange-candy-col.bmp","resources/candy/orange-candy-pack.bmp" ,"resources/candy/color-ball.bmp" }, RGB(255, 255, 255));				
+						candy[i][j].SetTopLeft(candy_lattice[i][j].GetLeft() + (unit_candy_lattice.GetWidth() - candy[i][j].GetWidth()) / 2, candy_lattice[i][j].GetTop() + (unit_candy_lattice.GetHeight() - candy[i][j].GetHeight()) / 2);
+						candy[i][j].SetFrameIndexOfBitmap(0);
+						cherry[i][j].LoadBitmapByString({ "resources/cherry.bmp" }, RGB(255, 255, 255));
+						cherry[i][j].SetTopLeft(candy_lattice[i][j].GetLeft() + (unit_candy_lattice.GetWidth() - cherry[i][j].GetWidth()) / 2, candy_lattice[i][j].GetTop() + (unit_candy_lattice.GetHeight() - cherry[i][j].GetHeight()) / 2);
+						chocolate[i][j].LoadBitmapByString({ "resources/block/chocolate.bmp" }, RGB(255, 255, 255));
+						chocolate[i][j].SetTopLeft(candy_lattice[i][j].GetLeft() + (unit_candy_lattice.GetWidth() - chocolate[i][j].GetWidth()) / 2, candy_lattice[i][j].GetTop() + (unit_candy_lattice.GetHeight() - chocolate[i][j].GetHeight()) / 2);
+						chocolate_machine[i][j].LoadBitmapByString({ "resources/block/chocolate_machine.bmp" }, RGB(255, 255, 255));
+						chocolate_machine[i][j].SetTopLeft(candy_lattice[i][j].GetLeft() + (unit_candy_lattice.GetWidth() - chocolate_machine[i][j].GetWidth()) / 2, candy_lattice[i][j].GetTop() + (unit_candy_lattice.GetHeight() - chocolate_machine[i][j].GetHeight()) / 2);
+						glass[i][j].LoadBitmapByString({ "resources/block/glass.bmp","resources/block/glass2.bmp" }, RGB(255, 255, 255));
+						glass[i][j].SetTopLeft(candy_lattice[i][j].GetLeft() + (unit_candy_lattice.GetWidth() - glass[i][j].GetWidth()) / 2, candy_lattice[i][j].GetTop() + (unit_candy_lattice.GetHeight() - glass[i][j].GetHeight()) / 2);
+						sugar[i][j].LoadBitmapByString({ "resources/block/sugar.bmp","resources/block/sugar2.bmp","resources/block/sugar3.bmp","resources/block/sugar4.bmp","resources/block/sugar5.bmp" }, RGB(255, 255, 255));
+						sugar[i][j].SetTopLeft(candy_lattice[i][j].GetLeft() + (unit_candy_lattice.GetWidth() - sugar[i][j].GetWidth()) / 2, candy_lattice[i][j].GetTop() + (unit_candy_lattice.GetHeight() - sugar[i][j].GetHeight()) / 2);
+						x_block[i][j].LoadBitmapByString({"resources/block/X_block.bmp" }, RGB(255, 255, 255));
+						x_block[i][j].SetTopLeft(candy_lattice[i][j].GetLeft() + (unit_candy_lattice.GetWidth() - x_block[i][j].GetWidth()) / 2, candy_lattice[i][j].GetTop() + (unit_candy_lattice.GetHeight() - x_block[i][j].GetHeight()) / 2);
+
+						if (map_level[level][i][j] == 1) {
+							candy[i][j].set_candy_random(i, j, level, candy);
+						}
+						else if (map_level[level][i][j] == 2) {
+							candy[i][j].set_candy_random(i, j, level, candy);
+						}
+						else if (map_level[level][i][j] == 4) {
+							bomb[i][j].set_bomb_random(i, j, level, bomb);
+						}
+						else if (map_level[level][i][j] == 7) {
+							sugar[i][j].SetFrameIndexOfBitmap(0);
+						}
+						else if (map_level[level][i][j] == 8) {
+							sugar[i][j].SetFrameIndexOfBitmap(1);
+						}
+						else if (map_level[level][i][j] == 9) {
+							sugar[i][j].SetFrameIndexOfBitmap(2);
+						}
+						else if (map_level[level][i][j] == 10) {
+							sugar[i][j].SetFrameIndexOfBitmap(3);
+						}
+						else if (map_level[level][i][j] == 11) {
+							sugar[i][j].SetFrameIndexOfBitmap(4);
+						}
+						else if (map_level[level][i][j] == 12) {
+							candy[i][j].set_candy_random(i, j, level, candy);
+							glass[i][j].SetFrameIndexOfBitmap(0);
+						}
+						else if (map_level[level][i][j] == 13) {
+							candy[i][j].set_candy_random(i, j, level, candy);
+							glass[i][j].SetFrameIndexOfBitmap(1);
+						}
+					}
+				}
+			}	
+		}
+		void show_map(int level) {
+			for (int i = 0; i < 10; i++) {
+				for (int j = 0; j < 10; j++) {
+					if (map_level[level][i][j] == 0) {
+						continue;
+					}				
+					candy_lattice[i][j].ShowBitmap();
+				}
+			}
+			
+			for (int i = 0; i < 10; i++) {
+				for (int j = 0; j < 10; j++) {
+					if (map_level[level][i][j] == 0) {
+						continue;
+					}
+					else {	
+						if (map_level[level][i][j] == 1) {
+							candy[i][j].ShowBitmap();
 						}
 						else {
-							candy_upgrade(clickX, clickY, changeX, changeY, i, j, sum_row, true);
-							sum_row = 0;
-							break;
+							candy[i][j].UnshowBitmap();
 						}
-						
-						k_row++;
-						if (k_row >= 10) {
-							candy_upgrade(clickX, clickY, changeX, changeY, i, j, sum_row, true);
-							sum_row = 0;
-							break;
-						}
-					}
-					int k_col = i;
-					int sum_col = 0;
-					while (1) {
-						if (candy[i][j].GetFrameIndexOfBitmap() == candy[k_col][j].GetFrameIndexOfBitmap()) {
-							sum_col++;
+						if (map_level[level][i][j] == 2) {
+							candy[i][j].ShowBitmap();
+							x_block[i][j].ShowBitmap();
 						}
 						else {
-							candy_upgrade(clickX, clickY, changeX, changeY, i, j, sum_col, false);
-							sum_col = 0;
-							break;
+							candy[i][j].UnshowBitmap();
+							x_block[i][j].UnshowBitmap();
 						}
-						k_col++;
-						if (k_col >= 10) {
-							candy_upgrade(clickX, clickY, changeX, changeY, i, j, sum_col, false);
-							sum_col = 0;
-							break;
+						if (map_level[level][i][j] == 3) {
+							cherry[i][j].ShowBitmap();
 						}
-					}
-					j++;
-					if (j >= 10) {
-						break;
-					}
-				}
-				i++;
-				if (i >= 10) {
-					break;
-				}
-			}
-		}
-
-		void candy_change(int i, int j, int x, int y) {
-			int num = candy[i][j].GetFrameIndexOfBitmap();
-			candy[i][j].SetFrameIndexOfBitmap(candy[x][y].GetFrameIndexOfBitmap());
-			candy[x][y].SetFrameIndexOfBitmap(num);
-			candy[x][y].SetTopLeft(map[x][y].GetLeft() + (map[x][y].GetWidth() - candy[x][y].GetWidth()) / 2, map[x][y].GetTop() + (map[x][y].GetHeight() - candy[x][y].GetHeight()) / 2);
-			candy[i][j].SetTopLeft(map[i][j].GetLeft() + (map[i][j].GetWidth() - candy[i][j].GetWidth()) / 2, map[i][j].GetTop() + (map[i][j].GetHeight() - candy[i][j].GetHeight()) / 2);
-		}
-
-		void candy_upgrade(int clickX, int clickY, int changeX, int changeY,int i,int j,int sum,bool isRow) {
-			if (candy[i][j].GetFrameIndexOfBitmap() != candy[clickX][clickY].GetFrameIndexOfBitmap()) {
-				clickX = changeX;
-				clickY = changeY;
-			}
-			if (isRow) {
-				if (sum == 5) {
-					for (int z = j; z < j + 5; z++) {
-						if (i == clickX && z == clickY) {
-							for (int k = i; k < i + 3; k++) {
-								if (k >= 10) {
-									break;
-								}
-								if (candy[k][z].GetFrameIndexOfBitmap() != candy[i][z].GetFrameIndexOfBitmap()) {
-									break;
-								}
-								if (k == i + 2) {
-									for (int k1 = i; k1 < i + 3; k1++) {
-										candy[k1][z].SetFrameIndexOfBitmap(0);
-									}
-								}
-							}
-							candy[i][z].SetFrameIndexOfBitmap(25);
-							continue;
+						else {
+							cherry[i][j].UnshowBitmap();
 						}
-						candy[i][z].SetFrameIndexOfBitmap(0);
-					}
-				}
-				else if (sum == 4) {
-					for (int z = j; z < j + 4; z++) {
-						if ((i == clickX && z == clickY) || (i == changeX && z == changeY)) {
-							candy[i][z].SetFrameIndexOfBitmap(8 + (candy[i][z].GetFrameIndexOfBitmap() - 1) * 3);
-							continue;
+						if (map_level[level][i][j] == 4) {
+							bomb[i][j].ShowBitmap();
 						}
-						candy[i][z].SetFrameIndexOfBitmap(0);
-					}
-				}
-				
-				else if (sum == 3) {
-					
-					for (int k = clickX; k < clickX + 3; k++) {
-						if (k >= 10) {
-							break;
+						else {
+							bomb[i][j].UnshowBitmap();
 						}
-						if (candy[k][clickY].GetFrameIndexOfBitmap() != candy[i][j].GetFrameIndexOfBitmap()) {
-							break;
+						if (map_level[level][i][j] == 5) {
+							chocolate_machine[i][j].ShowBitmap();
 						}
-						if (k == clickX + 2) {
-							candy[clickX][clickY].SetFrameIndexOfBitmap((9 + (candy[i][j].GetFrameIndexOfBitmap() - 1) * 3));
-							for (int k1 = j; k1 < j + 3; k1++) {
-								if (k1 == clickY) {
-									continue;
-								}
-								candy[i][k1].SetFrameIndexOfBitmap(0);
-							}
-				
-							for (int k1 = i; k1 < i + 3; k1++) {
-								if (k1 == clickX) {
-									continue;
-								}
-								candy[k1][clickY].SetFrameIndexOfBitmap(0);
-							}
-							return;
-						}					
-					}
-					
-					for (int z = j; z < j + 3; z++) {
-						candy[i][z].SetFrameIndexOfBitmap(0);
-					}
-				}
-			}
-			else if(!isRow){
-				if (sum == 5) {
-					for (int k = j - 2; k < j; k++) {
-						if (k < 0 || i + 2 >= 10) {
-							break;
+						else {
+							chocolate_machine[i][j].UnshowBitmap();
 						}
-						if (candy[i + 2][k].GetFrameIndexOfBitmap() != candy[i][j].GetFrameIndexOfBitmap()) {
-							break;
+						if (map_level[level][i][j] == 6) {
+							chocolate[i][j].ShowBitmap();
 						}
-						if (k == j - 1) {
-							for (int k1 = j - 2; k1 < j; k1++) {
-								candy[i + 2][k1].SetFrameIndexOfBitmap(0);
-							}
+						else {
+							chocolate[i][j].UnshowBitmap();
 						}
-					}
-					for (int z = i; z < i + 5; z++) {
-						if ((z == clickX && j == clickY) || (z == changeX && j == changeY)) {
-							candy[z][j].SetFrameIndexOfBitmap(25);
-							continue;
+						if (7 <= map_level[level][i][j] && map_level[level][i][j] <= 11) {
+							sugar[i][j].ShowBitmap();
 						}
-						candy[z][j].SetFrameIndexOfBitmap(0);
-					}
-				}
-				else if (sum == 4) {
-					for (int z = i; z < i + 4; z++) {
-						if ((z == clickX && j == clickY) || (z == changeX && j == changeY)) {
-							candy[z][j].SetFrameIndexOfBitmap(7 + (candy[z][j].GetFrameIndexOfBitmap() - 1) * 3);
-							continue;
+						else {
+							sugar[i][j].UnshowBitmap();
 						}
-						candy[z][j].SetFrameIndexOfBitmap(0);
-					}
-				}
-				else if (sum == 3) {
-					for (int k = clickY; k > clickY - 3; k--) {
-						if (k < 0 || i + 2 >= 10) {
-							break;
+						if (12 <= map_level[level][i][j] && map_level[level][i][j] <= 13) {
+							glass[i][j].ShowBitmap();
+							candy[i][j].ShowBitmap();
 						}
-						if (candy[i + 2][k].GetFrameIndexOfBitmap() != candy[i][j].GetFrameIndexOfBitmap()) {
-							break;
+						else {
+							glass[i][j].UnshowBitmap();
+							candy[i][j].UnshowBitmap();
 						}
-						if (k == clickY - 2) {
-							candy[clickX][clickY].SetFrameIndexOfBitmap((9 + (candy[i][j].GetFrameIndexOfBitmap() - 1) * 3));
-							for (int k1 = j; k1 > j - 3; k1--) {
-								if (k1 == clickY) {
-									continue;
-								}
-								candy[clickX][k1].SetFrameIndexOfBitmap(0);
-							}
-
-							for (int k1 = i; k1 < i + 3; k1++) {
-								if (k1 == clickX) {
-									continue;
-								}
-								candy[k1][j].SetFrameIndexOfBitmap(0);
-							}
-							return;
-						}
-					}
-					for (int k = clickY; k < clickY + 3; k++) {
-						if (k >= 10 || i+2 >= 10) {
-							break;
-						}
-						if (candy[i+2][k].GetFrameIndexOfBitmap() != candy[i][j].GetFrameIndexOfBitmap()) {
-							break;
-						}
-						if (k == clickY + 2) {
-							candy[clickX][clickY].SetFrameIndexOfBitmap((9 + (candy[i][j].GetFrameIndexOfBitmap() - 1) * 3));
-							for (int k1 = j; k1 < j + 3; k1++) {
-								if (k1 == clickY) {
-									continue;
-								}
-								candy[clickX][k1].SetFrameIndexOfBitmap(0);
-							}
-
-							for (int k1 = i; k1 < i + 3; k1++) {
-								if (k1 == clickX) {
-									continue;
-								}
-								candy[k1][j].SetFrameIndexOfBitmap(0);
-							}
-							
-							return;
-						}
-					}
-					for (int z = i; z < i + 3; z++) {
-						candy[z][j].SetFrameIndexOfBitmap(0);
 					}
 				}
 			}
 		}
-		CMovingBitmap candy[10][10];
-		CMovingBitmap map[10][10];
-	private:
+		/*
+		template <typename T>
+		void set_candy_lattice_center(int x, int y,T& object) {
+			object[x][y].SetTopLeft(candy_lattice[x][y].GetLeft() + (unit_candy_lattice.GetWidth() - object[x][y].GetWidth()) / 2, candy_lattice[x][y].GetTop() + (unit_candy_lattice.GetHeight() - object[x][y].GetHeight()) / 2);
+		}*/
+		void set_candy_lattice_center(int x, int y,int level) {
+			if (map_level[level][x][y] == 0) {
+				return;
+			}
+			if (map_level[level][x][y] == 1) {
+				candy[x][y].SetTopLeft(candy_lattice[x][y].GetLeft() + (unit_candy_lattice.GetWidth() - candy[x][y].GetWidth()) / 2, candy_lattice[x][y].GetTop() + (unit_candy_lattice.GetHeight() - candy[x][y].GetHeight()) / 2);
+			}
+			else if (map_level[level][x][y] == 2) {
+				x_block[x][y].SetTopLeft(candy_lattice[x][y].GetLeft() + (unit_candy_lattice.GetWidth() - x_block[x][y].GetWidth()) / 2, candy_lattice[x][y].GetTop() + (unit_candy_lattice.GetHeight() - x_block[x][y].GetHeight()) / 2);
+				candy[x][y].SetTopLeft(candy_lattice[x][y].GetLeft() + (unit_candy_lattice.GetWidth() - candy[x][y].GetWidth()) / 2, candy_lattice[x][y].GetTop() + (unit_candy_lattice.GetHeight() - candy[x][y].GetHeight()) / 2);
+			}
+			else if(map_level[level][x][y]==3) {
+				cherry[x][y].SetTopLeft(candy_lattice[x][y].GetLeft() + (unit_candy_lattice.GetWidth() - cherry[x][y].GetWidth()) / 2, candy_lattice[x][y].GetTop() + (unit_candy_lattice.GetHeight() - cherry[x][y].GetHeight()) / 2);
+			}
+			else if (map_level[level][x][y] == 4) {
+				bomb[x][y].SetTopLeft(candy_lattice[x][y].GetLeft() + (unit_candy_lattice.GetWidth() - bomb[x][y].GetWidth()) / 2, candy_lattice[x][y].GetTop() + (unit_candy_lattice.GetHeight() - bomb[x][y].GetHeight()) / 2);
+			}
+			else if (map_level[level][x][y] == 5) {
+				chocolate_machine[x][y].SetTopLeft(candy_lattice[x][y].GetLeft() + (unit_candy_lattice.GetWidth() - chocolate_machine[x][y].GetWidth()) / 2, candy_lattice[x][y].GetTop() + (unit_candy_lattice.GetHeight() - chocolate_machine[x][y].GetHeight()) / 2);
+			}
+			else if (map_level[level][x][y] == 6) {
+				chocolate[x][y].SetTopLeft(candy_lattice[x][y].GetLeft() + (unit_candy_lattice.GetWidth() - chocolate[x][y].GetWidth()) / 2, candy_lattice[x][y].GetTop() + (unit_candy_lattice.GetHeight() - chocolate[x][y].GetHeight()) / 2);
+			}
+			else if (7 <= map_level[level][x][y] && map_level[level][x][y] <= 11) {
+				sugar[x][y].SetTopLeft(candy_lattice[x][y].GetLeft() + (unit_candy_lattice.GetWidth() - sugar[x][y].GetWidth()) / 2, candy_lattice[x][y].GetTop() + (unit_candy_lattice.GetHeight() - sugar[x][y].GetHeight()) / 2);
+			}
+			else if (12 <= map_level[level][x][y] && map_level[level][x][y] <= 13) {
+				glass[x][y].SetTopLeft(candy_lattice[x][y].GetLeft() + (unit_candy_lattice.GetWidth() - glass[x][y].GetWidth()) / 2, candy_lattice[x][y].GetTop() + (unit_candy_lattice.GetHeight() - glass[x][y].GetHeight()) / 2);
+				candy[x][y].SetTopLeft(candy_lattice[x][y].GetLeft() + (unit_candy_lattice.GetWidth() - candy[x][y].GetWidth()) / 2, candy_lattice[x][y].GetTop() + (unit_candy_lattice.GetHeight() - candy[x][y].GetHeight()) / 2);
+			}
+		}
 		
-		
+
+		Bomb bomb[10][10];
+		Chocolate chocolate[10][10];
+		ChocolateMachine chocolate_machine[10][10];
+		CandyLattice unit_candy_lattice;
+		CandyLattice candy_lattice[10][10];	
+		Candy candy[10][10];
+		Cherry cherry[10][10];
+		Glass glass[10][10];
+		Sugar sugar[10][10];
+		X_block x_block[10][10];		
+		CMovingBitmap effect[10][10];
+		//Effect effectlevel;
+		CSpecialEffect time;
+
+		int test = 0;
 	};
 }
-//#endif 
+
